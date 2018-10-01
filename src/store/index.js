@@ -1,9 +1,10 @@
 import { createStore, applyMiddleware, compose} from 'redux'
-import reduser from '../reducer'
-import thunk from 'thunk'
+import reducer from '../reducer'
+import thunk from 'redux-thunk'
 import addUUID from '../middleweres/addUUID'
+
 
 const enhancer = compose( applyMiddleware(thunk, addUUID))
 
-export const store = createStore(reduser, enhancer)
+export const store = createStore(reducer, enhancer)
 
