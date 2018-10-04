@@ -1,128 +1,62 @@
-import React, { Component } from 'react'
+import React from 'react'
 import AuthMenu from '../auth-menu'
 import { reduxForm, Field } from 'redux-form'
 import Input from '../../input'
+import { required } from '../../input/validate'
 
-class SignIn extends Component {
-  render() {
-    return (<div className="container login-form">
-      <div>
-        <div className="row">
-          <div className="col-12 col-sm-12 col-md-2 col-lg-4"></div>
-          <div className="col-12 col-sm-12 col-md-8 col-lg-4">
-            <div className="row">
-              <h2 className="text-center">Войти в аккаунт</h2>
-              <form className="w-100" onSubmit={ ( values ) => console.log( values ) }>
-                <Field
-                  name="username"
-                  type="text"
-                  component={ Input }
-                  placeholder="Введите идентификационный номер"
-                  validate={ [ required ] }
+const  SignIn = ( ) => {
+  return (<div className="< d-flex position-absolute h-75 w-100">
+    <div className="container d-flex flex-column m-auto col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4 ">
+      <h1 className="h3 text-left font-wight-normal">Войти в аккаунт</h1>
+      <form onSubmit={ (values) =>  console.log(values) }>
 
-                />
-                { /*<PasswordInput/>*/ }
-                <div>
-                  <button type="submit" className="btn btn-primary btn-lg w-100">
-                    Войти
-                  </button>
-                </div>
-              </form>
-            </div>
-            <AuthMenu/>
-          </div>
+        <Field
+          className="form-control"
+          name="username"
+          type="text"
+          component={ Input }
+          placeholder="Введите идентификационный номер"
+          validate={ [ required ] }
+          prependIcon='user'
+        />
+
+        <Field
+          className="form-control"
+          name="password"
+          type="password"
+          component={ Input }
+          placeholder="Введите пароль"
+          validate={ [ required ] }
+          prependIcon='unlock-alt'
+        />
+
+        <div>
+          <button type="submit" className="btn btn-primary btn-lg btn-block">
+            Войти
+          </button>
         </div>
-      </div>
-    </div>)
-  }
+
+      </form>
+      <AuthMenu/>
+    </div>
+  </div>)
 }
 
-export default reduxForm( { form : 'signIn' } )( SignIn )
+const validate =(values) => {
+  const errors = {}
 
-const required = value => (value || typeof value === 'number' ? undefined : 'Поле обязательно')
+  if (!values.username) {
+    errors.username = 'Поле обязательно'
+  }
 
-// const maxLength = max => value =>
-//   value && value.length > max ? `Must be ${max} characters or less` : undefined
-//
-// const maxLength15 = maxLength(15)
+  if (!values.password) {
+    errors.password = 'Поле обязательно'
+  }
 
-// export const minLength = min => value =>
-//   value && value.length < min ? `Must be ${min} characters or more` : undefined
-//
-// export const minLength2 = minLength(2)
+  return errors
+}
 
-// const number = value =>
-//   value && isNaN(Number(value)) ? 'Must be a number' : undefined
-
-// const minValue = min => value =>
-//   value && value < min ? `Must be at least ${min}` : undefined
-//
-// const minValue13 = minValue(13)
-
-// const email = value =>
-//   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-//   ? 'Invalid email address'
-//   : undefined
-//
-// const aol = value =>
-//   value && /.+@aol\.com/.test(value)
-//   ? 'Really? You still use AOL for your email?'
-//   : undefined
-//
-// const alphaNumeric = value =>
-//   value && /[^a-zA-Z0-9 ]/i.test(value)
-//   ? 'Only alphanumeric characters'
-//   : undefined
-//
-// export const phoneNumber = value =>
-//   value && !/^(0|[1-9][0-9]{9})$/i.test(value)
-//   ? 'Invalid phone number, must be 10 digits'
-//   : undefined
-
-
-// const FieldLevelValidationForm = props => {
-//   const { handleSubmit, pristine, reset, submitting } = props
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <Field
-//         name="username"
-//         type="text"
-//         component={renderField}
-//         label="Username"
-//         validate={[required, maxLength15, minLength2]}
-//         warn={alphaNumeric}
-//       />
-//       <Field
-//         name="email"
-//         type="email"
-//         component={renderField}
-//         label="Email"
-//         validate={email}
-//         warn={aol}
-//       />
-//       <Field
-//         name="age"
-//         type="number"
-//         component={renderField}
-//         label="Age"
-//         validate={[required, number, minValue13]}
-//         warn={tooYoung}
-//       />
-//       <Field
-//         name="phone"
-//         type="number"
-//         component={renderField}
-//         label="Phone number"
-//         validate={[required, phoneNumber]}
-//       />
-//       <div>
-//         <button type="submit" disabled={submitting}>
-//           Submit
-//         </button>
-//         <button type="button" disabled={pristine || submitting} onClick={reset}>
-//           Clear Values
-//         </button>
-//       </div>
-//     </form>
-//   )
-// }
+export default reduxForm( {
+  form : 'signIn',
+  validate,
+} )( SignIn )
