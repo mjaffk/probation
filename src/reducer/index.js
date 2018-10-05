@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import user from './user'
+import dictionary from './dictionary'
 import { reducer as FormReducer } from 'redux-form'
 
 
 export default combineReducers({
-  user,
+  dictionary,
   form: FormReducer
 })
