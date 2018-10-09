@@ -1,34 +1,35 @@
-import {Record, List} from 'immutable'
+import { Record } from 'immutable'
 import {
-	LOAD_DICTIONARY,
+	LOAD_CAPTCHA,
 	SUCCESS,
 	START,
 	FAIL
 } from '../action-types'
 
 const ReducerRecord = new Record({
-	regions: List(),
+	image: '',
+	uuid: '',
 	loading: false,
 	loaded: false,
 	error: null
 })
 
 export default (state = new ReducerRecord(), action) => {
-	const {type, response, error} = action
+	const {type, response, error, uuid} = action
 
 	switch (type) {
-		case LOAD_DICTIONARY + START:
+		case LOAD_CAPTCHA + START:
 			return state.set('loading', true)
 
-		case LOAD_DICTIONARY + SUCCESS:
+		case LOAD_CAPTCHA + SUCCESS:
 			return state
-				.update('regions', (regions) =>
-					List(response.result.region.options).merge(regions)
-				)
+				.set('image', `data:image/png;base64,${response}`)
+				.set('uuid', uuid)
 				.set('loading', false)
 				.set('loaded', true)
 
-		case LOAD_DICTIONARY + FAIL :
+		case LOAD_CAPTCHA + FAIL :
+			console.log(error)
 			return state
 				.set('loading', false)
 				.set('error', error)
@@ -36,4 +37,6 @@ export default (state = new ReducerRecord(), action) => {
 		default:
 			return state
 	}
+
+
 }

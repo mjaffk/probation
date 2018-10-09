@@ -1,13 +1,15 @@
 import React from 'react'
 
-export default function Select({input, id, label, meta: {touched, error}}) {
-	return (<div className="form-group text-left">
-		<div>
-			<label htmlFor={id} className={`${touched && (error && 'text-danger')} form-check-label`}>{label}</label>
-			<input className="form-check-input" id={id} {...input}
-			       type='checkbox'/>
-
-		</div>
+export default function Select({input, id, label, meta: {touched, error}, options, placeholder }) {
+	return (<div className="form-group text-left required">
+			<label className={`form-control-label ${touched && (error && 'text-danger')}`}
+			       htmlFor={id}>{label}</label>
+			<select className="input-group form-control" id={id} {...input}>
+				<option value="" disabled selected >{placeholder}</option>
+				{
+					options && options.map((option) => <option value={option.index} key={option.index} name={option.index}>{option.value}</option>)
+				}
+			</select>
 		{
 			touched && (error && <span className="form-control-feedback text-danger small">{error}</span>)
 		}

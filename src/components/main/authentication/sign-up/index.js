@@ -7,15 +7,33 @@ import Checkbox from '../../input/checkbox'
 import {required, requiredConformation, email} from '../../input/validate'
 import {PasswordHint} from '../../input/hints'
 import Select from '../../select'
-import {loadDictionary} from '../../../../action-creators'
+import {loadDictionary, loadCaptcha, registerUser} from '../../../../action-creators'
+import Loader from '../../../loader'
 
 class SignUp extends Component {
+
+	componentDidMount() {
+
+		this.props.loadDictionary && !this.props.loadedRegions && !this.props.loadingRegions &&
+		this.props.loadDictionary()
+
+		this.props.loadCaptcha && !this.props.loadedCaptcha && !this.props.loadingCaptcha &&
+		this.props.loadCaptcha()
+	}
+
 	render() {
-		console.log(this.props.regions, this.props.loaded)
-		return (<div className="< d-flex position-absolute h-75 w-100">
+
+		if (!this.props.loadedRegions || this.props.loadingRegions ||
+			!this.props.loadedCaptcha || this.props.loadingCaptcha) return <Loader/>
+
+
+		return (<div className="< d-flex position-absolute h-100 w-100">
 			<div className="container d-flex flex-column m-auto col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4 ">
 				<h1 className="h3 text-left font-wight-normal">Регистрация</h1>
-				<form onSubmit={(values, errors) => console.log(errors)}>
+				<form onSubmit={this.props.handleSubmit((date, props) => props.registerUser({
+					values: date,
+					uuid: props.uuid
+				}))}>
 					<Field
 						className="form-control"
 						name="password"
@@ -58,14 +76,34 @@ class SignUp extends Component {
 					<Field
 						name="region"
 						component={Select}
+						placeholder="Выберите"
 						label="Регион проживания"
-						options={(this.props.loaded) ? this.props.regions : 'Loading...'}
+						options={this.props.regions.toArray()}
 						validate={[required]}
 						id="user-region"
 					/>
+					<div className="captcha-img d-flex mb-3">
+						<img
+							src={this.props.captcha}
+							alt="капча">
+						</img>
+						<button type="button"
+						        className="captcha-button btn btn-outline-primary px-4 ml-3"
+						        onClick={this.props.loadCaptcha}>
+							<i className={`fa fa-repeat`}/>
+						</button>
+					</div>
+					<Field
+						name="captcha"
+						type="text"
+						component={Input}
+						placeholder="Введите текст, который вы видете на экране"
+						validate={[required]}
+					/>
+
 					<div>
-						<button type="submit" className="btn btn-primary btn-lg btn-block">
-							Войти
+						<button type="submit" className="btn btn-primary btn-lg btn-block" disabled={!this.props.valid}>
+							Зарегистрироваться
 						</button>
 					</div>
 
@@ -74,11 +112,6 @@ class SignUp extends Component {
 			</div>
 		</div>)
 	}
-
-	componentDidMount() {
-		this.props.loadDictionary && this.props.loaded && this.props.loadDictionary()
-	}
-
 }
 
 const validate = (values) => {
@@ -98,10 +131,19 @@ const validate = (values) => {
 export default connect(
 	(state) => ({
 		regions: ((state) => state.dictionary.regions)(state),
-		loaded: ((state) => state.dictionary.loaded)(state)
+		loadedRegions: ((state) => state.dictionary.loaded)(state),
+		loadingRegions: ((state) => state.dictionary.loading)(state),
+		captcha: ((state) => state.captcha.image)(state),
+		uuid: ((state) => state.captcha.uuid)(state),
+		loadedCaptcha: ((state) => state.captcha.loaded)(state),
+		loadingCaptcha: ((state) => state.captcha.loading)(state),
 	}),
-	{loadDictionary}
+	{
+		loadDictionary,
+		loadCaptcha,
+		registerUser
+	}
 )(reduxForm({
-	form: 'signIn',
+	form: 'signUp',
 	validate,
 })(SignUp))

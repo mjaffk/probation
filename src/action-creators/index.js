@@ -1,33 +1,26 @@
 import {
 	LOAD_DICTIONARY,
-	SUCCESS,
-	FAIL,
+	LOAD_CAPTCHA,
+	REGISTER_USER,
 	START
 } from '../action-types'
-import {SERVER} from '../constants'
-import axios  from 'axios'
-
 
 export function loadDictionary() {
-	return (dispatch) => {
-		dispatch({
-			type: LOAD_DICTIONARY + START,
-		})
+	return ({
+		type: LOAD_DICTIONARY + START,
+	})
+}
 
-		axios.get(`${SERVER}/api/directory/regions`)
-			.then((response) => {
-				console.log(response)
-				dispatch({
-					type: LOAD_DICTIONARY + SUCCESS,
-					response: response.data
-				})
-			})
-			.catch((error) => {
-				console.log(error)
-				dispatch({
-					type: LOAD_DICTIONARY + FAIL,
-					error: error
-				})
-			})
-	}
+export function loadCaptcha() {
+	return ({
+		type: LOAD_CAPTCHA + START,
+	})
+}
+
+export function registerUser({values, uuid}) {
+	return ({
+		type: REGISTER_USER + START,
+		values,
+		uuid
+	})
 }
