@@ -9,43 +9,40 @@ import {PasswordHint} from '../../input/hints'
 import Select from '../../select'
 import {loadDictionary, loadCaptcha, registerUser} from '../../../../action-creators'
 import {SIGN_UP} from "../../../../constants"
-import Popup from 'react-popup'
+import Loader from "../../loader"
 
 class SignUp extends Component {
 
 	componentDidMount() {
-
+		//download dictionary of regions
 		this.props.loadDictionary && !this.props.loadedRegions && !this.props.loadingRegions &&
 		this.props.loadDictionary()
 
+		//download captcha
 		this.props.loadCaptcha && !this.props.loadedCaptcha && !this.props.loadingCaptcha &&
 		this.props.loadCaptcha()
-
-		this.props.userRegistered && Popup.register({
-			title: '',
-			content: `Для успешного завершения регистрации необходимо активировать \n' +
-						'учетную запись, перейдя по ссылке из активационного письма, \n' +
-						'отправленного на адрес электронной почты ${'email'}`,
-			buttons: {
-				right: ['Закрыть']
-			}
-		})
-
-		this.props.userRegistrationError && Popup.alert(this.props.userRegistrationError.message)
-
 	}
 
 	render() {
-
-		const formSubmitting = (date, dispatch, props) => {
+		/**
+		 * Action for form submitting
+		 * @param data - object of values from Redux Form
+		 * @param dispatch
+		 * @param props - object of all props from component
+		 */
+		const formSubmitting = (data, dispatch, props) => {
 			props.registerUser({
-				values: date,
+				values: data,
 				uuid: props.uuid
 			})
 		}
 
 		return (<div className="< d-flex position-absolute h-100 w-100">
 			<div className="container d-flex flex-column m-auto col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4 ">
+
+				{(!this.props.loadedRegions || !this.props.loadedCaptcha || this.props.loadingRegions ||
+					this.props.loadingCaptcha || this.props.userRegistering) && <Loader/>}
+
 				<h1 className="h3 text-left font-wight-normal">Регистрация</h1>
 				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 					<Field
@@ -85,7 +82,6 @@ class SignUp extends Component {
 						name="conformation"
 						type="checkbox"
 						component={Checkbox}
-						label="Для успешной регистрации необходимо подтвердить согласие с правилами проекта"
 						validate={[requiredConformation]}
 					/>
 
@@ -124,7 +120,6 @@ class SignUp extends Component {
 							Зарегистрироваться
 						</button>
 					</div>
-
 				</form>
 				<AuthMenu message='Уже зарегистрированы?'/>
 			</div>
@@ -142,7 +137,8 @@ export default connect(
 		loadedCaptcha: ((state) => state.captcha.loaded)(state),
 		loadingCaptcha: ((state) => state.captcha.loading)(state),
 		userRegistered: ((state) => state.user.registered)(state),
-		userRegistrationError: ((state) => state.user.error)(state)
+		userRegistrationError: ((state) => state.user.error)(state),
+		userRegistering: ((state) => state.user.registering)(state),
 	}),
 	{
 		loadDictionary,

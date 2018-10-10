@@ -5,8 +5,7 @@ import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import {Provider} from 'react-redux'
 import {store} from './store'
-import Popup from 'react-popup'
-
+import Modal from 'react-modal'
 
 ReactDOM.render(
 	<Provider store={store}>
@@ -14,9 +13,6 @@ ReactDOM.render(
 	</Provider>,
 	document.getElementById('root'))
 
-ReactDOM.render(
-	<Popup/>,
-	document.getElementById('popupContainer')
-)
+Modal.setAppElement(document.getElementById('root'))
 
 registerServiceWorker()
