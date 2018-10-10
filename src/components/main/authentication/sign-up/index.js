@@ -8,7 +8,8 @@ import {required, requiredConformation, email} from '../../input/validate'
 import {PasswordHint} from '../../input/hints'
 import Select from '../../select'
 import {loadDictionary, loadCaptcha, registerUser} from '../../../../action-creators'
-import Loader from '../../../loader'
+import {SIGN_UP} from "../../../../constants"
+import Popup from 'react-popup'
 
 class SignUp extends Component {
 
@@ -19,21 +20,34 @@ class SignUp extends Component {
 
 		this.props.loadCaptcha && !this.props.loadedCaptcha && !this.props.loadingCaptcha &&
 		this.props.loadCaptcha()
+
+		this.props.userRegistered && Popup.register({
+			title: '',
+			content: `Для успешного завершения регистрации необходимо активировать \n' +
+						'учетную запись, перейдя по ссылке из активационного письма, \n' +
+						'отправленного на адрес электронной почты ${'email'}`,
+			buttons: {
+				right: ['Закрыть']
+			}
+		})
+
+		this.props.userRegistrationError && Popup.alert(this.props.userRegistrationError.message)
+
 	}
 
 	render() {
 
-		if (!this.props.loadedRegions || this.props.loadingRegions ||
-			!this.props.loadedCaptcha || this.props.loadingCaptcha) return <Loader/>
-
+		const formSubmitting = (date, dispatch, props) => {
+			props.registerUser({
+				values: date,
+				uuid: props.uuid
+			})
+		}
 
 		return (<div className="< d-flex position-absolute h-100 w-100">
 			<div className="container d-flex flex-column m-auto col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4 ">
 				<h1 className="h3 text-left font-wight-normal">Регистрация</h1>
-				<form onSubmit={this.props.handleSubmit((date, props) => props.registerUser({
-					values: date,
-					uuid: props.uuid
-				}))}>
+				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 					<Field
 						className="form-control"
 						name="password"
@@ -65,6 +79,7 @@ class SignUp extends Component {
 						prependIcon='envelope'
 						hint='Для подтверждения адреса электронной почты вам будет направлена активационная ссылка'
 					/>
+
 					<Field
 						className="form-control"
 						name="conformation"
@@ -73,6 +88,7 @@ class SignUp extends Component {
 						label="Для успешной регистрации необходимо подтвердить согласие с правилами проекта"
 						validate={[requiredConformation]}
 					/>
+
 					<Field
 						name="region"
 						component={Select}
@@ -82,6 +98,7 @@ class SignUp extends Component {
 						validate={[required]}
 						id="user-region"
 					/>
+
 					<div className="captcha-img d-flex mb-3">
 						<img
 							src={this.props.captcha}
@@ -93,6 +110,7 @@ class SignUp extends Component {
 							<i className={`fa fa-repeat`}/>
 						</button>
 					</div>
+
 					<Field
 						name="captcha"
 						type="text"
@@ -114,20 +132,6 @@ class SignUp extends Component {
 	}
 }
 
-const validate = (values) => {
-	const errors = {}
-
-	if (!values.username) {
-		errors.username = 'Поле обязательно'
-	}
-
-	if (!values.password) {
-		errors.password = 'Поле обязательно'
-	}
-
-	return errors
-}
-
 export default connect(
 	(state) => ({
 		regions: ((state) => state.dictionary.regions)(state),
@@ -137,6 +141,8 @@ export default connect(
 		uuid: ((state) => state.captcha.uuid)(state),
 		loadedCaptcha: ((state) => state.captcha.loaded)(state),
 		loadingCaptcha: ((state) => state.captcha.loading)(state),
+		userRegistered: ((state) => state.user.registered)(state),
+		userRegistrationError: ((state) => state.user.error)(state)
 	}),
 	{
 		loadDictionary,
@@ -144,6 +150,5 @@ export default connect(
 		registerUser
 	}
 )(reduxForm({
-	form: 'signUp',
-	validate,
+	form: SIGN_UP,
 })(SignUp))

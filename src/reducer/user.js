@@ -7,7 +7,8 @@ import {
 } from '../action-types'
 
 const ReducerRecord = new Record({
-	user_id: null,
+	userId: null,
+	email: null,
 	registered: false,
 	registering: false,
 	error: null
@@ -21,9 +22,10 @@ export default (state = new ReducerRecord(), action) => {
 			return state.set('registering', true)
 
 		case REGISTER_USER + SUCCESS:
-			console.log(response)
+			const {email, userid} = response
 			return state
-				.set('user_id', response)
+				.set('userId', userid)
+				.set('email', email)
 				.set('registering', false)
 				.set('registered', true)
 
