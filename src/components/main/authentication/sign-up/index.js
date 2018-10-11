@@ -4,7 +4,7 @@ import AuthMenu from '../auth-menu'
 import {reduxForm, Field} from 'redux-form'
 import Input from '../../input'
 import Checkbox from '../../input/checkbox'
-import {required, requiredConformation, email} from '../../input/validate'
+import {required, requiredConformation, email, minLength, alphaNumeric} from '../../input/validate'
 import {PasswordHint} from '../../input/hints'
 import Select from '../../select'
 import {loadDictionary, loadCaptcha, registerUser} from '../../../../action-creators'
@@ -35,8 +35,16 @@ const modalStyle = {
 		right: 'auto',
 		bottom: 'auto',
 		marginRight: '-50%',
-		transform: 'translate(-50%, -50%)'
+		transform: 'translate(-50%, -50%)',
 	}
+}
+
+const validate = values => {
+	const errors = {}
+	if (values.password !== values.passwordConformation) {
+		errors.passwordConformation = 'Пароли не совпадают'
+	}
+	return errors
 }
 
 class SignUp extends Component {
@@ -78,8 +86,8 @@ class SignUp extends Component {
 
 				{isRegistered() && <AlertModal
 					style={modalStyle}
-					message={`Для успешного завершения регистрации необходимо активировать\n
-						учетную запись, перейдя по ссылке из активационного письма,\n
+					message={`Для успешного завершения регистрации необходимо активировать
+						учетную запись, перейдя по ссылке из активационного письма,
 						отправленного на адрес электронной почты ${this.props.userEmail}`}
 					buttonLabel='Закрыть'
 				/>}
@@ -97,7 +105,7 @@ class SignUp extends Component {
 						name="password"
 						component={InputPassword}
 						placeholder="Введите пароль"
-						validate={[required]}
+						validate={[required, minLength(8), alphaNumeric]}
 						prependIcon='unlock-alt'
 						hint={PasswordHint}
 					/>
@@ -195,4 +203,5 @@ export default connect(
 	}
 )(reduxForm({
 	form: SIGN_UP,
+	validate
 })(SignUp))

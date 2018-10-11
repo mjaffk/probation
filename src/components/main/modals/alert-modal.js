@@ -8,19 +8,26 @@ export default class AlertModal extends PureComponent {
 
 	render() {
 		const {style, title, message, buttonLabel} = this.props
-		console.log(style, title, message, buttonLabel)
 
 		const closeModal = () => this.setState({isOpen: false})
 
 		return (
 			<Modal
+				className="col-11 col-xl-6"
 				shouldCloseOnOverlayClick={false}
 				isOpen={this.state.isOpen}
 				onRequestClose={closeModal}
 				style={style}
 				contentLabel={title}>
-				<div>{message}</div>
-				<button className='pull-right btn' onClick={closeModal}>{buttonLabel}</button>
+				<div className='text-justify m-auto'>
+					<div>
+						{message}
+						<div>
+							<button className='btn btn-primary float-right mt-1' onClick={closeModal}>{buttonLabel}</button>
+						</div>
+					</div>
+
+				</div>
 			</Modal>
 		)
 	}
