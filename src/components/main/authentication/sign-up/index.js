@@ -10,6 +10,7 @@ import Select from '../../select'
 import {loadDictionary, loadCaptcha, registerUser} from '../../../../action-creators'
 import {SIGN_UP} from "../../../../constants"
 import Loader from "../../loader"
+import InputPassword from "../../input/input-password"
 
 class SignUp extends Component {
 
@@ -48,8 +49,7 @@ class SignUp extends Component {
 					<Field
 						className="form-control"
 						name="password"
-						type="password"
-						component={Input}
+						component={InputPassword}
 						placeholder="Введите пароль"
 						validate={[required]}
 						prependIcon='unlock-alt'
@@ -59,8 +59,7 @@ class SignUp extends Component {
 					<Field
 						className="form-control"
 						name="passwordConformation"
-						type="password"
-						component={Input}
+						component={InputPassword}
 						placeholder="Подтвердите пароль"
 						validate={[required]}
 						prependIcon='unlock-alt'
