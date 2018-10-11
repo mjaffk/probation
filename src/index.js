@@ -7,12 +7,14 @@ import {Provider} from 'react-redux'
 import {store} from './store'
 import Modal from 'react-modal'
 
+Modal.setAppElement(document.getElementById('root'))
+
 ReactDOM.render(
 	<Provider store={store}>
 		<App/>
 	</Provider>,
 	document.getElementById('root'))
 
-Modal.setAppElement(document.getElementById('root'))
+
 
 registerServiceWorker()

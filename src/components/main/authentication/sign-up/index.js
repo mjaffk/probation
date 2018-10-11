@@ -11,6 +11,33 @@ import {loadDictionary, loadCaptcha, registerUser} from '../../../../action-crea
 import {SIGN_UP} from "../../../../constants"
 import Loader from "../../loader"
 import InputPassword from "../../input/input-password"
+import AlertModal from "../../modals/alert-modal"
+import {
+	regionsSelector,
+	loadedRegionsSelector,
+	loadingRegionsSelector,
+	captchaSelector,
+	uuidSelector,
+	loadedCaptchaSelector,
+	loadingCaptchaSelector,
+	userRegisteredSelector,
+	userRegistrationErrorSelector,
+	userRegisteringSelector,
+	userEmailSelector,
+	regionsLoadErrorSelector,
+	captchaLoadErrorSelector
+} from "../../../../selectors"
+
+const modalStyle = {
+	content: {
+		top: '50%',
+		left: '50%',
+		right: 'auto',
+		bottom: 'auto',
+		marginRight: '-50%',
+		transform: 'translate(-50%, -50%)'
+	}
+}
 
 class SignUp extends Component {
 
@@ -37,12 +64,31 @@ class SignUp extends Component {
 				uuid: props.uuid
 			})
 		}
+		const hasError = () => this.props.userRegistrationError ||
+			this.props.captchaLoadError || this.props.regionsLoadError
+
+		const isLoading = () => this.props.loadingRegions || this.props.loadingCaptcha || this.props.userRegistering
+
+		const isRegistered = () => this.props.userRegistered
 
 		return (<div className="< d-flex position-absolute h-100 w-100">
 			<div className="container d-flex flex-column m-auto col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4 ">
 
-				{(!this.props.loadedRegions || !this.props.loadedCaptcha || this.props.loadingRegions ||
-					this.props.loadingCaptcha || this.props.userRegistering) && <Loader/>}
+				{isLoading() && <Loader/>}
+
+				{isRegistered() && <AlertModal
+					style={modalStyle}
+					message={`Для успешного завершения регистрации необходимо активировать\n
+						учетную запись, перейдя по ссылке из активационного письма,\n
+						отправленного на адрес электронной почты ${this.props.userEmail}`}
+					buttonLabel='Закрыть'
+				/>}
+
+				{hasError() && <AlertModal
+					style={modalStyle}
+					message={hasError().toString()}
+					buttonLabel='Закрыть'
+				/>}
 
 				<h1 className="h3 text-left font-wight-normal">Регистрация</h1>
 				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
@@ -128,16 +174,19 @@ class SignUp extends Component {
 
 export default connect(
 	(state) => ({
-		regions: ((state) => state.dictionary.regions)(state),
-		loadedRegions: ((state) => state.dictionary.loaded)(state),
-		loadingRegions: ((state) => state.dictionary.loading)(state),
-		captcha: ((state) => state.captcha.image)(state),
-		uuid: ((state) => state.captcha.uuid)(state),
-		loadedCaptcha: ((state) => state.captcha.loaded)(state),
-		loadingCaptcha: ((state) => state.captcha.loading)(state),
-		userRegistered: ((state) => state.user.registered)(state),
-		userRegistrationError: ((state) => state.user.error)(state),
-		userRegistering: ((state) => state.user.registering)(state),
+		regions: regionsSelector(state),
+		loadingRegions: loadingRegionsSelector(state),
+		loadedRegions: loadedRegionsSelector(state),
+		regionsLoadError: regionsLoadErrorSelector(state),
+		captcha: captchaSelector(state),
+		uuid: uuidSelector(state),
+		loadingCaptcha: loadingCaptchaSelector(state),
+		loadedCaptcha: loadedCaptchaSelector(state),
+		captchaLoadError: captchaLoadErrorSelector(state),
+		userEmail: userEmailSelector(state),
+		userRegistering: userRegisteringSelector(state),
+		userRegistered: userRegisteredSelector(state),
+		userRegistrationError: userRegistrationErrorSelector(state),
 	}),
 	{
 		loadDictionary,

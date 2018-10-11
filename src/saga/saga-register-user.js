@@ -2,7 +2,7 @@ import {call, put} from 'redux-saga/effects'
 import axios from "axios"
 import {SERVER, SIGN_UP} from "../constants"
 import {FAIL, REGISTER_USER, SUCCESS} from "../action-types"
-import {stopSubmit} from 'redux-form'
+import {stopSubmit, SubmissionError} from 'redux-form'
 
 export default function* sagaRegisterUser(action) {
 	const {uuid, values} = action
@@ -20,13 +20,13 @@ export default function* sagaRegisterUser(action) {
 			type: REGISTER_USER + SUCCESS,
 			response: response.data,
 		})
-	} catch (response) {
+	} catch (errors) {
 		yield put({
 				type: REGISTER_USER + FAIL,
-				error: response
+				error: errors
 			}
 		)
-		yield call(stopSubmit, { form : SIGN_UP, response})
+		yield stopSubmit( {form : SIGN_UP, errors : new SubmissionError(errors) })
 
 	}
 

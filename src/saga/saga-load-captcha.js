@@ -3,6 +3,7 @@ import generateUUID from "../utils/generate-uuid"
 import axios from "axios"
 import {SERVER} from "../constants"
 import {FAIL, LOAD_CAPTCHA, SUCCESS} from "../action-types"
+import { SubmissionError} from "redux-form"
 
 
 export default function* sagaLoadCaptcha() {
@@ -23,9 +24,8 @@ export default function* sagaLoadCaptcha() {
 	} catch (error) {
 		yield put({
 				type: LOAD_CAPTCHA+FAIL,
-				error: error
+				error: new SubmissionError(error)
 			}
 		)
-
 	}
 }
