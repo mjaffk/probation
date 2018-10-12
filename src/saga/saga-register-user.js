@@ -2,7 +2,8 @@ import {call, put} from 'redux-saga/effects'
 import axios from "axios"
 import {SERVER, SIGN_UP} from "../constants"
 import {FAIL, REGISTER_USER, SUCCESS} from "../action-types"
-import {stopSubmit, SubmissionError} from 'redux-form'
+import {stopSubmit} from 'redux-form'
+import errorParser from "../utils/error-parser"
 
 export default function* sagaRegisterUser(action) {
 	const {uuid, values} = action
@@ -13,20 +14,20 @@ export default function* sagaRegisterUser(action) {
 			password: password,
 			captcha: captcha.toUpperCase(),
 			role: 'Participant',
-			consentPR: true,
+			consentPR: 'true',
 			region: parseInt(region,10)
 		})
 		yield put({
 			type: REGISTER_USER + SUCCESS,
 			response: response.data,
 		})
-	} catch (errors) {
+	} catch (error) {
 		yield put({
 				type: REGISTER_USER + FAIL,
-				error: errors
+				error: errorParser(error)
 			}
 		)
-		yield stopSubmit( {form : SIGN_UP, errors : new SubmissionError(errors) })
+		yield put(stopSubmit( SIGN_UP, error.response.data ))
 
 	}
 

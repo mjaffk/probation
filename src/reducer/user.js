@@ -28,9 +28,9 @@ export default (state = new ReducerRecord(), action) => {
 				.set('email', email)
 				.set('registering', false)
 				.set('registered', true)
+				.set('error', null)
 
 		case REGISTER_USER + FAIL :
-			console.log(error)
 			return state
 				.set('registering', false)
 				.set('error', error)

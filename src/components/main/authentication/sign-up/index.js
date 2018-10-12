@@ -36,7 +36,17 @@ const modalStyle = {
 		bottom: 'auto',
 		marginRight: '-50%',
 		transform: 'translate(-50%, -50%)',
-	}
+		padding: '30px',
+		maxWidth: '500px',
+	},
+	overlay: {
+		backgroundColor: 'rgba(0, 0, 0, 0.2)',
+		position: 'fixed',
+		top: '0',
+		left: '0',
+		right: '0',
+		bottom: '0',
+	},
 }
 
 const validate = values => {
@@ -72,12 +82,15 @@ class SignUp extends Component {
 				uuid: props.uuid
 			})
 		}
-		const hasError = () => this.props.userRegistrationError ||
-			this.props.captchaLoadError || this.props.regionsLoadError
+		const getError = () => (this.props.captchaLoadError && this.props.captchaLoadError.errorToUser) ||
+			(this.props.regionsLoadError && this.props.regionsLoadError.errorToUser) ||
+			(this.props.userRegistrationError && this.props.userRegistrationError.errorToUser)
 
 		const isLoading = () => this.props.loadingRegions || this.props.loadingCaptcha || this.props.userRegistering
 
 		const isRegistered = () => this.props.userRegistered
+
+		console.log(this.props)
 
 		return (<div className="< d-flex position-absolute h-100 w-100">
 			<div className="container d-flex flex-column m-auto col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4 ">
@@ -92,9 +105,9 @@ class SignUp extends Component {
 					buttonLabel='Закрыть'
 				/>}
 
-				{hasError() && <AlertModal
+				{getError() && <AlertModal
 					style={modalStyle}
-					message={hasError().toString()}
+					message={getError()}
 					buttonLabel='Закрыть'
 				/>}
 

@@ -2,7 +2,7 @@ import {call, put} from 'redux-saga/effects'
 import axios from "axios"
 import {SERVER} from "../constants"
 import {FAIL, LOAD_DICTIONARY, SUCCESS} from "../action-types"
-import {SubmissionError} from "redux-form"
+import errorParser from "../utils/error-parser"
 
 export default function* sagaLoadDictionary() {
 	try {
@@ -15,7 +15,7 @@ export default function* sagaLoadDictionary() {
 		yield put(
 			{
 				type: LOAD_DICTIONARY + FAIL,
-				error: new SubmissionError(error)
+				error: errorParser(error)
 			}
 		)
 	}

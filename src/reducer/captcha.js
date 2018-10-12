@@ -27,9 +27,9 @@ export default (state = new ReducerRecord(), action) => {
 				.set('uuid', uuid)
 				.set('loading', false)
 				.set('loaded', true)
+				.set('error', null)
 
 		case LOAD_CAPTCHA + FAIL :
-			console.log(error)
 			return state
 				.set('loading', false)
 				.set('error', error)

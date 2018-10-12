@@ -13,7 +13,6 @@ export default class AlertModal extends PureComponent {
 
 		return (
 			<Modal
-				className="col-11 col-xl-6"
 				shouldCloseOnOverlayClick={false}
 				isOpen={this.state.isOpen}
 				onRequestClose={closeModal}
@@ -23,7 +22,7 @@ export default class AlertModal extends PureComponent {
 					<div>
 						{message}
 						<div>
-							<button className='btn btn-primary float-right mt-1' onClick={closeModal}>{buttonLabel}</button>
+							<button className='btn btn-primary float-right' onClick={closeModal}>{buttonLabel}</button>
 						</div>
 					</div>
 

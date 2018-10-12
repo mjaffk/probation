@@ -27,6 +27,7 @@ export default (state = new ReducerRecord(), action) => {
 				)
 				.set('loading', false)
 				.set('loaded', true)
+				.set('error', null)
 
 		case LOAD_DICTIONARY + FAIL :
 			return state
