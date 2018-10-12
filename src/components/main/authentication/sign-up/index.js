@@ -35,6 +35,7 @@ const validate = values => {
 	}
 	return errors
 }
+
 class SignUp extends Component {
 
 	componentDidMount() {

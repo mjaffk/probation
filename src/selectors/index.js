@@ -13,3 +13,7 @@ export const userEmailSelector = (state) => state.user.email
 export const userRegisteredSelector = (state) => state.user.registered
 export const userRegisteringSelector = (state) => state.user.registering
 export const userRegistrationErrorSelector = (state) => state.user.error
+
+export const userAuthorizedSelector = (state) => state.user.authorized
+export const userAuthorizingSelector = (state) => state.user.authorizing
+export const userAuthorizeErrorSelector = (state) => state.user.error

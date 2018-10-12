@@ -1,9 +1,4 @@
-import {
-	LOAD_DICTIONARY,
-	LOAD_CAPTCHA,
-	REGISTER_USER,
-	START
-} from '../action-types'
+import {AUTHORIZE_USER, LOAD_CAPTCHA, LOAD_DICTIONARY, REGISTER_USER, START} from '../action-types'
 
 export function loadDictionary() {
 	return ({
@@ -22,5 +17,13 @@ export function registerUser({values, uuid}) {
 		type: REGISTER_USER + START,
 		values,
 		uuid
+	})
+}
+
+export function authorizeUser({userId, password}) {
+	return ({
+		type: AUTHORIZE_USER + START,
+		userId,
+		password
 	})
 }

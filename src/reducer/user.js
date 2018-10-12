@@ -1,6 +1,7 @@
 import {Record} from 'immutable'
 import {
 	REGISTER_USER,
+	AUTHORIZE_USER,
 	SUCCESS,
 	START,
 	FAIL
@@ -9,8 +10,12 @@ import {
 const ReducerRecord = new Record({
 	userId: null,
 	email: null,
+	token: null,
+	duration: null,
 	registered: false,
 	registering: false,
+	authorized: false,
+	authorizing: false,
 	error: null
 })
 
@@ -34,6 +39,26 @@ export default (state = new ReducerRecord(), action) => {
 			return state
 				.set('registering', false)
 				.set('error', error)
+
+
+		case AUTHORIZE_USER + START:
+			return state.set('authorizing', true)
+
+		case AUTHORIZE_USER + SUCCESS:
+			const {token, duration, userId} = response
+			return state
+				.set('token', token)
+				.set('duration', duration)
+				.set('userId', userId)
+				.set('authorizing', false)
+				.set('authorized', true)
+				.set('error', null)
+
+		case AUTHORIZE_USER + FAIL :
+			return state
+				.set('authorizing', false)
+				.set('error', error)
+
 
 		default:
 			return state

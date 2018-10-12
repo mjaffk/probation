@@ -22,7 +22,7 @@ export default class AlertModal extends PureComponent {
 					<div>
 						{message}
 						<div>
-							<button className='btn btn-primary float-right' onClick={closeModal}>{buttonLabel}</button>
+							<button className='btn btn-primary float-right mt-3' onClick={closeModal}>{buttonLabel}</button>
 						</div>
 					</div>
 
