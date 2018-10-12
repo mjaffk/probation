@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, {Component} from 'react'
+import {Provider as UserProvider} from './contexts/auth'
+import './App.css'
+import Main from './components/main'
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <h1>Hello word!</h1>
-      </div>
-    );
-  }
+	render() {
+		return (<UserProvider>
+			<Main/>
+		</UserProvider>)
+	}
 }
 
-export default App;
+export default App
