@@ -20,7 +20,5 @@ export default function errorParser(error) {
 			usefulError.errorToUser = 'Произошла ошибка, пожалуйста, попробуйте повторить попытку позже'
 	}
 
-
-	console.log(usefulError)
 	return usefulError
 }

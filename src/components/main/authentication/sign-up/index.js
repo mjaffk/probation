@@ -1,53 +1,32 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import AuthMenu from '../auth-menu'
-import {reduxForm, Field} from 'redux-form'
+import {Field, reduxForm} from 'redux-form'
 import Input from '../../input'
 import Checkbox from '../../input/checkbox'
-import {required, requiredConformation, email, minLength, alphaNumeric} from '../../input/validate'
+import {alphaNumeric, email, minLength, required, requiredConformation} from '../../input/validate'
 import {PasswordHint} from '../../input/hints'
 import Select from '../../select'
-import {loadDictionary, loadCaptcha, registerUser} from '../../../../action-creators'
-import {SIGN_UP} from "../../../../constants"
+import {loadCaptcha, loadDictionary, registerUser} from '../../../../action-creators'
+import {modalStyle, SIGN_UP} from "../../../../constants"
 import Loader from "../../loader"
 import InputPassword from "../../input/input-password"
 import AlertModal from "../../modals/alert-modal"
 import {
-	regionsSelector,
-	loadedRegionsSelector,
-	loadingRegionsSelector,
+	captchaLoadErrorSelector,
 	captchaSelector,
-	uuidSelector,
 	loadedCaptchaSelector,
+	loadedRegionsSelector,
 	loadingCaptchaSelector,
-	userRegisteredSelector,
-	userRegistrationErrorSelector,
-	userRegisteringSelector,
-	userEmailSelector,
+	loadingRegionsSelector,
 	regionsLoadErrorSelector,
-	captchaLoadErrorSelector
+	regionsSelector,
+	userEmailSelector,
+	userRegisteredSelector,
+	userRegisteringSelector,
+	userRegistrationErrorSelector,
+	uuidSelector
 } from "../../../../selectors"
-
-const modalStyle = {
-	content: {
-		top: '50%',
-		left: '50%',
-		right: 'auto',
-		bottom: 'auto',
-		marginRight: '-50%',
-		transform: 'translate(-50%, -50%)',
-		padding: '30px',
-		maxWidth: '500px',
-	},
-	overlay: {
-		backgroundColor: 'rgba(0, 0, 0, 0.2)',
-		position: 'fixed',
-		top: '0',
-		left: '0',
-		right: '0',
-		bottom: '0',
-	},
-}
 
 const validate = values => {
 	const errors = {}
@@ -56,7 +35,6 @@ const validate = values => {
 	}
 	return errors
 }
-
 class SignUp extends Component {
 
 	componentDidMount() {
@@ -70,27 +48,20 @@ class SignUp extends Component {
 	}
 
 	render() {
-		/**
-		 * Action for form submitting
-		 * @param data - object of values from Redux Form
-		 * @param dispatch
-		 * @param props - object of all props from component
-		 */
 		const formSubmitting = (data, dispatch, props) => {
 			props.registerUser({
 				values: data,
 				uuid: props.uuid
 			})
 		}
-		const getError = () => (this.props.captchaLoadError && this.props.captchaLoadError.errorToUser) ||
+
+		const getErrorMessage = () => (this.props.captchaLoadError && this.props.captchaLoadError.errorToUser) ||
 			(this.props.regionsLoadError && this.props.regionsLoadError.errorToUser) ||
 			(this.props.userRegistrationError && this.props.userRegistrationError.errorToUser)
 
 		const isLoading = () => this.props.loadingRegions || this.props.loadingCaptcha || this.props.userRegistering
 
 		const isRegistered = () => this.props.userRegistered
-
-		console.log(this.props)
 
 		return (<div className="< d-flex position-absolute h-100 w-100">
 			<div className="container d-flex flex-column m-auto col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4 ">
@@ -105,9 +76,9 @@ class SignUp extends Component {
 					buttonLabel='Закрыть'
 				/>}
 
-				{getError() && <AlertModal
+				{getErrorMessage() && <AlertModal
 					style={modalStyle}
-					message={getError()}
+					message={getErrorMessage()}
 					buttonLabel='Закрыть'
 				/>}
 
