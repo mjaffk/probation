@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
-// import {Route, Switch, Redirect} from 'react-router-dom'
+import {Route, Switch, Redirect} from 'react-router-dom'
 
 class Profile extends Component {
 	render() {
-		return (<div> Профиль пользователя
-			{/*<Switch>*/}
-			{/*<Redirect from={'/profile'} to={'/auth/signin'} exact/>*/}
-			{/*<Route path="/auth/signin" component={SignIn}/>*/}
-			{/*<Route path="/auth/cntstnt/signup" component={SignUp}/>*/}
-			{/*<Route path="/auth/forgot" component={Forgot}/>*/}
-		{/*</Switch>*/}
-		</div>)
+		return (<Switch>
+			<Redirect from={'/profile'} to={'/profile/personal-data'} exact/>
+			{/*<Route path="/profile/messages" component={}/>*/}
+			{/*<Route path="/profile/contests" component={}/>*/}
+			{/*<Route path="/profile/recommendation" component={}/>*/}
+			{/*<Route path="/profile/tickets" component={}/>*/}
+			<Route path="/profile/personal-data" component={Persanal}/>
+		</Switch>)
 	}
 }
 

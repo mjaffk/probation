@@ -1,6 +1,6 @@
 import React from 'react'
-import Menu from '../../menu'
-import MenuItem from '../../menu/menu-item'
+import Menu from '../menu'
+import MenuItem from '../menu/menu-item'
 
 export default function AuthMenu({message}) {
 	return (<Menu>

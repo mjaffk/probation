@@ -1,5 +1,5 @@
 import React from 'react'
-import Icon from '../icon/'
+import Icon from '../icon/index'
 
 export default function Input({input, placeholder, type, meta: {touched, error}, prependIcon, appendIcon, hint: Hint}) {
 	return (<div className="form-group text-left">

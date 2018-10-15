@@ -2,13 +2,13 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import AuthMenu from '../auth-menu'
 import {Field, reduxForm} from 'redux-form'
-import {required} from '../../input/validate'
-import Input from '../../input'
+import {required} from '../input/validate'
+import Input from '../input'
 import {authorizeUser} from '../../../../redux/action-creators'
 import {modalStyle, SIGN_IN} from "../../../../constants"
-import Loader from "../../loader"
-import InputPassword from "../../input/input-password"
-import AlertModal from "../../modals/alert-modal"
+import Loader from "../../../loader"
+import InputPassword from "../input/input-password"
+import AlertModal from "../../../modals/alert-modal"
 import {userAuthorizedSelector, userAuthorizeErrorSelector, userAuthorizingSelector} from "../../../../redux/selectors"
 
 class SignIn extends Component {
