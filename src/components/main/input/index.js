@@ -9,6 +9,6 @@ export default function Input({input, placeholder, type, meta: {touched, error},
 			{appendIcon && < Icon type='append' iconId={appendIcon}/>}
 		</div>
 		{touched && (error && <span className="form-control-feedback text-danger small">{error}</span>)}
-		{Hint && <div className="font-text text-muted small" >{(typeof Hint === 'string') ? Hint : <Hint/>} </div>}
+		{Hint && <div className="font-text text-muted small">{(typeof Hint === 'string') ? Hint : <Hint/>} </div>}
 	</div>)
 }

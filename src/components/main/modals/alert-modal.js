@@ -1,5 +1,7 @@
 import Modal from "react-modal"
 import React, {PureComponent} from "react"
+import {compose} from 'redux'
+
 
 export default class AlertModal extends PureComponent {
 	state = {
@@ -7,7 +9,7 @@ export default class AlertModal extends PureComponent {
 	}
 
 	render() {
-		const {style, title, message, buttonLabel} = this.props
+		const {title, message, buttonLabel, onAfterClose, ...options} = this.props
 
 		const closeModal = () => this.setState({isOpen: false})
 
@@ -16,13 +18,15 @@ export default class AlertModal extends PureComponent {
 				shouldCloseOnOverlayClick={false}
 				isOpen={this.state.isOpen}
 				onRequestClose={closeModal}
-				style={style}
-				contentLabel={title}>
+				contentLabel={title}
+				{...options}
+			>
 				<div className='text-justify m-auto'>
 					<div>
 						{message}
 						<div>
-							<button className='btn btn-primary float-right' onClick={closeModal}>{buttonLabel}</button>
+							<button className='btn btn-primary float-right mt-3'
+							        onClick={onAfterClose ? compose(closeModal, (onAfterClose)) : closeModal}>{buttonLabel}</button>
 						</div>
 					</div>
 

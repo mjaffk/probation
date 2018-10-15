@@ -2,6 +2,8 @@ export const LOAD_DICTIONARY = 'LOAD_DICTIONARY'
 export const LOAD_CAPTCHA = 'LOAD_CAPTCHA'
 
 export const REGISTER_USER = 'REGISTER_USER'
+export const AUTHORIZE_USER = 'AUTHORIZE_USER'
+export const USER_PASSWORD_RECOVERY = 'USER_PASSWORD_RECOVERY'
 
 export const SUCCESS = '_SUCCESS'
 export const START = '_START'

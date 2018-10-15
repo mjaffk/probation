@@ -2,7 +2,16 @@
 export const SERVER = 'https://10.31.7.109'
 // export const SERVER = 'https://10.31.7.101' // некорректный сервер
 
-export const SIGN_UP = "signUp"
+export const userAuthorizeAPI = `${SERVER}/api/token/`
+export const loadCaptchaAPI = `${SERVER}/api/captcha/` // + uuid
+export const loadRegionsAPI = `${SERVER}/api/directory/regions`
+export const userRegisterAPI = `${SERVER}/api/user/register/` // + uuid
+export const recoveryPasswordAPI = `${SERVER}/api/user/reset_password/`
+
+
+export const SIGN_UP = 'signUp'
+export const SIGN_IN = 'signIn'
+export const FORGOT = 'forgot'
 
 export const modalStyle = {
 	content: {

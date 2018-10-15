@@ -1,12 +1,12 @@
 import {call, put} from 'redux-saga/effects'
 import axios from "axios"
-import {SERVER} from "../constants"
-import {FAIL, LOAD_DICTIONARY, SUCCESS} from "../action-types"
-import errorParser from "../utils/error-parser"
+import {loadRegionsAPI} from "../../constants/index"
+import {FAIL, LOAD_DICTIONARY, SUCCESS} from "../action-types/index"
+import errorParser from "../../utils/error-parser"
 
 export default function* sagaLoadDictionary() {
 	try {
-		const response = yield call(axios.get, `${SERVER}/api/directory/regions`)
+		const response = yield call(axios.get, loadRegionsAPI)
 		yield put({
 			type: LOAD_DICTIONARY + SUCCESS,
 			response: response.data
