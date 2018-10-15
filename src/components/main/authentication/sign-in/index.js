@@ -4,12 +4,12 @@ import AuthMenu from '../auth-menu'
 import {Field, reduxForm} from 'redux-form'
 import {required} from '../../input/validate'
 import Input from '../../input'
-import {authorizeUser} from '../../../../action-creators'
+import {authorizeUser} from '../../../../redux/action-creators'
 import {modalStyle, SIGN_IN} from "../../../../constants"
 import Loader from "../../loader"
 import InputPassword from "../../input/input-password"
 import AlertModal from "../../modals/alert-modal"
-import {userAuthorizedSelector, userAuthorizeErrorSelector, userAuthorizingSelector} from "../../../../selectors"
+import {userAuthorizedSelector, userAuthorizeErrorSelector, userAuthorizingSelector} from "../../../../redux/selectors"
 
 class SignIn extends Component {
 	render() {
@@ -32,7 +32,7 @@ class SignIn extends Component {
 					buttonLabel='Закрыть'
 				/>}
 
-				<h1 className="h3 text-left font-wight-normal">Регистрация</h1>
+				<h1 className="h3 text-left font-wight-normal">Войти в аккаунт</h1>
 				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 
 					<Field

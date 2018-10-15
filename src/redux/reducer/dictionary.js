@@ -4,7 +4,7 @@ import {
 	SUCCESS,
 	START,
 	FAIL
-} from '../action-types'
+} from '../action-types/index'
 
 const ReducerRecord = new Record({
 	regions: List(),

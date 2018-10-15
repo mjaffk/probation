@@ -1,4 +1,11 @@
-import {AUTHORIZE_USER, LOAD_CAPTCHA, LOAD_DICTIONARY, REGISTER_USER, START} from '../action-types'
+import {
+	AUTHORIZE_USER,
+	LOAD_CAPTCHA,
+	LOAD_DICTIONARY,
+	REGISTER_USER,
+	USER_PASSWORD_RECOVERY,
+	START
+} from '../action-types/index'
 
 export function loadDictionary() {
 	return ({
@@ -25,5 +32,12 @@ export function authorizeUser({userId, password}) {
 		type: AUTHORIZE_USER + START,
 		userId,
 		password
+	})
+}
+
+export function recoveryPassword({email}) {
+	return ({
+		type: USER_PASSWORD_RECOVERY + START,
+		email,
 	})
 }

@@ -7,7 +7,7 @@ import Checkbox from '../../input/checkbox'
 import {alphaNumeric, email, minLength, required, requiredConformation} from '../../input/validate'
 import {PasswordHint} from '../../input/hints'
 import Select from '../../select'
-import {loadCaptcha, loadDictionary, registerUser} from '../../../../action-creators'
+import {loadCaptcha, loadDictionary, registerUser} from '../../../../redux/action-creators'
 import {modalStyle, SIGN_UP} from "../../../../constants"
 import Loader from "../../loader"
 import InputPassword from "../../input/input-password"
@@ -26,7 +26,8 @@ import {
 	userRegisteringSelector,
 	userRegistrationErrorSelector,
 	uuidSelector
-} from "../../../../selectors"
+} from "../../../../redux/selectors"
+import history from '../../../../utils/history'
 
 const validate = values => {
 	const errors = {}
@@ -75,6 +76,7 @@ class SignUp extends Component {
 						учетную запись, перейдя по ссылке из активационного письма,
 						отправленного на адрес электронной почты ${this.props.userEmail}`}
 					buttonLabel='Закрыть'
+					onAfterClose={ () => history.push( '/auth/signin')}
 				/>}
 
 				{getErrorMessage() && <AlertModal
@@ -184,7 +186,7 @@ export default connect(
 	{
 		loadDictionary,
 		loadCaptcha,
-		registerUser
+		registerUser,
 	}
 )(reduxForm({
 	form: SIGN_UP,
