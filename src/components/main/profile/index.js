@@ -5,33 +5,17 @@ import MainNavMenu from "./main-nav-menu"
 import Sidebar from "react-sidebar"
 import './profile.css'
 
-const mql = window.matchMedia(`(min-width: 800px)`)
-
 class Profile extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			sidebarOpen: true,
 		}
-
-		this.mediaQueryChanged = this.mediaQueryChanged.bind(this)
 		this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this)
-	}
-
-	componentWillMount() {
-		mql.addListener(this.mediaQueryChanged)
-	}
-
-	componentWillUnmount() {
-		mql.removeListener(this.mediaQueryChanged)
 	}
 
 	onSetSidebarOpen() {
 		this.setState({sidebarOpen: !this.state.sidebarOpen})
-	}
-
-	mediaQueryChanged() {
-		this.setState({sidebarDocked: mql.matches, sidebarOpen: false})
 	}
 
 	render() {
