@@ -43,13 +43,16 @@ class Profile extends Component {
 				docked={this.state.sidebarOpen}
 				styles={{sidebar: {background: "white"}}}
 			>
-				<button type="button" className="hamburger is-closed" data-toggle="offcanvas"
-				        onClick={() => this.onSetSidebarOpen()}>
-					<span className="hamb-top">{''}</span>
-					<span className="hamb-middle">{''}</span>
-					<span className="hamb-bottom">{''}</span>
+				<button type="button" id="hamburger" className="is-open"
+				        onClick={(event) => {
+					        event.currentTarget.classList.toggle("is-closed")
+					        event.currentTarget.classList.toggle("is-open")
+					        this.onSetSidebarOpen()
+				        }}>
+					<span className="hamb-top line">{''}</span>
+					<span className="hamb-middle line">{''}</span>
+					<span className="hamb-bottom line">{''}</span>
 				</button>
-
 				<Switch>
 					<Redirect from={'/profile'} to={'/profile/personal-data'} exact/>
 					{/*<Route path="/profile/messages" component={}/>*/}
