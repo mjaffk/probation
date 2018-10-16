@@ -43,10 +43,11 @@ class Profile extends Component {
 				docked={this.state.sidebarOpen}
 				styles={{sidebar: {background: "white"}}}
 			>
-				<button type="button" className="hamburger is-closed" data-toggle="offcanvas" >
-					<span className="hamb-top"></span>
-					<span className="hamb-middle"></span>
-					<span className="hamb-bottom"></span>
+				<button type="button" className="hamburger is-closed" data-toggle="offcanvas"
+				        onClick={() => this.onSetSidebarOpen()}>
+					<span className="hamb-top">{''}</span>
+					<span className="hamb-middle">{''}</span>
+					<span className="hamb-bottom">{''}</span>
 				</button>
 
 				<Switch>
