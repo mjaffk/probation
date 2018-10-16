@@ -38,7 +38,7 @@ class Profile extends Component {
 		return (
 			<Sidebar
 				sidebarId="nab_menu_wrapper"
-				sidebar={<MainNavMenu/>}
+				sidebar={<MainNavMenu role={'Участник'} userId={'K0SWYXYGC1'}/>}
 				onSetOpen={this.onSetSidebarOpen}
 				docked={this.state.sidebarOpen}
 				styles={{sidebar: {background: "white"}}}

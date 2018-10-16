@@ -6,8 +6,7 @@ import './main-nav-menu.css'
 const activeClassName = "active_link"
 const linkClassName = "link"
 
-// TODO: delete default values
-export default function MainNavMenu({userId = 'K0SWYXYGC1', role = 'Участник'}) {
+export default function MainNavMenu({userId, role}) {
 	return (<Menu className="main_nav">
 		<span className="sidebar-brand">Билет в будущее</span>
 		<ul>
