@@ -2,11 +2,9 @@ import React from 'react'
 import {NavLink} from 'react-router-dom'
 
 function MenuItem({children, ...rest}) {
-	return (<div>
-		<NavLink {...rest} activeStyle={{display: 'none'}}>
+	return (<NavLink {...rest} >
 			{children}
-		</NavLink>
-	</div>)
+		</NavLink>)
 }
 
 export default MenuItem
