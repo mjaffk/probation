@@ -1,6 +1,10 @@
 #nab_menu_wrapper {
     background-color: #0072BC !important;
 }
+#footer {
+    height: 98px;
+    border-top: 2px solid #C0C0C0;
+}
 
 #hamburger {
     position: fixed;

@@ -22,6 +22,7 @@ class Profile extends Component {
 		return (
 			<Sidebar
 				sidebarId="nab_menu_wrapper"
+				contentClassName="d-flex flex-column justify-content-between"
 				sidebar={<MainNavMenu role={'Участник'} userId={'K0SWYXYGC1'}/>}
 				onSetOpen={this.onSetSidebarOpen}
 				docked={this.state.sidebarOpen}
@@ -37,6 +38,8 @@ class Profile extends Component {
 					<span className="hamb-middle line">{''}</span>
 					<span className="hamb-bottom line">{''}</span>
 				</button>
+
+				<div className='flex-grow-1'>
 				<Switch>
 					<Redirect from={'/profile'} to={'/profile/personal-data'} exact/>
 					{/*<Route path="/profile/messages" component={}/>*/}
@@ -45,6 +48,9 @@ class Profile extends Component {
 					{/*<Route path="/profile/tickets" component={}/>*/}
 					<Route path="/profile/personal-data" component={PersonalData}/>
 				</Switch>
+				</div>
+				<footer id="footer" className="bg-light footer d-flex flex-grow-0">
+				</footer>
 			</Sidebar>
 		)
 	}
