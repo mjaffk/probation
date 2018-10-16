@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import Icon from '../icon/'
+import Icon from '../icon/index'
 
 export default class InputPassword extends PureComponent {
 	constructor(props) {
