@@ -40,7 +40,7 @@ class Profile extends Component {
 									<img className="img-thumbnail logo"
 									     src={logo}
 									     alt="WorldSkills Russia"
-									     border="0"/>
+									     style={{borderStyle: "none"}}/>
 								</Link>
 							</div>
 

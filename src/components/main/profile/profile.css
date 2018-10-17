@@ -11,6 +11,11 @@
     padding: 20px 64px 120px 64px;
 }
 
+#content_wrapper header {
+    min-width: 400px;
+    flex-basis: auto;
+}
+
 #header_top {
     display: flex;
     flex-direction: row;
@@ -20,18 +25,21 @@
 
 #logo {
     flex-basis: 100px;
-    flex-grow: 0.2;
+    max-width: 200px;
+    flex-grow: 0.1;
+    flex-shrink: 1;
 }
 
 #logo:after {
     flex-basis: 500px;
-    flex-grow: 0.8;
-
+    flex-grow: 0.9;
+    flex-shrink: 2;
 }
 
 #title {
     flex-basis: 100px;
     flex-grow: 0;
     color: #00AEEF;
+    flex-shrink: 0;
 
 }

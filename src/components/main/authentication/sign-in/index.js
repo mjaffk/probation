@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import AuthMenu from '../auth-menu'
 import {Field, reduxForm} from 'redux-form'
-import {required} from '../input/validate'
+import {required} from '../../validate'
 import Input from '../input'
 import {authorizeUser} from '../../../../redux/action-creators'
 import {modalStyle, SIGN_IN} from "../../../../constants"
