@@ -1,14 +1,25 @@
-#nab_menu_wrapper {
+#nav_menu_wrapper {
     background-color: #0072BC !important;
+}
+
+#profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #footer {
     height: 98px;
     border-top: 2px solid #C0C0C0;
+    flex-grow: 0;
+    flex-shrink: 0;
+    background-color: #FFFFFF;
 }
 
 #content_wrapper {
     padding: 20px 64px 120px 64px;
+    flex-grow: 1;
+    flex-shrink: 1;
 }
 
 #content_wrapper header {

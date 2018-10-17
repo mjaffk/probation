@@ -2,12 +2,12 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import AuthMenu from '../auth-menu'
 import {Field, reduxForm} from 'redux-form'
-import {required, email} from '../../validate'
-import Input from '../input'
+import {required, email} from '../../../details/validate'
+import Input from '../../../details/input'
 import {recoveryPassword} from '../../../../redux/action-creators'
 import {modalStyle, FORGOT} from "../../../../constants"
-import Loader from "../../../loader"
-import AlertModal from "../../../modals/alert-modal"
+import Loader from "../../../details/loader"
+import AlertModal from "../../../details/modals/alert-modal"
 import {
 	passwordRecoveredSelector,
 	passwordRecoveringSelector,

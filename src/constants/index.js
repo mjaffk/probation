@@ -13,6 +13,7 @@ export const recoveryPasswordAPI = `${SERVER}/api/user/reset_password/`
 export const SIGN_UP = 'signUp'
 export const SIGN_IN = 'signIn'
 export const FORGOT = 'forgot'
+export const PERSONAL_DATA = 'personalData'
 
 export const modalStyle = {
 	content: {
@@ -34,3 +35,8 @@ export const modalStyle = {
 		bottom: '0',
 	},
 }
+
+export const CLASS_NUMBER_DICTIONARY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+export const CLASS_LETTER_DICTIONARY = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н',
+										'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ы',
+										'Э', 'Ю', 'Я']

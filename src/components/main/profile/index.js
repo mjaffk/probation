@@ -20,8 +20,8 @@ class Profile extends Component {
 	render() {
 		return (
 			<Sidebar
-				sidebarId="nab_menu_wrapper"
-				contentClassName="d-flex flex-column justify-content-between"
+				sidebarId="nav_menu_wrapper"
+				contentId="profile"
 				sidebar={<MainNavMenu role={'Участник'} userId={'K0SWYXYGC1'}/>}
 				docked={this.state.sidebarOpen}
 				styles={{sidebar: {background: "white"}}}
@@ -32,7 +32,7 @@ class Profile extends Component {
 					this.onSetSidebarOpen()
 				}}/>
 
-				<div className="flex-grow-1" id="content_wrapper">
+				<div id="content_wrapper">
 					<header>
 						<div id='header_top'>
 							<div id="logo">
@@ -60,7 +60,7 @@ class Profile extends Component {
 						<Route path="/profile/personal-data" component={PersonalData}/>
 					</Switch>
 				</div>
-				<footer id="footer" className="bg-light footer d-flex flex-grow-0">
+				<footer id="footer">
 				</footer>
 			</Sidebar>
 		)

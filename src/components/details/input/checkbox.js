@@ -1,5 +1,5 @@
 import React from 'react'
-import {SERVER} from "../../../../constants/index"
+import {SERVER} from "../../../constants/index"
 
 export default function Checkbox({input, id, meta: {touched, error}}) {
 	return (<div className="form-group form-check">

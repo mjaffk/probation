@@ -1,6 +1,6 @@
 import React from 'react'
-import Menu from '../../menu'
-import MenuItem from '../../menu/menu-item'
+import Menu from '../../../details/menu'
+import MenuItem from '../../../details/menu/menu-item'
 
 export default function AuthMenu({message}) {
 	return (<Menu className = "card w-100 text-center mt-3 card-body">

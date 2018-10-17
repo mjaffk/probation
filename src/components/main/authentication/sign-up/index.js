@@ -2,16 +2,16 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import AuthMenu from '../auth-menu'
 import {Field, reduxForm} from 'redux-form'
-import Input from '../input'
-import Checkbox from '../input/checkbox'
-import {alphaNumeric, email, minLength, required, requiredConformation} from '../../validate'
-import {PasswordHint} from '../input/hints'
-import Select from '../select'
+import Input from '../../../details/input'
+import Checkbox from '../../../details/input/checkbox'
+import {alphaNumeric, email, minLength, required, requiredConformation} from '../../../details/validate'
+import {PasswordHint} from '../../../details/input/hints'
+import Select from '../../../details/select'
 import {loadCaptcha, loadDictionary, registerUser} from '../../../../redux/action-creators'
 import {modalStyle, SIGN_UP} from "../../../../constants"
-import Loader from "../../../loader"
-import InputPassword from "../input/input-password"
-import AlertModal from "../../../modals/alert-modal"
+import Loader from "../../../details/loader"
+import InputPassword from "../../../details/input/input-password"
+import AlertModal from "../../../details/modals/alert-modal"
 import {
 	captchaLoadErrorSelector,
 	captchaSelector,
@@ -28,14 +28,6 @@ import {
 	uuidSelector
 } from "../../../../redux/selectors"
 import history from '../../../../utils/history'
-
-const validate = values => {
-	const errors = {}
-	if (values.password !== values.passwordConformation) {
-		errors.passwordConformation = 'Пароли не совпадают'
-	}
-	return errors
-}
 
 class SignUp extends Component {
 
@@ -165,6 +157,14 @@ class SignUp extends Component {
 			</div>
 		</div>)
 	}
+}
+
+const validate = values => {
+	const errors = {}
+	if (values.password !== values.passwordConformation) {
+		errors.passwordConformation = 'Пароли не совпадают'
+	}
+	return errors
 }
 
 export default connect(
