@@ -9,11 +9,11 @@ import {
 const ReducerRecord = new Record({
 	regions: List(),
 	loading: false,
-	loaded: false,
 	error: null
 })
 
-export default (state = new ReducerRecord(), action) => {
+export default (state, action) => {
+	state = new ReducerRecord().merge(state)
 	const {type, response, error} = action
 
 	switch (type) {
@@ -26,7 +26,6 @@ export default (state = new ReducerRecord(), action) => {
 					List(response.result.region.options).merge(regions)
 				)
 				.set('loading', false)
-				.set('loaded', true)
 				.set('error', null)
 
 		case LOAD_DICTIONARY + FAIL :

@@ -6,12 +6,19 @@ import Profile from './profile/index'
 import Page404 from "./page-404/index"
 import ProtectedRout from "../common/protected-route"
 
+const isAuthorized = !!JSON.parse(localStorage.getItem('reduxState')).token.length // todo: make real function
 
 class Main extends PureComponent {
 	render() {
 		return (<Router basename={'/'} history={history}>
 			<Switch>
-				<Redirect from={'/'} to={'/auth'} exact/>
+				<Route exact path="/" render={() => (
+					isAuthorized ? (
+						<Redirect to="/profile"/>
+					) : (
+						<Redirect to="/auth"/>
+					)
+				)}/>
 				<Route path="/auth" component={Authentication}/>
 				<ProtectedRout path='/profile' component={Profile}/>
 				<Route path='/404' component={Page404}/>
@@ -20,5 +27,6 @@ class Main extends PureComponent {
 		</Router>)
 	}
 }
+
 
 export default Main

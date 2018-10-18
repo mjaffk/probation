@@ -5,7 +5,6 @@ import {required} from "../../../common/validate"
 import {CLASS_LETTER_DICTIONARY, CLASS_NUMBER_DICTIONARY, PERSONAL_DATA} from "../../../../constants"
 import Loader from "../../../common/loader"
 import {
-	loadedRegionsSelector,
 	loadingRegionsSelector,
 	regionsLoadErrorSelector,
 	regionsSelector
@@ -21,7 +20,7 @@ class PersonalData extends Component {
 
 	componentDidMount() {
 		//download dictionary of regions
-		this.props.loadDictionary && !this.props.loadedRegions && !this.props.loadingRegions &&
+		this.props.loadDictionary && !this.props.regions.toArray().length && !this.props.loadingRegions &&
 		this.props.loadDictionary()
 	}
 
@@ -159,20 +158,13 @@ class PersonalData extends Component {
 
 }
 
-const validate = (values) => {
-	const error = {}
-	console.log(values)
-	return error
-}
-
 export default connect(
 	(state) => ({
 		regions: regionsSelector(state),
 		loadingRegions: loadingRegionsSelector(state),
-		loadedRegions: loadedRegionsSelector(state),
 		regionsLoadError: regionsLoadErrorSelector(state),
 	}),
 	{
 		loadDictionary,
 	}
-)(reduxForm({form: PERSONAL_DATA, validate})(PersonalData))
+)(reduxForm({form: PERSONAL_DATA})(PersonalData))

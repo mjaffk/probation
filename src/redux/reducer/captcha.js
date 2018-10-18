@@ -10,7 +10,6 @@ const ReducerRecord = new Record({
 	image: '',
 	uuid: '',
 	loading: false,
-	loaded: false,
 	error: null
 })
 
@@ -26,7 +25,6 @@ export default (state = new ReducerRecord(), action) => {
 				.set('image', `data:image/png;base64,${response}`)
 				.set('uuid', uuid)
 				.set('loading', false)
-				.set('loaded', true)
 				.set('error', null)
 
 		case LOAD_CAPTCHA + FAIL :

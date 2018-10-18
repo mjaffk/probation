@@ -8,6 +8,7 @@ import {
 	FAIL
 } from '../action-types/index'
 
+
 const ReducerRecord = new Record({
 	userId: null,
 	email: null,
@@ -15,12 +16,10 @@ const ReducerRecord = new Record({
 	duration: null,
 
 // status of password recovery request
-	registered: false,
 	registering: false,
 	registerError: null,
 
 // status of password recovery request
-	authorized: false,
 	authorizing: false,
 	authorizeError: null,
 
@@ -30,9 +29,9 @@ const ReducerRecord = new Record({
 	passwordRecoveryError: null
 })
 
-export default (state = new ReducerRecord(), action) => {
+export default (state, action) => {
+	state = new ReducerRecord().merge(state)
 	const {type, response, error} = action
-
 	switch (type) {
 
 // User registrations
@@ -44,7 +43,6 @@ export default (state = new ReducerRecord(), action) => {
 				.set('userId', response.userId)
 				.set('email', response.email)
 				.set('registering', false)
-				.set('registered', true)
 				.set('registerError', null)
 
 		case REGISTER_USER + FAIL :
@@ -62,7 +60,6 @@ export default (state = new ReducerRecord(), action) => {
 				.set('duration', response.duration)
 				.set('userId', response.userId)
 				.set('authorizing', false)
-				.set('authorized', true)
 				.set('authorizeError', null)
 
 		case AUTHORIZE_USER + FAIL :
