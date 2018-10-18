@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import {Field, reduxForm} from 'redux-form'
 import {connect} from "react-redux"
-import {required} from "../../../details/validate"
+import {required} from "../../../common/validate"
 import {CLASS_LETTER_DICTIONARY, CLASS_NUMBER_DICTIONARY, PERSONAL_DATA} from "../../../../constants"
-import Loader from "../../../details/loader"
+import Loader from "../../../common/loader"
 import {
 	loadedRegionsSelector,
 	loadingRegionsSelector,
 	regionsLoadErrorSelector,
 	regionsSelector
 } from "../../../../redux/selectors"
-import Input from "../../../details/input"
-import Select from "../../../details/select"
+import Input from "../../../common/input"
+import Select from "../../../common/select"
 import arrToObj from "../../../../utils/arr-to-obj"
 import './personal-data.css'
 import {loadDictionary} from "../../../../redux/action-creators"

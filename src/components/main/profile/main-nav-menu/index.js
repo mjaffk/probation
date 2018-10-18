@@ -1,6 +1,6 @@
 import React from 'react'
-import Menu from "../../../details/menu"
-import MenuItem from "../../../details/menu/menu-item"
+import Menu from "../../../common/menu"
+import MenuItem from "../../../common/menu/menu-item"
 import './main-nav-menu.css'
 
 const activeClassName = "active_link"
