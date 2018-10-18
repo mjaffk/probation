@@ -15,14 +15,11 @@ import AlertModal from "../../../common/modals/alert-modal"
 import {
 	captchaLoadErrorSelector,
 	captchaSelector,
-	loadedCaptchaSelector,
-	loadedRegionsSelector,
 	loadingCaptchaSelector,
 	loadingRegionsSelector,
 	regionsLoadErrorSelector,
 	regionsSelector,
 	userEmailSelector,
-	userRegisteredSelector,
 	userRegisteringSelector,
 	userRegistrationErrorSelector,
 	uuidSelector
@@ -33,11 +30,11 @@ class SignUp extends Component {
 
 	componentDidMount() {
 		//download dictionary of regions
-		this.props.loadDictionary && !this.props.loadedRegions && !this.props.loadingRegions &&
+		this.props.loadDictionary && !this.props.regions.toArray().length && !this.props.loadingRegions &&
 		this.props.loadDictionary()
 
 		//download captcha
-		this.props.loadCaptcha && !this.props.loadedCaptcha && !this.props.loadingCaptcha &&
+		this.props.loadCaptcha && !this.props.captcha.length && !this.props.loadingCaptcha &&
 		this.props.loadCaptcha()
 	}
 
@@ -55,7 +52,7 @@ class SignUp extends Component {
 
 		const isLoading = () => this.props.loadingRegions || this.props.loadingCaptcha || this.props.userRegistering
 
-		const isRegistered = () => this.props.userRegistered
+		const isRegistered = () => !!this.props.userEmail
 
 		return (<div className="< d-flex position-absolute h-100 w-100">
 			<div className="container d-flex flex-column m-auto col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4 ">
@@ -167,16 +164,13 @@ export default connect(
 	(state) => ({
 		regions: regionsSelector(state),
 		loadingRegions: loadingRegionsSelector(state),
-		loadedRegions: loadedRegionsSelector(state),
 		regionsLoadError: regionsLoadErrorSelector(state),
 		captcha: captchaSelector(state),
 		uuid: uuidSelector(state),
 		loadingCaptcha: loadingCaptchaSelector(state),
-		loadedCaptcha: loadedCaptchaSelector(state),
 		captchaLoadError: captchaLoadErrorSelector(state),
 		userEmail: userEmailSelector(state),
 		userRegistering: userRegisteringSelector(state),
-		userRegistered: userRegisteredSelector(state),
 		userRegistrationError: userRegistrationErrorSelector(state),
 	}),
 	{

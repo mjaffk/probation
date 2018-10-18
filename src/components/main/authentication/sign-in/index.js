@@ -9,7 +9,7 @@ import {modalStyle, SIGN_IN} from "../../../../constants"
 import Loader from "../../../common/loader"
 import InputPassword from "../../../common/input/input-password"
 import AlertModal from "../../../common/modals/alert-modal"
-import {userAuthorizedSelector, userAuthorizeErrorSelector, userAuthorizingSelector} from "../../../../redux/selectors"
+import {userAuthorizeErrorSelector, userAuthorizingSelector} from "../../../../redux/selectors"
 
 class SignIn extends Component {
 	render() {
@@ -66,7 +66,6 @@ class SignIn extends Component {
 export default connect(
 	(state) => ({
 		initialValues: {userId: state.user.userId},
-		userAuthorized: userAuthorizedSelector(state),
 		userAuthorizing: userAuthorizingSelector(state),
 		userAuthorizeError: userAuthorizeErrorSelector(state),
 	}), {
