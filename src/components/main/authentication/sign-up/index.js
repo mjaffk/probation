@@ -2,16 +2,16 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import AuthMenu from '../auth-menu'
 import {Field, reduxForm} from 'redux-form'
-import Input from '../../../details/input'
-import Checkbox from '../../../details/input/checkbox'
-import {alphaNumeric, email, minLength, required, requiredConformation} from '../../../details/validate'
-import {PasswordHint} from '../../../details/input/hints'
-import Select from '../../../details/select'
+import Input from '../../../common/input'
+import Checkbox from '../../../common/input/checkbox'
+import {alphaNumeric, email, minLength, required, requiredConformation} from '../../../common/validate'
+import {PasswordHint} from '../../../common/input/hints'
+import Select from '../../../common/select'
 import {loadCaptcha, loadDictionary, registerUser} from '../../../../redux/action-creators'
 import {modalStyle, SIGN_UP} from "../../../../constants"
-import Loader from "../../../details/loader"
-import InputPassword from "../../../details/input/input-password"
-import AlertModal from "../../../details/modals/alert-modal"
+import Loader from "../../../common/loader"
+import InputPassword from "../../../common/input/input-password"
+import AlertModal from "../../../common/modals/alert-modal"
 import {
 	captchaLoadErrorSelector,
 	captchaSelector,

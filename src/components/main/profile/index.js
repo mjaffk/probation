@@ -6,7 +6,7 @@ import Sidebar from "react-sidebar"
 import './profile.css'
 import ProfileBreadCrumb from "./breadcrumb"
 import Hamburger from "./hamburger"
-import logo from "./logo.jpg"
+import logo from "../../../data/logo.jpg"
 
 class Profile extends Component {
 	state = {
