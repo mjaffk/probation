@@ -17,7 +17,7 @@
 }
 
 #content_wrapper {
-    padding: 20px 64px 120px 64px;
+    padding: 20px 64px 20px 64px;
     flex-grow: 1;
     flex-shrink: 1;
 }

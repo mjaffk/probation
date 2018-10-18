@@ -3,6 +3,7 @@ import {Route, Switch, Redirect, Router} from 'react-router-dom'
 import Authentication from './authentication'
 import history from '../../utils/history'
 import Profile from './profile/index'
+import Page404 from "./page-404/index"
 
 
 class Main extends PureComponent {
@@ -12,6 +13,8 @@ class Main extends PureComponent {
 				<Redirect from={'/'} to={'/auth'} exact/>
 				<Route path="/auth" component={Authentication}/>
 				<Route path='/profile' component={Profile}/>
+				<Route path='/404' component={Page404}/>
+				<Redirect from={'*'} to={'/page-404'} exact/>
 			</Switch>
 		</Router>)
 	}

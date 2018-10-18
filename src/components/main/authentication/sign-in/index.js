@@ -36,7 +36,6 @@ class SignIn extends Component {
 				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 
 					<Field
-						className="form-control"
 						name="userId"
 						type="text"
 						component={Input}

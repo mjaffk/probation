@@ -6,12 +6,15 @@ import SignUp from './sign-up'
 
 class Authentication extends Component {
 	render() {
-		return (<Switch>
+		return (<div>
+			<Switch>
 			<Redirect from={'/auth'} to={'/auth/signin'} exact/>
+			<Redirect from={'/auth/cntstnt'} to={'/auth/cntstnt/signup'} exact/>
 			<Route path="/auth/signin" component={SignIn}/>
 			<Route path="/auth/cntstnt/signup" component={SignUp}/>
 			<Route path="/auth/forgot" component={Forgot}/>
-		</Switch>)
+		</Switch>
+		</div>)
 	}
 }
 
