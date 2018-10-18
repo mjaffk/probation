@@ -80,7 +80,6 @@ class SignUp extends Component {
 				<h1 className="h3 text-left font-wight-normal">Регистрация</h1>
 				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 					<Field
-						className="form-control"
 						name="password"
 						component={InputPassword}
 						placeholder="Введите пароль"
@@ -90,7 +89,6 @@ class SignUp extends Component {
 					/>
 
 					<Field
-						className="form-control"
 						name="passwordConformation"
 						component={InputPassword}
 						placeholder="Подтвердите пароль"
@@ -99,7 +97,6 @@ class SignUp extends Component {
 					/>
 
 					<Field
-						className="form-control"
 						name="email"
 						type="text"
 						component={Input}
@@ -110,7 +107,6 @@ class SignUp extends Component {
 					/>
 
 					<Field
-						className="form-control"
 						name="conformation"
 						type="checkbox"
 						component={Checkbox}

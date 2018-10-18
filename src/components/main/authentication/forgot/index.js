@@ -49,7 +49,6 @@ class Forgot extends Component {
 				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 
 					<Field
-						className="form-control"
 						name="email"
 						type="text"
 						component={Input}
