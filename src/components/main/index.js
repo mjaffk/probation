@@ -1,15 +1,18 @@
 import React, {PureComponent} from 'react'
+import {connect} from 'react-redux'
 import {Route, Switch, Redirect, Router} from 'react-router-dom'
 import Authentication from './authentication'
 import history from '../../utils/history'
 import Profile from './profile/index'
-import Page404 from "./page-404/index"
+import Page404 from "../common/page-404/index"
 import ProtectedRout from "../common/protected-route"
+import {userTokenSelector} from "../../redux/selectors"
+import PropTypes from "prop-types"
 
-const isAuthorized = !!JSON.parse(localStorage.getItem('reduxState')).token.length // todo: make real function
 
 class Main extends PureComponent {
 	render() {
+		const isAuthorized = !!this.props.token
 		return (<Router basename={'/'} history={history}>
 			<Switch>
 				<Route exact path="/" render={() => (
@@ -29,4 +32,12 @@ class Main extends PureComponent {
 }
 
 
-export default Main
+export default connect(
+	state => ({
+		token : userTokenSelector(state)
+	})
+)(Main)
+
+Main.propTypes = {
+	token: PropTypes.string,
+}

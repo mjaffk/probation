@@ -4,9 +4,9 @@ import PersonalData from "./personal-data/index"
 import MainNavMenu from "./main-nav-menu"
 import Sidebar from "react-sidebar"
 import './profile.css'
-import ProfileBreadCrumb from "./breadcrumb"
-import Hamburger from "./hamburger"
-import logo from "../../../data/logo.jpg"
+import ProfileBreadCrumb from "../../common/breadcrumb"
+import Hamburger from "../../common/hamburger"
+import logo from "../../../pictures/logo.jpg"
 
 class Profile extends Component {
 	state = {
@@ -52,7 +52,7 @@ class Profile extends Component {
 						<ProfileBreadCrumb location='Личные данные'/>
 					</header>
 					<Switch>
-						<Redirect from={'/profile'} to={'/profile/personal-data'} exact/>
+						<Redirect from={'/profile'} to={'/profile/personal-pictures'} exact/>
 						{/*<Route path="/profile/messages" component={}/>*/}
 						{/*<Route path="/profile/contests" component={}/>*/}
 						{/*<Route path="/profile/recommendation" component={}/>*/}

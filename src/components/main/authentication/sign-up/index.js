@@ -30,7 +30,7 @@ class SignUp extends Component {
 
 	componentDidMount() {
 		//download dictionary of regions
-		this.props.loadDictionary && !this.props.regions.toArray().length && !this.props.loadingRegions &&
+		this.props.loadDictionary && !this.props.regions.length && !this.props.regionsLoading &&
 		this.props.loadDictionary()
 
 		//download captcha
@@ -50,7 +50,7 @@ class SignUp extends Component {
 			(this.props.regionsLoadError && this.props.regionsLoadError.errorToUser) ||
 			(this.props.userRegistrationError && this.props.userRegistrationError.errorToUser)
 
-		const isLoading = () => this.props.loadingRegions || this.props.loadingCaptcha || this.props.userRegistering
+		const isLoading = () => this.props.regionsLoading || this.props.loadingCaptcha || this.props.userRegistering
 
 		const isRegistered = () => !!this.props.userEmail
 
@@ -115,7 +115,7 @@ class SignUp extends Component {
 						component={Select}
 						placeholder="Выберите"
 						label="Регион проживания"
-						options={this.props.regions.toArray()}
+						options={this.props.regions}
 						validate={[required]}
 						id="user-region"
 					/>
@@ -163,7 +163,7 @@ const validate = values => {
 export default connect(
 	(state) => ({
 		regions: regionsSelector(state),
-		loadingRegions: loadingRegionsSelector(state),
+		regionsLoading: loadingRegionsSelector(state),
 		regionsLoadError: regionsLoadErrorSelector(state),
 		captcha: captchaSelector(state),
 		uuid: uuidSelector(state),

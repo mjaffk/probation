@@ -2,9 +2,12 @@ import {
 	AUTHORIZE_USER,
 	LOAD_CAPTCHA,
 	LOAD_DICTIONARY,
+	LOAD_PROFILE,
+	LOGOUT_USER,
 	REGISTER_USER,
-	USER_PASSWORD_RECOVERY,
-	START
+	START,
+	UPDATE_PROFILE,
+	USER_PASSWORD_RECOVERY
 } from '../action-types/index'
 
 export function loadDictionary() {
@@ -35,9 +38,27 @@ export function authorizeUser({userId, password}) {
 	})
 }
 
+export function logoutUser() {
+	return ({
+		type: LOGOUT_USER + START,
+	})
+}
+
 export function recoveryPassword({email}) {
 	return ({
 		type: USER_PASSWORD_RECOVERY + START,
 		email,
+	})
+}
+
+export function loadProfile() {
+	return ({
+		type: LOAD_PROFILE + START,
+	})
+}
+export function updateProfile({data}) {
+	return ({
+		type: UPDATE_PROFILE + START,
+		data
 	})
 }

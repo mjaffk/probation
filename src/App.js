@@ -1,12 +1,9 @@
 import React, {Component} from 'react'
-import {Provider as UserProvider} from './contexts/auth'
 import Main from './components/main'
 
 class App extends Component {
 	render() {
-		return (<UserProvider>
-			<Main/>
-		</UserProvider>)
+		return (<Main/>)
 	}
 }
 

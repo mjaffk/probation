@@ -3,6 +3,7 @@ import {
 	REGISTER_USER,
 	AUTHORIZE_USER,
 	USER_PASSWORD_RECOVERY,
+	LOAD_PROFILE,
 	SUCCESS,
 	START,
 	FAIL
@@ -14,19 +15,42 @@ const ReducerRecord = new Record({
 	email: null,
 	token: null,
 	duration: null,
+	role: '',
 
-// status of password recovery request
+	profile: {
+		personalData: {
+			lastName: '',
+			firstName: '',
+			middleName: '',
+			birthday: '',
+			region: null,
+			city: '',
+			school: '',
+			grade: null,
+			gradeLetter: '',
+		},
+		phone: '',
+		email: '',
+	},
+
+// status of user registering request
 	registering: false,
 	registerError: null,
 
-// status of password recovery request
+// status of user authorizing request
 	authorizing: false,
 	authorizeError: null,
 
 // status of password recovery request
 	passwordRecovering: false,
 	passwordRecovered: false,
-	passwordRecoveryError: null
+	passwordRecoveryError: null,
+
+// status of profile loading request
+	profileLoading: false,
+	profileLoaded: false,
+	profileLoadError: null,
+
 })
 
 export default (state, action) => {
@@ -82,6 +106,23 @@ export default (state, action) => {
 			return state
 				.set('passwordRecovering', false)
 				.set('passwordRecoveryError', error)
+
+// User make password recovery
+		case LOAD_PROFILE + START:
+			return state.set('profileLoading', true)
+
+		case LOAD_PROFILE + SUCCESS:
+			console.log(response)
+			//todo: map response
+			return state
+				.set('profileLoading', false)
+				.set('profileLoadError', null)
+
+		case LOAD_PROFILE + FAIL :
+			return state
+				.set('profileLoading', false)
+				.set('profileLoadError', error)
+
 
 // Default state
 		default:

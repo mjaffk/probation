@@ -3,7 +3,11 @@ export const LOAD_CAPTCHA = 'LOAD_CAPTCHA'
 
 export const REGISTER_USER = 'REGISTER_USER'
 export const AUTHORIZE_USER = 'AUTHORIZE_USER'
+export const LOGOUT_USER = 'LOGOUT_USER'
 export const USER_PASSWORD_RECOVERY = 'USER_PASSWORD_RECOVERY'
+
+export const LOAD_PROFILE = 'LOAD_PROFILE'
+export const UPDATE_PROFILE = 'LOAD_PROFILE'
 
 export const SUCCESS = '_SUCCESS'
 export const START = '_START'

@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../../data/logo.jpg'
+import logo from '../../../pictures/logo.jpg'
 import './page-404.css'
 
 export default function Page404 () {
