@@ -1,5 +1,6 @@
 import React from "react"
 import './hamburger.css'
+import PropTypes from "prop-types"
 
 export default function Hamburger ({onClick}) {
 	return (
@@ -12,3 +13,6 @@ export default function Hamburger ({onClick}) {
 	)
 }
 
+Hamburger.propTypes = {
+	onClick: PropTypes.func
+}

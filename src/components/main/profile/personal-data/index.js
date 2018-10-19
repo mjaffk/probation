@@ -2,33 +2,42 @@ import React, {Component} from 'react'
 import {Field, reduxForm} from 'redux-form'
 import {connect} from "react-redux"
 import {required} from "../../../common/validate"
-import {CLASS_LETTER_DICTIONARY, CLASS_NUMBER_DICTIONARY, PERSONAL_DATA} from "../../../../constants"
+import {GRADE_DICTIONARY, GRADE_LETTER_DICTIONARY, PERSONAL_DATA} from "../../../../constants"
 import Loader from "../../../common/loader"
 import {
+	defaultPersonalDataValues,
 	loadingRegionsSelector,
+	profileLoadedSelector,
+	profileLoadErrorSelector,
+	profileLoadingSelector,
 	regionsLoadErrorSelector,
-	regionsSelector
+	regionsSelector,
+	userIdSelector,
 } from "../../../../redux/selectors"
 import Input from "../../../common/input"
 import Select from "../../../common/select"
 import arrToObj from "../../../../utils/arr-to-obj"
 import './personal-data.css'
-import {loadDictionary} from "../../../../redux/action-creators"
+import {loadDictionary, loadProfile} from "../../../../redux/action-creators"
+import PropTypes from "prop-types"
+
 
 class PersonalData extends Component {
 	state = {}
 
 	componentDidMount() {
 		//download dictionary of regions
-		this.props.loadDictionary && !this.props.regions.toArray().length && !this.props.loadingRegions &&
+		this.props.loadDictionary && !this.props.regions.length && !this.props.regionsLoading &&
 		this.props.loadDictionary()
+
+		this.props.loadProfile && !this.props.profileLoaded && this.props.loadProfile()
 	}
 
 	render() {
 		const formSubmitting = (data, dispatch, props) => {
 		}
 
-		const isLoading = () => this.props.loadingRegions
+		const isLoading = () => this.props.regionsLoading || this.props.profileLoading
 
 		return (<div id="personal_data_form">
 			{isLoading() && <Loader/>}
@@ -85,20 +94,20 @@ class PersonalData extends Component {
 					       className="required"
 					       component={Select}
 					       validate={[required]}
-					       options={this.props.regions.toArray()}
+					       options={this.props.regions}
 					       placeholder="Выберите или введите"
 					       label="Регион проживания"
 					       id="region"
 					       required={true}
 					/>
 
-					<Field name="settlement"
+					<Field name="city"
 					       className="required"
 					       component={Input}
 					       validate={[required]}
 					       type="text"
 					       label="Населенный пункт"
-					       id="settlement"
+					       id="city"
 					/>
 
 					<Field name="school"
@@ -109,35 +118,35 @@ class PersonalData extends Component {
 					       label="Наименование учебного заведения"
 					       id="school"
 					/>
-					<div id="user_class">
-						<Field name="classNumber"
+					<div id="user_grade">
+						<Field name="grade"
 						       className="required"
 						       component={Select}
 						       validate={[required]}
 						       placeholder="Выберите класс"
-						       options={arrToObj(CLASS_NUMBER_DICTIONARY)}
+						       options={arrToObj(GRADE_DICTIONARY)}
 						       label="Класс"
-						       id="class_number"
+						       id="grade"
 						/>
-						<Field name="classLetter"
+						<Field name="gradeLetter"
 						       className="required"
 						       component={Select}
 						       validate={[required]}
 						       placeholder="Выберите букву класса"
-						       options={arrToObj(CLASS_LETTER_DICTIONARY)}
+						       options={arrToObj(GRADE_LETTER_DICTIONARY)}
 						       label="Буква"
-						       id="class_letter"
+						       id="grade_letter"
 						/>
 					</div>
 				</div>
 				<h4>Контактные данные</h4>
 				<div>
-					<Field name="phoneNumber"
+					<Field name="phone"
 					       disabled={true}
 					       component={Input}
 					       type="tel"
 					       label="Телефон"
-					       id="phone_number"
+					       id="phone"
 					       placeholder="+X(XXX)-XXX-XX-XX"
 					/>
 
@@ -158,13 +167,30 @@ class PersonalData extends Component {
 
 }
 
+
 export default connect(
 	(state) => ({
+		initialValues: defaultPersonalDataValues(state),
+		userId: userIdSelector(state),
 		regions: regionsSelector(state),
-		loadingRegions: loadingRegionsSelector(state),
+		regionsLoading: loadingRegionsSelector(state),
 		regionsLoadError: regionsLoadErrorSelector(state),
+		profileLoading: profileLoadingSelector(state),
+		profileLoaded: profileLoadedSelector(state),
+		profileLoadError: profileLoadErrorSelector(state),
 	}),
 	{
 		loadDictionary,
+		loadProfile,
 	}
 )(reduxForm({form: PERSONAL_DATA})(PersonalData))
+
+PersonalData.propTypes = {
+	userId: PropTypes.string,
+	regions: PropTypes.array,
+	regionsLoading: PropTypes.bool,
+	regionsLoadError: PropTypes.object,
+	profileLoading: PropTypes.bool,
+	profileLoaded: PropTypes.bool,
+	profileLoadError: PropTypes.object,
+}

@@ -1,7 +1,6 @@
 // export const SERVER = 'https://fvm212.lpr.jet.msk.su'
+export const SERVER = 'https://10.31.7.111'
 // export const SERVER = 'https://10.31.7.109'
-// export const SERVER = 'https://10.31.7.111'
-export const SERVER = 'https://10.31.7.109'
 // export const SERVER = 'https://10.31.7.101' // некорректный сервер
 
 export const userAuthorizeAPI = `${SERVER}/api/token/`
@@ -9,6 +8,7 @@ export const loadCaptchaAPI = `${SERVER}/api/captcha/` // + uuid
 export const loadRegionsAPI = `${SERVER}/api/directory/regions`
 export const userRegisterAPI = `${SERVER}/api/user/register/` // + uuid
 export const recoveryPasswordAPI = `${SERVER}/api/user/reset_password/`
+export const ProfileAPI = `${SERVER}/api/user/current`
 
 
 export const SIGN_UP = 'signUp'
@@ -37,7 +37,12 @@ export const modalStyle = {
 	},
 }
 
-export const CLASS_NUMBER_DICTIONARY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-export const CLASS_LETTER_DICTIONARY = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н',
+export const GRADE_DICTIONARY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+export const GRADE_LETTER_DICTIONARY = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н',
 										'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ы',
 										'Э', 'Ю', 'Я']
+
+// todo update dictionary
+export const ROLE_DICTIONARY = {
+	'Participant': 'Участник',
+}

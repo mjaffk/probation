@@ -6,14 +6,14 @@ import {
 	FAIL
 } from '../action-types/index'
 
-const ReducerRecord = new Record({
-	regions: List(),
+const ReducerRecord = (arr = []) => new Record({
+	regions: List(arr),
 	loading: false,
 	error: null
-})
+})()
 
-export default (state, action) => {
-	state = new ReducerRecord().merge(state)
+export default (state = new ReducerRecord(), action) => {
+	state = (!state.regions.isList) ? new ReducerRecord(state.regions) : state
 	const {type, response, error} = action
 
 	switch (type) {
