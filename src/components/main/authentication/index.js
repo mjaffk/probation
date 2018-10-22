@@ -3,6 +3,7 @@ import {Redirect, Route, Switch} from 'react-router-dom'
 import Forgot from './forgot'
 import SignIn from './sign-in'
 import SignUp from './sign-up'
+import SignOut from './sign-out'
 
 class Authentication extends Component {
 	render() {
@@ -13,7 +14,7 @@ class Authentication extends Component {
 				<Route path="/auth/signin" component={SignIn}/>
 				<Route path="/auth/cntstnt/signup" component={SignUp}/>
 				<Route path="/auth/forgot" component={Forgot}/>
-				<Route path="/auth/signout"/>
+				<Route path="/auth/signout" component={SignOut}/>
 			</Switch>
 		</div>)
 	}

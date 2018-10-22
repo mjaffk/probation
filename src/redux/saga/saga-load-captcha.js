@@ -1,24 +1,16 @@
 import {call, put} from 'redux-saga/effects'
 import generateUUID from "../../utils/generate-uuid"
-import axios from "axios"
-import {loadCaptchaAPI} from "../../constants/index"
 import {FAIL, LOAD_CAPTCHA, SUCCESS} from "../action-types/index"
 import errorParser from '../../utils/error-parser'
+import {loadCaptchaAPI} from "../../constants/api-config"
 
 export default function* sagaLoadCaptcha() {
 	try {
 		const uuid = yield call(generateUUID)
-		const response = yield call(axios.get, loadCaptchaAPI+uuid, {
-			headers: {
-				'Content-Type': 'image/png',
-				'Accept': 'image/png'
-			},
-			responseType: 'arraybuffer'
-		})
+		const response = yield call(loadCaptchaAPI, {uuid})
 		yield put({
 			type: LOAD_CAPTCHA + SUCCESS,
-			response: new Buffer(response.data).toString('base64'),
-			uuid: response.config.url.slice(loadCaptchaAPI.length)
+			response: response.data
 		})
 	} catch (error) {
 		yield put({

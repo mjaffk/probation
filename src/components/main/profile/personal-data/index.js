@@ -12,7 +12,6 @@ import {
 	profileLoadingSelector,
 	regionsLoadErrorSelector,
 	regionsSelector,
-	userIdSelector,
 } from "../../../../redux/selectors"
 import Input from "../../../common/input"
 import Select from "../../../common/select"
@@ -171,7 +170,6 @@ class PersonalData extends Component {
 export default connect(
 	(state) => ({
 		initialValues: defaultPersonalDataValues(state),
-		userId: userIdSelector(state),
 		regions: regionsSelector(state),
 		regionsLoading: loadingRegionsSelector(state),
 		regionsLoadError: regionsLoadErrorSelector(state),
@@ -186,6 +184,7 @@ export default connect(
 )(reduxForm({form: PERSONAL_DATA})(PersonalData))
 
 PersonalData.propTypes = {
+	initialValues: PropTypes.object,
 	userId: PropTypes.string,
 	regions: PropTypes.array,
 	regionsLoading: PropTypes.bool,
@@ -193,4 +192,6 @@ PersonalData.propTypes = {
 	profileLoading: PropTypes.bool,
 	profileLoaded: PropTypes.bool,
 	profileLoadError: PropTypes.object,
+	loadDictionary: PropTypes.func,
+	loadProfile: PropTypes.func
 }

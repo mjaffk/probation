@@ -25,16 +25,20 @@ export function loadCaptcha() {
 export function registerUser({values, uuid}) {
 	return ({
 		type: REGISTER_USER + START,
-		values,
-		uuid
+		payload: {
+			data: values,
+			uuid
+		}
 	})
 }
 
 export function authorizeUser({userId, password}) {
 	return ({
 		type: AUTHORIZE_USER + START,
-		userId,
-		password
+		payload: {
+			userId,
+			password
+		}
 	})
 }
 
@@ -47,7 +51,9 @@ export function logoutUser() {
 export function recoveryPassword({email}) {
 	return ({
 		type: USER_PASSWORD_RECOVERY + START,
-		email,
+		payload: {
+			email
+		},
 	})
 }
 
@@ -56,9 +62,12 @@ export function loadProfile() {
 		type: LOAD_PROFILE + START,
 	})
 }
+
 export function updateProfile({data}) {
 	return ({
 		type: UPDATE_PROFILE + START,
-		data
+		payload: {
+			data
+		}
 	})
 }
