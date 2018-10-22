@@ -4,6 +4,7 @@ import {
 	AUTHORIZE_USER,
 	USER_PASSWORD_RECOVERY,
 	LOAD_PROFILE,
+	LOGOUT_USER,
 	SUCCESS,
 	START,
 	FAIL
@@ -56,8 +57,8 @@ const ReducerRecord = new Record({
 export default (state, action) => {
 	state = new ReducerRecord().merge(state)
 	const {type, response, error} = action
-	switch (type) {
 
+	switch (type) {
 // User registrations
 		case REGISTER_USER + START:
 			return state.set('registering', true)
@@ -107,14 +108,16 @@ export default (state, action) => {
 				.set('passwordRecovering', false)
 				.set('passwordRecoveryError', error)
 
-// User make password recovery
+// Load user profile
 		case LOAD_PROFILE + START:
 			return state.set('profileLoading', true)
 
 		case LOAD_PROFILE + SUCCESS:
-			console.log(response)
-			//todo: map response
 			return state
+				.set('profile', response.profile)
+				.set('userId', response.userId)
+				.set('email', response.email)
+				.set('role', response.role)
 				.set('profileLoading', false)
 				.set('profileLoadError', null)
 
@@ -123,6 +126,12 @@ export default (state, action) => {
 				.set('profileLoading', false)
 				.set('profileLoadError', error)
 
+
+// Logout user
+		case LOGOUT_USER + START :
+			return state
+				.set('token', null)
+				.set('userId', null)
 
 // Default state
 		default:

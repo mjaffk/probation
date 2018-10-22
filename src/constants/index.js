@@ -1,15 +1,8 @@
-// export const SERVER = 'https://fvm212.lpr.jet.msk.su'
-export const SERVER = 'https://10.31.7.111'
-// export const SERVER = 'https://10.31.7.109'
-// export const SERVER = 'https://10.31.7.101' // некорректный сервер
-
-export const userAuthorizeAPI = `${SERVER}/api/token/`
-export const loadCaptchaAPI = `${SERVER}/api/captcha/` // + uuid
-export const loadRegionsAPI = `${SERVER}/api/directory/regions`
-export const userRegisterAPI = `${SERVER}/api/user/register/` // + uuid
-export const recoveryPasswordAPI = `${SERVER}/api/user/reset_password/`
-export const ProfileAPI = `${SERVER}/api/user/current`
-
+export const SERVER = 'https://10.31.7.111/'
+// export const SERVER = 'https://10.31.7.112/'
+// export const SERVER = 'https://10.31.7.109/'
+// export const SERVER = 'https://10.31.7.101/' //некорректный
+// export const SERVER = 'https://fvm212.lpr.jet.msk.su/'
 
 export const SIGN_UP = 'signUp'
 export const SIGN_IN = 'signIn'

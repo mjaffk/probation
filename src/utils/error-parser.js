@@ -1,3 +1,5 @@
+//todo: make middleware from this function
+
 export default function errorParser(error) {
 	if (!error) return error
 

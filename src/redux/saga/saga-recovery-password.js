@@ -1,14 +1,14 @@
 import {call, put} from 'redux-saga/effects'
-import axios from "axios"
-import {FORGOT, recoveryPasswordAPI} from "../../constants/index"
+import {FORGOT} from "../../constants/index"
 import {FAIL, SUCCESS, USER_PASSWORD_RECOVERY} from "../action-types/index"
 import {reset, stopSubmit} from 'redux-form'
 import errorParser from "../../utils/error-parser"
+import {recoveryPasswordAPI} from "../../constants/api-config"
 
 export default function* sagaRecoveryPassword(action) {
+	const {email} = action.payload
 	try {
-		const response = yield call(axios.post, recoveryPasswordAPI, {email: action.email})
-
+		const response = yield call(recoveryPasswordAPI,{email})
 		yield put({
 			type: USER_PASSWORD_RECOVERY + SUCCESS,
 			response: response.data

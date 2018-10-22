@@ -12,6 +12,7 @@ export const userTokenSelector = (state) => state.user.token
 export const userEmailSelector = (state) => state.user.email
 export const userRegisteringSelector = (state) => state.user.registering
 export const userRegistrationErrorSelector = (state) => state.user.registerError
+export const userRoleSelector = (state) => state.user.role
 
 export const userAuthorizingSelector = (state) => state.user.authorizing
 export const userAuthorizeErrorSelector = (state) => state.user.authorizeError
@@ -36,5 +37,5 @@ export const defaultPersonalDataValues = (state) => ({
 	grade: state.user.profile.personalData.grade,
 	gradeLetter: state.user.profile.personalData.gradeLetter,
 	phone: state.user.profile.phone,
-	email: state.user.profile.email,
+	email: state.user.email,
 })

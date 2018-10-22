@@ -14,7 +14,7 @@ const ReducerRecord = new Record({
 })
 
 export default (state = new ReducerRecord(), action) => {
-	const {type, response, error, uuid} = action
+	const {type, response, error} = action
 
 	switch (type) {
 		case LOAD_CAPTCHA + START:
@@ -22,8 +22,8 @@ export default (state = new ReducerRecord(), action) => {
 
 		case LOAD_CAPTCHA + SUCCESS:
 			return state
-				.set('image', `data:image/png;base64,${response}`)
-				.set('uuid', uuid)
+				.set('image', response.image)
+				.set('uuid', response.uuid)
 				.set('loading', false)
 				.set('error', null)
 
