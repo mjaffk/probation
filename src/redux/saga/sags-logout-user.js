@@ -6,7 +6,7 @@ import history from "../../utils/history"
 export default function* sagaLogoutUser() {
 	try {
 		const token = yield select(userTokenSelector)
-		yield logoutUserAPI ({token})
+		yield put(logoutUserAPI ({token}))
 		yield put(history.push('/auth'))
 	} catch (error) {
 	}

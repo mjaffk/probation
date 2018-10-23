@@ -43,7 +43,6 @@ export const loadProfileAPI = ({token}) => {
 		},
 		transformResponse: (data) => {
 			data = JSON.parse(data).result.data
-			console.log('---axios',data)
 			return {
 				profile: {
 					personalData: {
@@ -81,7 +80,6 @@ export const loadCaptchaAPI = ({uuid}) => {
 		},
 		responseType: 'arraybuffer',
 		transformResponse: (data) => {
-			console.log(data)
 			return {
 				image: `data:image/png;base64,${new Buffer(data).toString('base64')}`,
 				uuid

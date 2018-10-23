@@ -1,3 +1,6 @@
+import {ROLE_DICTIONARY} from "../../constants"
+
+
 export const regionsSelector = (state) => state.regions.regions.toArray()
 export const loadingRegionsSelector = (state) => state.regions.loading
 export const regionsLoadErrorSelector = (state) => state.regions.error
@@ -12,6 +15,7 @@ export const userTokenSelector = (state) => state.user.token
 export const userEmailSelector = (state) => state.user.email
 export const userRegisteringSelector = (state) => state.user.registering
 export const userRegistrationErrorSelector = (state) => state.user.registerError
+export const userRoleNameSelector = (state) => ROLE_DICTIONARY[state.user.role]
 export const userRoleSelector = (state) => state.user.role
 
 export const userAuthorizingSelector = (state) => state.user.authorizing
