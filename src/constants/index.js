@@ -35,7 +35,7 @@ export const GRADE_LETTER_DICTIONARY = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж'
 										'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ы',
 										'Э', 'Ю', 'Я']
 
-// todo update dictionary
+// todo: update dictionary
 export const ROLE_DICTIONARY = {
 	'Participant': 'Участник',
 }

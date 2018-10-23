@@ -6,15 +6,16 @@ import {
 	FAIL
 } from '../action-types/index'
 
-const ReducerRecord = (arr = []) => new Record({
+export const ReducerRecord = (arr) => new Record({
 	regions: List(arr),
 	loading: false,
 	error: null
 })()
 
 export default (state = new ReducerRecord(), action) => {
-	state = (!state.regions.isList) ? new ReducerRecord(state.regions) : state
 	const {type, response, error} = action
+
+	console.log(state)
 
 	switch (type) {
 		case LOAD_DICTIONARY + START:
