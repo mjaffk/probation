@@ -54,8 +54,9 @@ export const ReducerRecord = (userId = null, token = null)=> new Record({
 
 })()
 
-export default (state, action) => {
-	state = new ReducerRecord().merge(state)
+
+export default (state = new ReducerRecord(), action) => {
+	console.log(state)
 	const {type, response, error} = action
 
 	switch (type) {

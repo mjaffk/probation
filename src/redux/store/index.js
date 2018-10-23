@@ -7,7 +7,6 @@ import {routerMiddleware} from 'react-router-redux'
 import history from '../../utils/history'
 import {ReducerRecord as RegionRecord} from "../reducer/regions"
 import {ReducerRecord as UserRecord} from "../reducer/user"
-import merge from 'deepmerge'
 
 
 /**
@@ -39,7 +38,6 @@ const enhancer = composeEnhancers(
  * @return {Object} - initial state
  */
 const persistedState = () => {
-
 	/**
 	 * Get Data from Local Storage in necessary form
 	 * @returns {object}
@@ -66,7 +64,7 @@ const persistedState = () => {
 		}
 	}
 
-	return merge(getDataFromLocalStorage(), getDataFromSessionStorage())
+	return ({...getDataFromLocalStorage(), ...getDataFromSessionStorage()})
 }
 
 
@@ -83,7 +81,7 @@ store.subscribe(() => {
 	localStorage.setItem('reduxState', JSON.stringify({
 		userid: store.getState().user.userId,
 		token: store.getState().user.token,
-		regions: store.getState().regions.regions.toArray().length && store.getState().regions.regions.toArray()
+		regions: store.getState().regions.regions && store.getState().regions.regions.toArray()
 	}))
 	sessionStorage.setItem('reduxForm', JSON.stringify({
 		form: store.getState().form
