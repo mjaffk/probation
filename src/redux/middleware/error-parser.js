@@ -1,4 +1,4 @@
-import {AUTHORIZE_USER, LOGOUT_USER} from "../action-types"
+import {AUTHORIZE_USER, FAIL, LOGOUT_USER} from "../action-types"
 
 
 export default (store) => (next) => (action) => {
@@ -22,7 +22,7 @@ export default (store) => (next) => (action) => {
 
 		case 'Request failed with status code 401':
 			switch (type) {
-				case AUTHORIZE_USER :
+				case AUTHORIZE_USER + FAIL :
 					usefulError.errorToUser = 'Неверный логин или пароль. Прооверьте, пожалуйста, раскладку и Caps Lock'
 					return next({...rest, type, error : usefulError})
 
