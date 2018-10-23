@@ -17,7 +17,7 @@ import Input from "../../../common/input"
 import Select from "../../../common/select"
 import arrToObj from "../../../../utils/arr-to-obj"
 import './personal-data.css'
-import {loadDictionary, loadProfile} from "../../../../redux/action-creators"
+import {loadDictionary, loadProfile, updateProfile} from "../../../../redux/action-creators"
 import PropTypes from "prop-types"
 
 
@@ -29,11 +29,12 @@ class PersonalData extends Component {
 		this.props.loadDictionary && !this.props.regions.length && !this.props.regionsLoading &&
 		this.props.loadDictionary()
 
-		this.props.loadProfile && !this.props.profileLoaded && this.props.loadProfile()
+		this.props.loadProfile && !this.props.profileLoading && this.props.loadProfile()
 	}
 
 	render() {
 		const formSubmitting = (data, dispatch, props) => {
+			props.updateProfile({data})
 		}
 
 		const isLoading = () => this.props.regionsLoading || this.props.profileLoading
@@ -157,7 +158,7 @@ class PersonalData extends Component {
 					       id="email"
 					/>
 				</div>
-				<button type="submit" className="btn btn-success" disabled={!this.props.valid}>
+				<button type="submit" className="btn btn-success" disabled={this.props.invalid || this.props.pristine}>
 					Сохронить изменения
 				</button>
 			</form>
@@ -180,6 +181,7 @@ export default connect(
 	{
 		loadDictionary,
 		loadProfile,
+		updateProfile,
 	}
 )(reduxForm({form: PERSONAL_DATA})(PersonalData))
 

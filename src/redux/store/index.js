@@ -7,6 +7,7 @@ import {routerMiddleware} from 'react-router-redux'
 import history from '../../utils/history'
 import {ReducerRecord as RegionRecord} from "../reducer/regions"
 import {ReducerRecord as UserRecord} from "../reducer/user"
+import errorParser from "../middleware/error-parser"
 
 
 /**
@@ -28,7 +29,7 @@ const sagaMiddleware = createSagaMiddleware()
  * Compose all middleware to StoreEnhancer
  */
 const enhancer = composeEnhancers(
-	applyMiddleware(routerMiddleware(history), sagaMiddleware, logger,)
+	applyMiddleware(routerMiddleware(history), sagaMiddleware, logger, errorParser)
 )
 
 

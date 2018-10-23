@@ -7,7 +7,7 @@ export default function Input({
                               }) {
 	const {id} = rest
 	return (<div className={`form-group text-left ${className}`}>
-		{label && id && <label htmlFor={id}>{label}</label>}
+		{label && id && <label htmlFor={id} className={`${touched && error && 'text-danger'}`}>{label}</label>}
 		<div className={`input-group ${touched && (error && 'rounded border border-danger ')}`}>
 			{prependIcon && < Icon type='prepend' iconId={prependIcon}/>}
 			<input {...rest} {...input} className='form-control' type={type} placeholder={placeholder}/>

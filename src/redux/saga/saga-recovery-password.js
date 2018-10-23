@@ -2,7 +2,6 @@ import {call, put} from 'redux-saga/effects'
 import {FORGOT} from "../../constants/index"
 import {FAIL, SUCCESS, USER_PASSWORD_RECOVERY} from "../action-types/index"
 import {reset, stopSubmit} from 'redux-form'
-import errorParser from "../../utils/error-parser"
 import {recoveryPasswordAPI} from "../../constants/api-config"
 
 export default function* sagaRecoveryPassword(action) {
@@ -19,7 +18,7 @@ export default function* sagaRecoveryPassword(action) {
 		console.log(error)
 		yield put({
 				type: USER_PASSWORD_RECOVERY + FAIL,
-				error: errorParser(error)
+				error: error
 			}
 		)
 		yield put(stopSubmit(FORGOT, error.response.data))

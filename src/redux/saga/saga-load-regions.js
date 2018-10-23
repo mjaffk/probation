@@ -1,6 +1,5 @@
 import {call, put} from 'redux-saga/effects'
 import {FAIL, LOAD_DICTIONARY, SUCCESS} from "../action-types/index"
-import errorParser from "../../utils/error-parser"
 import {loadRegionsAPI} from "../../constants/api-config"
 
 export default function* sagaLoadDictionary() {
@@ -14,7 +13,7 @@ export default function* sagaLoadDictionary() {
 		yield put(
 			{
 				type: LOAD_DICTIONARY + FAIL,
-				error: errorParser(error)
+				error: error
 			}
 		)
 	}

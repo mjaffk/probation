@@ -7,7 +7,7 @@ import {
 	USER_PASSWORD_RECOVERY,
 	LOAD_PROFILE,
 	LOGOUT_USER,
-	START
+	START, UPDATE_PROFILE
 } from '../action-types/index'
 import sagaLoadCaptcha from "./saga-load-captcha"
 import sagaLoadDictionary from "./saga-load-regions"
@@ -16,6 +16,7 @@ import sagaAuthorizeUser from "./saga-authoriz-user"
 import sagaRecoveryPassword from "./saga-recovery-password"
 import sagaLoadProfile from "./saga-load-profile"
 import sagaLogoutUser from "./sags-logout-user"
+import sagaUpdateProfile from "./saga-update-profile"
 
 
 export default function* saga() {
@@ -25,5 +26,6 @@ export default function* saga() {
 	yield takeEvery(AUTHORIZE_USER + START, sagaAuthorizeUser)
 	yield takeEvery(USER_PASSWORD_RECOVERY + START, sagaRecoveryPassword)
 	yield takeEvery(LOAD_PROFILE + START, sagaLoadProfile)
+	yield takeEvery(UPDATE_PROFILE + START, sagaUpdateProfile)
 	yield takeEvery(LOGOUT_USER + START, sagaLogoutUser)
 }

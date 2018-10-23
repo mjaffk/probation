@@ -6,9 +6,28 @@ import {SERVER} from "./index"
  * @type {AxiosInstance}
  */
 const apiConfig = axios.create({
-	baseURL: `${SERVER}/api/`,
+	baseURL: `${SERVER}api/`,
 	timeout: 1000,
 })
+
+
+/**
+ * API to register new user
+ * @param {string} uuid - from captcha
+ * @param {Object} data
+ * @returns {AxiosPromise<any>}
+ */
+export const userRegisterAPI = ({uuid, data}) => {
+	return apiConfig.post('user/register/' + uuid, data, {
+		transformResponse: (data) => {
+			data = JSON.parse(data)
+			return {
+				email: data.email,
+				userId: data.userid
+			}
+		}
+	})
+}
 
 
 /**
@@ -32,7 +51,31 @@ export const userAuthorizeAPI = ({userId, password}) => {
 
 
 /**
- * API to authorize user in app
+ * API to recovery password by email
+ * @param {string} email
+ * @returns {AxiosPromise<any>}
+ */
+export const recoveryPasswordAPI = ({email}) => {
+	return apiConfig.post(`user/reset_password/`, email)
+}
+
+
+/**
+ * API to logout user by token
+ * @param token
+ * @returns {AxiosPromise<any>}
+ */
+export const logoutUserAPI = ({token}) => {
+	return apiConfig.get('logout/',{
+		headers: {
+			'Authorization': 'Bearer '+ token
+		}
+	})
+}
+
+
+/**
+ * API to load user profile
  * @param {string} token
  * @returns {AxiosPromise<any>}
  */
@@ -42,6 +85,45 @@ export const loadProfileAPI = ({token}) => {
 			'Authorization': 'Bearer '+ token
 		},
 		transformResponse: (data) => {
+			data = JSON.parse(data).result.data
+			return {
+				profile: {
+					personalData: {
+						lastName: data['personal-data'] && data['personal-data']['last-name'],
+						firstName: data['personal-data'] && data['personal-data']['first-name'],
+						middleName: data['personal-data'] && data['personal-data']['middle-name'],
+						birthday: data.birthday,
+						region: data.region,
+						city: data['personal-data'] && data['personal-data'].city,
+						school: data['personal-data'] && data['personal-data'].school,
+						grade: data['personal-data'] && data['personal-data'].grade,
+						gradeLetter: data['personal-data'] && data['personal-data']['grade-letter'],
+					},
+					phone: data.phone,
+				},
+				userId: data['user_id'],
+				email: data.email,
+				role: data.role,
+			}
+		}
+	})
+}
+
+
+/**
+ * API to update user profile
+ * @param {string} token
+ * @param {Object} data
+ * @returns {AxiosPromise<any>}
+ */
+export const updateProfileAPI = ({token, data}) => {
+	return apiConfig.post('user/current', data, {
+		headers: {
+			'Authorization': 'Bearer '+ token
+		},
+		transformResponse: (data) => {
+			if (!JSON.parse(data).result) return JSON.parse(data)
+
 			data = JSON.parse(data).result.data
 			return {
 				profile: {
@@ -95,47 +177,4 @@ export const loadCaptchaAPI = ({uuid}) => {
  */
 export const loadRegionsAPI = () => {
 	return apiConfig.get('directory/regions')
-}
-
-
-/**
- * API to register new user
- * @param {string} uuid - from captcha
- * @param {Object} data
- * @returns {AxiosPromise<any>}
- */
-export const userRegisterAPI = ({uuid, data}) => {
-	return apiConfig.post('user/register/' + uuid, data, {
-		transformResponse: (data) => {
-			data = JSON.parse(data)
-			return {
-				email: data.email,
-				userId: data.userid
-			}
-		}
-	})
-}
-
-
-/**
- * API to recovery password by email
- * @param {string} email
- * @returns {AxiosPromise<any>}
- */
-export const recoveryPasswordAPI = ({email}) => {
-	return apiConfig.post(`user/reset_password/`, email)
-}
-
-
-/**
- * API to logout user by token
- * @param token
- * @returns {AxiosPromise<any>}
- */
-export const logoutUserAPI = ({token}) => {
-	return apiConfig.get('logout/',{
-		headers: {
-			'Authorization': 'Bearer '+ token
-		}
-	})
 }
