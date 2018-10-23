@@ -10,6 +10,10 @@ import Hamburger from "../../common/hamburger"
 import logo from "../../../pictures/logo.jpg"
 import {userIdSelector, userRoleNameSelector} from "../../../redux/selectors"
 import {loadProfile} from "../../../redux/action-creators"
+import Messages from "./messages"
+import Contests from "./contests"
+import Recommendation from "./recommendation"
+import Tickets from "./tickets"
 
 class Profile extends Component {
 	state = {
@@ -56,14 +60,14 @@ class Profile extends Component {
 							</div>
 						</div>
 
-						<ProfileBreadCrumb location='Личные данные'/>
+						<ProfileBreadCrumb location={this.props.location.pathname}/>
 					</header>
 					<Switch>
 						<Redirect from={'/profile'} to={'/profile/personal-data'} exact/>
-						{/*<Route path="/profile/messages" component={}/>*/}
-						{/*<Route path="/profile/contests" component={}/>*/}
-						{/*<Route path="/profile/recommendation" component={}/>*/}
-						{/*<Route path="/profile/tickets" component={}/>*/}
+						<Route path="/profile/messages" component={Messages}/>
+						<Route path="/profile/contests" component={Contests}/>
+						<Route path="/profile/recommendation" component={Recommendation}/>
+						<Route path="/profile/tickets" component={Tickets}/>
 						<Route path="/profile/personal-data" component={PersonalData}/>
 					</Switch>
 				</div>

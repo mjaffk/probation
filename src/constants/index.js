@@ -1,6 +1,6 @@
-// export const SERVER = 'https://10.31.7.111/'
+export const SERVER = 'https://10.31.7.111/'
 // export const SERVER = 'https://10.31.7.112/'
-export const SERVER = 'https://10.31.7.109/'
+// export const SERVER = 'https://10.31.7.109/'
 // export const SERVER = 'https://10.31.7.101/' //некорректный
 // export const SERVER = 'https://fvm212.lpr.jet.msk.su/'
 
@@ -32,10 +32,19 @@ export const modalStyle = {
 
 export const GRADE_DICTIONARY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 export const GRADE_LETTER_DICTIONARY = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н',
-										'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ы',
-										'Э', 'Ю', 'Я']
+	'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ы',
+	'Э', 'Ю', 'Я']
 
 // todo: update dictionary
 export const ROLE_DICTIONARY = {
 	'Participant': 'Участник',
+}
+
+
+export const LOCATION_DICTIONARY = {
+	'/profile/messages': 'Сообщения',
+	'/profile/contests': 'Конкурсы',
+	'/profile/recommendation': 'Рекомендации',
+	'/profile/tickets': 'Билеты',
+	'/profile/personal-data': 'Персональные данные',
 }
