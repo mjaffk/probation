@@ -1,7 +1,6 @@
 import {call, put, select} from 'redux-saga/effects'
 import {userTokenSelector} from "../selectors"
 import {LOAD_PROFILE, SUCCESS, FAIL} from '../action-types'
-import errorParser from '../../utils/error-parser'
 import {loadProfileAPI} from '../../constants/api-config'
 
 export default function* sagaLoadProfile() {
@@ -15,7 +14,7 @@ export default function* sagaLoadProfile() {
 	} catch (error) {
 		yield put({
 			type: LOAD_PROFILE + FAIL,
-			error: errorParser(error)
+			error: error
 		})
 	}
 }

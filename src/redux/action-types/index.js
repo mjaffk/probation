@@ -7,7 +7,7 @@ export const LOGOUT_USER = 'LOGOUT_USER'
 export const USER_PASSWORD_RECOVERY = 'USER_PASSWORD_RECOVERY'
 
 export const LOAD_PROFILE = 'LOAD_PROFILE'
-export const UPDATE_PROFILE = 'LOAD_PROFILE'
+export const UPDATE_PROFILE = 'UPDATE_PROFILE'
 
 export const SUCCESS = '_SUCCESS'
 export const START = '_START'

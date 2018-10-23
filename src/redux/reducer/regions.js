@@ -15,8 +15,6 @@ export const ReducerRecord = (arr) => new Record({
 export default (state = new ReducerRecord(), action) => {
 	const {type, response, error} = action
 
-	console.log(state)
-
 	switch (type) {
 		case LOAD_DICTIONARY + START:
 			return state.set('loading', true)

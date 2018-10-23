@@ -1,26 +1,64 @@
-import {call, put, select} from 'redux-saga/effects'
-import {userTokenSelector} from "../selectors"
-import axios from 'axios'
-import {ProfileAPI} from '../../constants'
-import {LOAD_PROFILE, SUCCESS, FAIL} from '../action-types'
-import errorParser from '../../utils/error-parser'
+import {call, put, select, all} from 'redux-saga/effects'
+import {userIdSelector, userRoleSelector, userTokenSelector} from "../selectors"
+import {UPDATE_PROFILE, SUCCESS, FAIL} from '../action-types'
+import {updateProfileAPI} from "../../constants/api-config"
+import {stopSubmit, reset} from "redux-form"
+import {PERSONAL_DATA} from "../../constants"
 
-export default function* sagaLoadProfile() {
+
+export default function* sagaUpdateProfile(action) {
+	const {data} = action.payload
 	try {
-		const token = select(userTokenSelector)
-		const response = yield call(axios.post, ProfileAPI, data, {
-			headers: {
-				'token': token
-			},
+		const token = yield select(userTokenSelector)
+		const role = yield select(userRoleSelector)
+		const userId = yield select(userIdSelector)
+		const response = yield call(updateProfileAPI, {
+			token, data: {
+				'active_school': null,
+				birthday: data.birthday,
+				email: data.email,
+				'email_confirmed': true,
+				'esia_id': null,
+				gender: null,
+				'init_password': null,
+				'personal_data': {
+					snils: "1231313",
+					city: data.city,
+					school: data.school,
+					grade: parseInt(data.grade, 10),
+					'grade_letter': data.gradeLetter,
+				},
+				city: data.city,
+				grade: data.grade,
+				'grade_letter': data.gradeLetter,
+				school: data.school,
+				snils: "",
+				phone: null,
+				region: parseInt(data.region, 10),
+				role: role,
+				'school_data': [],
+				'user_id': userId
+			}
 		})
-		yield put({
-			type: LOAD_PROFILE + SUCCESS,
-			response: response.data //todo: map data to user.profile
-		})
+		yield all([
+			put({
+				type: UPDATE_PROFILE + SUCCESS,
+				response: response.data
+			}),
+			put(reset(PERSONAL_DATA))
+		])
 	} catch (error) {
-		yield put({
-			type: LOAD_PROFILE + FAIL,
-			error: errorParser(error)
-		})
+		yield all([
+			put({
+				type: UPDATE_PROFILE + FAIL,
+				error: error
+			}),
+			put(stopSubmit(PERSONAL_DATA, {
+				city: error.response.data.city,
+				grade:  error.response.data.grade,
+				gradeLetter:  error.response.data.grade_letter,
+				school:  error.response.data.school
+			}))
+		])
 	}
 }

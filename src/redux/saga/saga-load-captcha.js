@@ -1,7 +1,6 @@
 import {call, put} from 'redux-saga/effects'
 import generateUUID from "../../utils/generate-uuid"
 import {FAIL, LOAD_CAPTCHA, SUCCESS} from "../action-types/index"
-import errorParser from '../../utils/error-parser'
 import {loadCaptchaAPI} from "../../constants/api-config"
 
 export default function* sagaLoadCaptcha() {
@@ -15,7 +14,7 @@ export default function* sagaLoadCaptcha() {
 	} catch (error) {
 		yield put({
 				type: LOAD_CAPTCHA + FAIL,
-				error: errorParser(error)
+				error: error
 			}
 		)
 	}
