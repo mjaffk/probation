@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {connect} from "react-redux"
 import {Route, Switch, Redirect, Link} from 'react-router-dom'
 import PersonalData from "./personal-data/index"
 import MainNavMenu from "./main-nav-menu"
@@ -7,6 +8,8 @@ import './profile.css'
 import ProfileBreadCrumb from "../../common/breadcrumb"
 import Hamburger from "../../common/hamburger"
 import logo from "../../../pictures/logo.jpg"
+import {userIdSelector, userRoleNameSelector} from "../../../redux/selectors"
+import {loadProfile} from "../../../redux/action-creators"
 
 class Profile extends Component {
 	state = {
@@ -17,12 +20,16 @@ class Profile extends Component {
 		this.setState({sidebarOpen: !this.state.sidebarOpen})
 	}
 
+	componentDidMount() {
+		this.props.loadProfile && this.props.loadProfile()
+	}
+
 	render() {
 		return (
 			<Sidebar
 				sidebarId="nav_menu_wrapper"
 				contentId="profile"
-				sidebar={<MainNavMenu role={'Участник'} userId={'K0SWYXYGC1'}/>}
+				sidebar={<MainNavMenu role={this.props.role} userId={this.props.userId}/>}
 				docked={this.state.sidebarOpen}
 				styles={{sidebar: {background: "white"}}}
 			>
@@ -67,4 +74,12 @@ class Profile extends Component {
 	}
 }
 
-export default Profile
+export default connect(
+	(state) => ({
+		userId: userIdSelector(state),
+		role: userRoleNameSelector(state)
+	}),
+	{
+		loadProfile
+	}
+)(Profile)
