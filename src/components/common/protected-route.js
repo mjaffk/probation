@@ -6,8 +6,10 @@ import UnAuthorized from "./unauthorised/index"
 
 class ProtectedRout extends Component {
 	render() {
-		// Route should not take component as attribute.
-		// Component uses in renderProtected as ProtectedComponent
+		/**
+		 * @description Route should not take component as attribute.
+		 * Component is used in renderProtected as ProtectedComponent
+		 */
 		const {component, ...rest} = this.props
 		return (<div>
 			<Route {...rest} render={this.renderProtected}/>
