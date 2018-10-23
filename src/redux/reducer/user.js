@@ -11,10 +11,10 @@ import {
 } from '../action-types/index'
 
 
-const ReducerRecord = new Record({
-	userId: null,
+export const ReducerRecord = (userId = null, token = null)=> new Record({
+	userId: userId,
 	email: null,
-	token: null,
+	token: token,
 	duration: null,
 	role: '',
 
@@ -52,7 +52,7 @@ const ReducerRecord = new Record({
 	profileLoaded: false,
 	profileLoadError: null,
 
-})
+})()
 
 export default (state, action) => {
 	state = new ReducerRecord().merge(state)
