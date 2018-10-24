@@ -1,6 +1,5 @@
 import {ROLE_DICTIONARY} from "../../constants"
 
-
 export const regionsSelector = (state) => state.regions.regions.toArray()
 export const loadingRegionsSelector = (state) => state.regions.loading
 export const regionsLoadErrorSelector = (state) => state.regions.error
@@ -12,18 +11,34 @@ export const captchaLoadErrorSelector = (state) => state.captcha.error
 
 export const userIdSelector = (state) => state.user.userId
 export const userTokenSelector = (state) => state.user.token
-export const userEmailSelector = (state) => state.user.email
-export const userRegisteringSelector = (state) => state.user.registering
-export const userRegistrationErrorSelector = (state) => state.user.registerError
 export const userRoleNameSelector = (state) => ROLE_DICTIONARY[state.user.role]
 export const userRoleSelector = (state) => state.user.role
+export const userEmailSelector = (state) => state.user.email
+export const userMessageSelector = (state) => state.user.message
+
+export const userRegisteringSelector = (state) => state.user.registering
+export const userRegisteredSelector = (state) => state.user.registered
+export const userRegistrationErrorSelector = (state) => state.user.registerError
 
 export const userAuthorizingSelector = (state) => state.user.authorizing
 export const userAuthorizeErrorSelector = (state) => state.user.authorizeError
 
-export const passwordRecoveringSelector = (state) => state.user.passwordRecovering
-export const passwordRecoveredSelector = (state) => state.user.passwordRecovered
-export const passwordRecoveryErrorSelector = (state) => state.user.passwordRecoveryError
+export const activateMessageSelector = (state) => state.user.activateMessage
+export const userActivatingSelector = (state) => state.user.activating
+export const userActivatedSelector = (state) => state.user.activated
+export const userActivateErrorSelector = (state) => state.user.activateError
+
+export const passwordResettingSelector = (state) => state.password.passwordResetting
+export const passwordResetSelector = (state) => state.password.passwordReset
+export const passwordResetErrorSelector = (state) => state.password.passwordResetError
+
+export const passwordSettingSelector = (state) => state.password.passwordSetting
+export const passwordSetErrorSelector = (state) => state.password.passwordSetError
+
+export const passwordChangingSelector = (state) => state.password.passwordChanging
+export const passwordChangedSelector = (state) => state.password.passwordChanged
+export const passwordCahgedErrorSelector = (state) => state.password.passwordChangeError
+
 
 export const profileLoadingSelector = (state) => state.user.profileLoading
 export const profileLoadedSelector = (state) => state.user.profileLoaded

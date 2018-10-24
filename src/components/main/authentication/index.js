@@ -4,6 +4,7 @@ import Forgot from './forgot'
 import SignIn from './sign-in'
 import SignUp from './sign-up'
 import SignOut from './sign-out'
+import SetPassword from "./set-password/index"
 
 class Authentication extends Component {
 	render() {
@@ -11,8 +12,10 @@ class Authentication extends Component {
 			<Switch>
 				<Redirect from={'/auth'} to={'/auth/signin'} exact/>
 				<Redirect from={'/auth/cntstnt'} to={'/auth/cntstnt/signup'} exact/>
+				<Route path="auth/activate/:token" component={SignIn}/>
 				<Route path="/auth/signin" component={SignIn}/>
 				<Route path="/auth/cntstnt/signup" component={SignUp}/>
+				<Route path="/auth/forgot/:token" component={SetPassword} />
 				<Route path="/auth/forgot" component={Forgot}/>
 				<Route path="/auth/signout" component={SignOut}/>
 			</Switch>

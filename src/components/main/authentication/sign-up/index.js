@@ -8,7 +8,7 @@ import {alphaNumeric, email, minLength, required, requiredConformation} from '..
 import {PasswordHint} from '../../../common/input/hints'
 import Select from '../../../common/select'
 import {loadCaptcha, loadDictionary, registerUser} from '../../../../redux/action-creators'
-import {modalStyle, SIGN_UP} from "../../../../constants"
+import {MODAL_STYLE, SIGN_UP} from "../../../../constants"
 import Loader from "../../../common/loader"
 import InputPassword from "../../../common/input/input-password"
 import AlertModal from "../../../common/modals/alert-modal"
@@ -21,13 +21,13 @@ import {
 	regionsSelector,
 	userEmailSelector,
 	userRegisteringSelector,
+	userRegisteredSelector,
 	userRegistrationErrorSelector,
 	uuidSelector
 } from "../../../../redux/selectors"
 import history from '../../../../utils/history'
 
 class SignUp extends Component {
-
 	componentDidMount() {
 		//download dictionary of regions
 		this.props.loadDictionary && !this.props.regions.length && !this.props.regionsLoading &&
@@ -39,20 +39,23 @@ class SignUp extends Component {
 	}
 
 	render() {
+		const {captchaLoadError, regionsLoadError, userRegistrationError} = this.props
+
 		const formSubmitting = (data, dispatch, props) => {
 			props.registerUser({
-				values: data,
+				data,
 				uuid: props.uuid
 			})
 		}
 
-		const getErrorMessage = () => (this.props.captchaLoadError && this.props.captchaLoadError.errorToUser) ||
-			(this.props.regionsLoadError && this.props.regionsLoadError.errorToUser) ||
-			(this.props.userRegistrationError && this.props.userRegistrationError.errorToUser)
+		const isRegistered = () => this.props.userRegistered
+
+		const getErrorMessage = () =>
+			(captchaLoadError && captchaLoadError.errorToUser) ||
+			(regionsLoadError && regionsLoadError.errorToUser) ||
+			(userRegistrationError && userRegistrationError.errorToUser)
 
 		const isLoading = () => this.props.regionsLoading || this.props.loadingCaptcha || this.props.userRegistering
-
-		const isRegistered = () => !!this.props.userEmail
 
 		return (<div className="< d-flex position-absolute h-100 w-100">
 			<div className="container d-flex flex-column m-auto col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4 ">
@@ -60,7 +63,7 @@ class SignUp extends Component {
 				{isLoading() && <Loader/>}
 
 				{isRegistered() && <AlertModal
-					style={modalStyle}
+					style={MODAL_STYLE}
 					message={`Для успешного завершения регистрации необходимо активировать
 						учетную запись, перейдя по ссылке из активационного письма,
 						отправленного на адрес электронной почты ${this.props.userEmail}`}
@@ -69,7 +72,7 @@ class SignUp extends Component {
 				/>}
 
 				{getErrorMessage() && <AlertModal
-					style={modalStyle}
+					style={MODAL_STYLE}
 					message={getErrorMessage()}
 					buttonLabel='Закрыть'
 				/>}
@@ -171,6 +174,7 @@ export default connect(
 		captchaLoadError: captchaLoadErrorSelector(state),
 		userEmail: userEmailSelector(state),
 		userRegistering: userRegisteringSelector(state),
+		userRegistered: userRegisteredSelector(state),
 		userRegistrationError: userRegistrationErrorSelector(state),
 	}),
 	{
@@ -178,7 +182,4 @@ export default connect(
 		loadCaptcha,
 		registerUser,
 	}
-)(reduxForm({
-	form: SIGN_UP,
-	validate
-})(SignUp))
+)(reduxForm({form: SIGN_UP, validate})(SignUp))

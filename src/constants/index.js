@@ -7,9 +7,10 @@ export const SERVER = 'https://10.31.7.111/'
 export const SIGN_UP = 'signUp'
 export const SIGN_IN = 'signIn'
 export const FORGOT = 'forgot'
+export const SET_NEW_PASSWORD = 'setNewPassword'
 export const PERSONAL_DATA = 'personalData'
 
-export const modalStyle = {
+export const MODAL_STYLE = {
 	content: {
 		top: '50%',
 		left: '50%',
@@ -47,4 +48,8 @@ export const LOCATION_DICTIONARY = {
 	'/profile/recommendation': 'Рекомендации',
 	'/profile/tickets': 'Билеты',
 	'/profile/personal-data': 'Персональные данные',
+}
+
+export const MESSAGE_DICTIONARY = {
+	"new password is set" : "Вы успешно сменили пароль"
 }

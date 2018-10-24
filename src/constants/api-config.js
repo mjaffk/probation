@@ -29,6 +29,23 @@ export const userRegisterAPI = ({uuid, data}) => {
 	})
 }
 
+/**
+ * API to activate new user
+ * @param {string} token
+ * @returns {AxiosPromise<any>}
+ */
+export const activateUserAPI = ({token}) => {
+	return apiConfig.get('user/activate/' + token, {
+		transformResponse: (data) => {
+			data = JSON.parse(data)
+			return {
+				message: data.message,
+				userId: data.userid
+			}
+		}
+	})
+}
+
 
 /**
  * API to authorize user in app (request token)
@@ -51,12 +68,38 @@ export const userAuthorizeAPI = ({userId, password}) => {
 
 
 /**
- * API to recovery password by email
+ * API to reset password by email
  * @param {string} email
  * @returns {AxiosPromise<any>}
  */
-export const recoveryPasswordAPI = ({email}) => {
-	return apiConfig.post(`user/reset_password/`, email)
+export const resetPasswordAPI = ({email}) => {
+	return apiConfig.post(`user/reset_password/`, {email: email})
+}
+
+
+/**
+ * API to set password after reset
+ * @param { Object} data : {{string} password, {string} token }
+ * @returns {AxiosPromise<any>}
+ */
+export const setPasswordAPI = ({data}) => {
+	return apiConfig.post(`user/set_password/`, data)
+}
+
+
+/**
+ * API to change password in personal data
+ * @param { Object} data : {{string} old_passwd, {string} new_passwd }
+ * @param {string} token
+ * @returns {AxiosPromise<any>}
+ */
+export const changePasswordAPI = ({token, data}) => {
+	return apiConfig.post(`change_password/`, data, {
+			headers: {
+				'Authorization': 'Bearer ' + token
+			},
+		}
+	)
 }
 
 
@@ -66,9 +109,9 @@ export const recoveryPasswordAPI = ({email}) => {
  * @returns {AxiosPromise<any>}
  */
 export const logoutUserAPI = ({token}) => {
-	return apiConfig.get('logout/',{
+	return apiConfig.get('logout/', {
 		headers: {
-			'Authorization': 'Bearer '+ token
+			'Authorization': 'Bearer ' + token
 		}
 	})
 }
@@ -82,7 +125,7 @@ export const logoutUserAPI = ({token}) => {
 export const loadProfileAPI = ({token}) => {
 	return apiConfig.get('user/current', {
 		headers: {
-			'Authorization': 'Bearer '+ token
+			'Authorization': 'Bearer ' + token
 		},
 		transformResponse: (data) => {
 			data = JSON.parse(data).result.data
@@ -119,7 +162,7 @@ export const loadProfileAPI = ({token}) => {
 export const updateProfileAPI = ({token, data}) => {
 	return apiConfig.post('user/current', data, {
 		headers: {
-			'Authorization': 'Bearer '+ token
+			'Authorization': 'Bearer ' + token
 		},
 		transformResponse: (data) => {
 			if (!JSON.parse(data).result) return JSON.parse(data)

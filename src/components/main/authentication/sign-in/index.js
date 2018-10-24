@@ -5,11 +5,16 @@ import {Field, reduxForm} from 'redux-form'
 import {required} from '../../../common/validate'
 import Input from '../../../common/input'
 import {authorizeUser} from '../../../../redux/action-creators'
-import {modalStyle, SIGN_IN} from "../../../../constants"
+import {MODAL_STYLE, SIGN_IN} from "../../../../constants"
 import Loader from "../../../common/loader"
 import InputPassword from "../../../common/input/input-password"
 import AlertModal from "../../../common/modals/alert-modal"
-import {userAuthorizeErrorSelector, userAuthorizingSelector} from "../../../../redux/selectors"
+import {
+	userAuthorizeErrorSelector,
+	userAuthorizingSelector,
+	userIdSelector,
+	userMessageSelector
+} from "../../../../redux/selectors"
 
 class SignIn extends Component {
 	render() {
@@ -27,12 +32,13 @@ class SignIn extends Component {
 				{isLoading() && <Loader/>}
 
 				{getErrorMessage() && <AlertModal
-					style={modalStyle}
+					style={MODAL_STYLE}
 					message={getErrorMessage()}
 					buttonLabel='Закрыть'
 				/>}
 
 				<h1 className="h3 text-left font-wight-normal">Войти в аккаунт</h1>
+				{this.props.message && <div className='my-2'>{this.props.message}</div>}
 				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 
 					<Field
@@ -65,12 +71,11 @@ class SignIn extends Component {
 
 export default connect(
 	(state) => ({
-		initialValues: {userId: state.user.userId},
+		initialValues: {userId: userIdSelector(state)},
 		userAuthorizing: userAuthorizingSelector(state),
 		userAuthorizeError: userAuthorizeErrorSelector(state),
+		message: userMessageSelector(state)
 	}), {
 		authorizeUser
 	}
-)(reduxForm({
-	form: SIGN_IN,
-})(SignIn))
+)(reduxForm({form: SIGN_IN})(SignIn))

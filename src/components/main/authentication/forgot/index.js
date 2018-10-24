@@ -4,14 +4,14 @@ import AuthMenu from '../auth-menu'
 import {Field, reduxForm} from 'redux-form'
 import {required, email} from '../../../common/validate'
 import Input from '../../../common/input'
-import {recoveryPassword} from '../../../../redux/action-creators'
-import {modalStyle, FORGOT} from "../../../../constants"
+import {resetPassword} from '../../../../redux/action-creators'
+import {MODAL_STYLE, FORGOT} from "../../../../constants"
 import Loader from "../../../common/loader"
 import AlertModal from "../../../common/modals/alert-modal"
 import {
-	passwordRecoveredSelector,
-	passwordRecoveringSelector,
-	passwordRecoveryErrorSelector,
+	passwordResetSelector,
+	passwordResettingSelector,
+	passwordResetErrorSelector,
 	userEmailSelector,
 } from "../../../../redux/selectors"
 import history from "../../../../utils/history"
@@ -19,12 +19,12 @@ import history from "../../../../utils/history"
 class Forgot extends Component {
 	render() {
 		const formSubmitting = (data, dispatch, props) => {
-			props.recoveryPassword({email: data.email})
+			props.resetPassword({email: data.email})
 		}
 
-		const getErrorMessage = () => (this.props.passwordRecoveryError && this.props.passwordRecoveryError.errorToUser)
-		const isLoading = () => this.props.passwordRecovering
-		const isPasswordRecoverySuccess = () => (this.props.passwordRecovered && this.props.userEmail)
+		const getErrorMessage = () => (this.props.passwordResetError && this.props.passwordResetError.errorToUser)
+		const isLoading = () => this.props.passwordResetting
+		const isPasswordResetSuccess = () => (this.props.passwordReset && this.props.userEmail)
 
 		return (<div className="< d-flex position-absolute h-75 w-100">
 			<div className="container d-flex flex-column m-auto col-11 col-sm-8 col-md-6  col-xl-4 ">
@@ -32,13 +32,13 @@ class Forgot extends Component {
 				{isLoading() && <Loader/>}
 
 				{getErrorMessage() && <AlertModal
-					style={modalStyle}
+					style={MODAL_STYLE}
 					message={getErrorMessage()}
 					buttonLabel='Закрыть'
 				/>}
 
-				{(isPasswordRecoverySuccess()) && <AlertModal
-					style={modalStyle}
+				{isPasswordResetSuccess() && <AlertModal
+					style={MODAL_STYLE}
 					message={` В течение минуты на адрес ${this.props.userEmail} придёт ссылка для смены пароля`}
 					buttonLabel='Закрыть'
 					onAfterClose={() => history.push('/auth/signin')}
@@ -70,13 +70,11 @@ class Forgot extends Component {
 
 export default connect(
 	(state) => ({
-		passwordRecovering: passwordRecoveringSelector(state),
-		passwordRecovered: passwordRecoveredSelector(state),
-		passwordRecoveryError: passwordRecoveryErrorSelector(state),
+		passwordResetting: passwordResettingSelector(state),
+		passwordReset: passwordResetSelector(state),
+		passwordResetError: passwordResetErrorSelector(state),
 		userEmail: userEmailSelector(state)
 	}), {
-		recoveryPassword
+		resetPassword
 	}
-)(reduxForm({
-	form: FORGOT,
-})(Forgot))
+)(reduxForm({form: FORGOT})(Forgot))

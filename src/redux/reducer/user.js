@@ -1,22 +1,26 @@
 import {Record} from 'immutable'
 import {
-	REGISTER_USER,
+	ACTIVATE_USER,
 	AUTHORIZE_USER,
-	USER_PASSWORD_RECOVERY,
+	FAIL,
 	LOAD_PROFILE,
 	LOGOUT_USER,
-	SUCCESS,
+	REGISTER_USER,
+	RESET_PASSWORD,
+	SET_PASSWORD,
 	START,
-	FAIL
+	SUCCESS,
+	UPDATE_PROFILE
 } from '../action-types/index'
 
 
-export const ReducerRecord = (userId = null, token = null)=> new Record({
+export const ReducerRecord = (userId = null, token = null) => new Record({
 	userId: userId,
 	email: null,
 	token: token,
 	duration: null,
 	role: '',
+	message: null,
 
 	profile: {
 		personalData: {
@@ -31,26 +35,32 @@ export const ReducerRecord = (userId = null, token = null)=> new Record({
 			gradeLetter: '',
 		},
 		phone: '',
-		email: '',
 	},
 
 // status of user registering request
 	registering: false,
+	registered: false,
 	registerError: null,
 
 // status of user authorizing request
 	authorizing: false,
 	authorizeError: null,
 
-// status of password recovery request
-	passwordRecovering: false,
-	passwordRecovered: false,
-	passwordRecoveryError: null,
+// status of user activation request
+	activateMessage: null,
+	activating: false,
+	activated: false,
+	activateError: null,
 
 // status of profile loading request
 	profileLoading: false,
 	profileLoaded: false,
 	profileLoadError: null,
+
+// status of profile updating request
+	profileUpdating: false,
+	profileUpdated: false,
+	profileUpdateError: null,
 
 })()
 
@@ -68,12 +78,31 @@ export default (state = new ReducerRecord(), action) => {
 				.set('userId', response.userId)
 				.set('email', response.email)
 				.set('registering', false)
+				.set('registered', true)
 				.set('registerError', null)
 
 		case REGISTER_USER + FAIL :
 			return state
 				.set('registering', false)
 				.set('registerError', error)
+
+// User activation
+		case ACTIVATE_USER + START:
+			return state.set('authorizing', true)
+
+		case ACTIVATE_USER + SUCCESS:
+			return state
+				.set('token', response.token)
+				.set('duration', response.duration)
+				.set('userId', response.userId)
+				.set('activating', false)
+				.set('activated', true)
+				.set('activateError', null)
+
+		case ACTIVATE_USER + FAIL :
+			return state
+				.set('activating', false)
+				.set('activateError', error)
 
 // User authorization
 		case AUTHORIZE_USER + START:
@@ -92,24 +121,9 @@ export default (state = new ReducerRecord(), action) => {
 				.set('authorizing', false)
 				.set('authorizeError', error)
 
-// User make password recovery
-		case USER_PASSWORD_RECOVERY + START:
-			return state.set('passwordRecovering', true)
-
-		case USER_PASSWORD_RECOVERY + SUCCESS:
-			return state
-				.set('email', response.email)
-				.set('passwordRecovering', false)
-				.set('passwordRecovered', true)
-				.set('passwordRecoveryError', null)
-
-		case USER_PASSWORD_RECOVERY + FAIL :
-			return state
-				.set('passwordRecovering', false)
-				.set('passwordRecoveryError', error)
-
 // Load user profile
 		case LOAD_PROFILE + START:
+
 			return state.set('profileLoading', true)
 
 		case LOAD_PROFILE + SUCCESS:
@@ -119,6 +133,7 @@ export default (state = new ReducerRecord(), action) => {
 				.set('email', response.email)
 				.set('role', response.role)
 				.set('profileLoading', false)
+				.set('profileLoaded', true)
 				.set('profileLoadError', null)
 
 		case LOAD_PROFILE + FAIL :
@@ -126,6 +141,41 @@ export default (state = new ReducerRecord(), action) => {
 				.set('profileLoading', false)
 				.set('profileLoadError', error)
 
+// Update user profile
+		case UPDATE_PROFILE + START:
+
+			return state.set('profileUpdating', true)
+
+		case UPDATE_PROFILE + SUCCESS:
+			return state
+				.set('profile', response.profile)
+				.set('userId', response.userId)
+				.set('email', response.email)
+				.set('role', response.role)
+				.set('profileUpdating', false)
+				.set('profileUpdated', true)
+				.set('profileUpdateError', null)
+
+		case UPDATE_PROFILE + FAIL :
+			return state
+				.set('profileUpdating', false)
+				.set('profileUpdateError', error)
+
+//Reset password passed
+		case RESET_PASSWORD + SUCCESS:
+			return state
+				.set('email', response.email)
+				.set('userId', response.userId)
+
+// User set password after reset
+		case SET_PASSWORD + START:
+			return state
+				.set('message', null)
+
+		case SET_PASSWORD + SUCCESS:
+			return state
+				.set('message', response.message)
+				.set('userId', response.userId)
 
 // Logout user
 		case LOGOUT_USER + START :

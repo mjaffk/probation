@@ -6,9 +6,10 @@ import {
 	LOGOUT_USER,
 	REGISTER_USER,
 	START,
-	UPDATE_PROFILE,
-	USER_PASSWORD_RECOVERY
+	UPDATE_PROFILE, ACTIVATE_USER,
+	RESET_PASSWORD, SET_PASSWORD, CHANGE_PASSWORD
 } from '../action-types/index'
+
 
 export function loadDictionary() {
 	return ({
@@ -16,21 +17,34 @@ export function loadDictionary() {
 	})
 }
 
+
 export function loadCaptcha() {
 	return ({
 		type: LOAD_CAPTCHA + START,
 	})
 }
 
-export function registerUser({values, uuid}) {
+
+export function registerUser({data, uuid}) {
 	return ({
 		type: REGISTER_USER + START,
 		payload: {
-			data: values,
+			data,
 			uuid
 		}
 	})
 }
+
+
+export function activateUser({token}) {
+	return ({
+		type: ACTIVATE_USER,
+		payload: {
+			token
+		}
+	})
+}
+
 
 export function authorizeUser({userId, password}) {
 	return ({
@@ -42,26 +56,52 @@ export function authorizeUser({userId, password}) {
 	})
 }
 
+
 export function logoutUser() {
 	return ({
 		type: LOGOUT_USER + START,
 	})
 }
 
-export function recoveryPassword({email}) {
+
+export function resetPassword({email}) {
 	return ({
-		type: USER_PASSWORD_RECOVERY + START,
+		type: RESET_PASSWORD + START,
 		payload: {
 			email
 		},
 	})
 }
 
+
+export function setPassword({token, password}) {
+	return ({
+		type: SET_PASSWORD + START,
+		payload: {
+			token,
+			password
+		},
+	})
+}
+
+
+export function changePassword({oldPassword, newPassword}) {
+	return ({
+		type: CHANGE_PASSWORD + START,
+		payload: {
+			oldPassword,
+			newPassword
+		},
+	})
+}
+
+
 export function loadProfile() {
 	return ({
 		type: LOAD_PROFILE + START,
 	})
 }
+
 
 export function updateProfile({data}) {
 	return ({
