@@ -4,7 +4,7 @@ import AuthMenu from '../auth-menu'
 import {Field, reduxForm} from 'redux-form'
 import {required, email} from '../../../common/validate'
 import Input from '../../../common/input'
-import {resetPassword} from '../../../../redux/action-creators'
+import {resetPassword, forgotStatusClean} from '../../../../redux/action-creators'
 import {MODAL_STYLE, FORGOT} from "../../../../constants"
 import Loader from "../../../common/loader"
 import AlertModal from "../../../common/modals/alert-modal"
@@ -17,6 +17,11 @@ import {
 import history from "../../../../utils/history"
 
 class Forgot extends Component {
+
+	componentWillUnmount() {
+		this.props.forgotStatusClean && this.props.forgotStatusClean()
+	}
+
 	render() {
 		const formSubmitting = (data, dispatch, props) => {
 			props.resetPassword({email: data.email})
@@ -75,6 +80,7 @@ export default connect(
 		passwordResetError: passwordResetErrorSelector(state),
 		userEmail: userEmailSelector(state)
 	}), {
-		resetPassword
+		resetPassword,
+		forgotStatusClean
 	}
 )(reduxForm({form: FORGOT})(Forgot))

@@ -6,9 +6,12 @@ import {Redirect} from "react-router-dom"
 
 
 class SignOut extends Component {
-	render() {
+	componentDidMount(){
 		this.props.logoutUser()
-		return (<Redirect to='/auth'/>)
+	}
+
+	render() {
+		return (<Redirect to='/auth/signin'/>)
 	}
 }
 

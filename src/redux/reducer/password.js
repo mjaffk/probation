@@ -3,6 +3,7 @@ import {
 	RESET_PASSWORD,
 	SET_PASSWORD,
 	CHANGE_PASSWORD,
+	FORGOT_STATUS_CLEAN,
 	SUCCESS,
 	START,
 	FAIL
@@ -75,6 +76,11 @@ export default (state = new ReducerRecord(), action) => {
 				.set('passwordChanging', false)
 				.set('passwordChangeError', error)
 
+		case FORGOT_STATUS_CLEAN:
+			return state
+				.set('passwordResetting', false)
+				.set('passwordReset', false)
+				.set('passwordResetError', null)
 
 // Default state
 		default:

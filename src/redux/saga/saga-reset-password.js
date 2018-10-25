@@ -8,8 +8,7 @@ export default function* sagaResetPassword(action) {
 	const {email} = action.payload
 	try {
 		const response = yield call(resetPasswordAPI, {email})
-		yield all
-		([
+		yield all([
 			put({
 				type: RESET_PASSWORD + SUCCESS,
 				response: {

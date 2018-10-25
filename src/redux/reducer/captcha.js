@@ -1,6 +1,7 @@
 import { Record } from 'immutable'
 import {
 	LOAD_CAPTCHA,
+	SIGN_UP_STATUS_CLEAN,
 	SUCCESS,
 	START,
 	FAIL
@@ -31,6 +32,9 @@ export default (state = new ReducerRecord(), action) => {
 			return state
 				.set('loading', false)
 				.set('error', error)
+
+		case SIGN_UP_STATUS_CLEAN :
+			return new ReducerRecord()
 
 		default:
 			return state

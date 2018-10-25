@@ -84,6 +84,6 @@ export default connect((state) => ({
 		passwordSetError: passwordSetErrorSelector(state)
 	}),
 	{
-		setPassword
+		setPassword,
 	}
 )(reduxForm({form: SET_NEW_PASSWORD, validate})(SetPassword))

@@ -4,7 +4,7 @@ import AuthMenu from '../auth-menu'
 import {Field, reduxForm} from 'redux-form'
 import {required} from '../../../common/validate'
 import Input from '../../../common/input'
-import {authorizeUser} from '../../../../redux/action-creators'
+import {authorizeUser, activateUser, signInStatusClean} from '../../../../redux/action-creators'
 import {MODAL_STYLE, SIGN_IN} from "../../../../constants"
 import Loader from "../../../common/loader"
 import InputPassword from "../../../common/input/input-password"
@@ -17,6 +17,18 @@ import {
 } from "../../../../redux/selectors"
 
 class SignIn extends Component {
+
+	componentDidMount() {
+		this.props.location.state && this.props.location.state.token && this.props.activateUser && this.props.activateUser({
+			token: this.props.location.state.token
+		})
+	}
+
+	componentWillUnmount() {
+		this.props.signInStatusClean && this.props.signInStatusClean()
+	}
+
+
 	render() {
 		const formSubmitting = (data, dispatch, props) => {
 			props.authorizeUser(data)
@@ -76,6 +88,8 @@ export default connect(
 		userAuthorizeError: userAuthorizeErrorSelector(state),
 		message: userMessageSelector(state)
 	}), {
-		authorizeUser
+		authorizeUser,
+		activateUser,
+		signInStatusClean
 	}
 )(reduxForm({form: SIGN_IN})(SignIn))

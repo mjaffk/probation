@@ -7,7 +7,7 @@ import Checkbox from '../../../common/input/checkbox'
 import {alphaNumeric, email, minLength, required, requiredConformation} from '../../../common/validate'
 import {PasswordHint} from '../../../common/input/hints'
 import Select from '../../../common/select'
-import {loadCaptcha, loadDictionary, registerUser} from '../../../../redux/action-creators'
+import {loadCaptcha, loadDictionary, registerUser, signUpStatusClean} from '../../../../redux/action-creators'
 import {MODAL_STYLE, SIGN_UP} from "../../../../constants"
 import Loader from "../../../common/loader"
 import InputPassword from "../../../common/input/input-password"
@@ -36,6 +36,10 @@ class SignUp extends Component {
 		//download captcha
 		this.props.loadCaptcha && !this.props.captcha.length && !this.props.loadingCaptcha &&
 		this.props.loadCaptcha()
+	}
+
+	componentWillUnmount() {
+		this.props.signUpStatusClean && this.props.signUpStatusClean()
 	}
 
 	render() {
@@ -181,5 +185,6 @@ export default connect(
 		loadDictionary,
 		loadCaptcha,
 		registerUser,
+		signUpStatusClean
 	}
 )(reduxForm({form: SIGN_UP, validate})(SignUp))

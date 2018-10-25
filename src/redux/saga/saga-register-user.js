@@ -1,5 +1,5 @@
 import {call, put, all} from 'redux-saga/effects'
-import {SET_NEW_PASSWORD} from "../../constants/index"
+import {SIGN_UP} from "../../constants/index"
 import {FAIL, REGISTER_USER, SUCCESS} from "../action-types/index"
 import {stopSubmit, reset} from 'redux-form'
 import {userRegisterAPI} from "../../constants/api-config"
@@ -20,9 +20,12 @@ export default function* sagaRegisterUser(action) {
 		yield all([
 			put({
 				type: REGISTER_USER + SUCCESS,
-				response: response.data,
+				response: {
+					email: response.data.email,
+					userId: response.data.userid
+				},
 			}),
-			put(reset(SET_NEW_PASSWORD))
+			put(reset(SIGN_UP))
 		])
 	} catch (error) {
 		yield all([
@@ -31,7 +34,7 @@ export default function* sagaRegisterUser(action) {
 					error: error
 				}
 			),
-			put(stopSubmit(SET_NEW_PASSWORD, error.response.data))
+			put(stopSubmit(SIGN_UP, error.response.data))
 		])
 	}
 }

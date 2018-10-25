@@ -3,7 +3,7 @@ import {MESSAGE_DICTIONARY, SET_NEW_PASSWORD} from "../../constants/index"
 import {FAIL, SET_PASSWORD, SUCCESS} from "../action-types/index"
 import {stopSubmit, reset} from 'redux-form'
 import {setPasswordAPI} from "../../constants/api-config"
-import history from '../../utils/history'
+import {push} from "react-router-redux"
 
 export default function* sagaSetPassword(action) {
 	const {password, token} = action.payload
@@ -23,7 +23,7 @@ export default function* sagaSetPassword(action) {
 			},
 		}),
 			put(reset(SET_NEW_PASSWORD)),
-			history.push('/auth/signin')
+			put(push('/auth/signin'))
 		])
 	} catch (error) {
 		yield all([put({

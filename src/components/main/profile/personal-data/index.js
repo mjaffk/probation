@@ -17,7 +17,7 @@ import Input from "../../../common/input"
 import Select from "../../../common/select"
 import arrToObj from "../../../../utils/arr-to-obj"
 import './personal-data.css'
-import {loadDictionary, loadProfile, updateProfile} from "../../../../redux/action-creators"
+import {loadDictionary, loadProfile, updateProfile, personalDataStatusClean} from "../../../../redux/action-creators"
 import PropTypes from "prop-types"
 
 
@@ -30,6 +30,10 @@ class PersonalData extends Component {
 		this.props.loadDictionary()
 
 		this.props.loadProfile && !this.props.profileLoading && this.props.loadProfile()
+	}
+
+	componentWillUnmount() {
+		this.props.personalDataStatusClean && this.props.personalDataStatusClean()
 	}
 
 	render() {
@@ -182,6 +186,7 @@ export default connect(
 		loadDictionary,
 		loadProfile,
 		updateProfile,
+		personalDataStatusClean
 	}
 )(reduxForm({form: PERSONAL_DATA})(PersonalData))
 

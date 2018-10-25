@@ -43,7 +43,25 @@ export default function* sagaUpdateProfile(action) {
 		yield all([
 			put({
 				type: UPDATE_PROFILE + SUCCESS,
-				response: response.data
+				response: {
+					userId: response.data['user_id'],
+					email: response.data.email,
+					role: response.data.role,
+					profile: {
+						phone: response.data.phone,
+						personalData: {
+							lastName: response.data['personal-data'] && response.data['personal-data']['last-name'],
+							firstName: response.data['personal-data'] && response.data['personal-data']['first-name'],
+							middleName: response.data['personal-data'] && response.data['personal-data']['middle-name'],
+							birthday: response.data.birthday,
+							region: response.data.region,
+							city: response.data['personal-data'] && response.data['personal-data'].city,
+							school: response.data['personal-data'] && response.data['personal-data'].school,
+							grade: response.data['personal-data'] && response.data['personal-data'].grade,
+							gradeLetter: response.data['personal-data'] && response.data['personal-data']['grade-letter'],
+						},
+					},
+				}
 			}),
 			put(reset(PERSONAL_DATA))
 		])

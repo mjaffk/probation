@@ -18,15 +18,7 @@ const apiConfig = axios.create({
  * @returns {AxiosPromise<any>}
  */
 export const userRegisterAPI = ({uuid, data}) => {
-	return apiConfig.post('user/register/' + uuid, data, {
-		transformResponse: (data) => {
-			data = JSON.parse(data)
-			return {
-				email: data.email,
-				userId: data.userid
-			}
-		}
-	})
+	return apiConfig.post('user/register/' + uuid, data)
 }
 
 /**
@@ -35,16 +27,7 @@ export const userRegisterAPI = ({uuid, data}) => {
  * @returns {AxiosPromise<any>}
  */
 export const activateUserAPI = ({token}) => {
-	return apiConfig.get('user/activate/' + token, {
-		transformResponse: (data) => {
-			data = JSON.parse(data)
-			return {
-				message: data.message,
-				userId: data.userid
-			}
-		}
-	})
-}
+	return apiConfig.get('user/activate/' + token)}
 
 
 /**
@@ -127,28 +110,6 @@ export const loadProfileAPI = ({token}) => {
 		headers: {
 			'Authorization': 'Bearer ' + token
 		},
-		transformResponse: (data) => {
-			data = JSON.parse(data).result.data
-			return {
-				profile: {
-					personalData: {
-						lastName: data['personal-data'] && data['personal-data']['last-name'],
-						firstName: data['personal-data'] && data['personal-data']['first-name'],
-						middleName: data['personal-data'] && data['personal-data']['middle-name'],
-						birthday: data.birthday,
-						region: data.region,
-						city: data['personal-data'] && data['personal-data'].city,
-						school: data['personal-data'] && data['personal-data'].school,
-						grade: data['personal-data'] && data['personal-data'].grade,
-						gradeLetter: data['personal-data'] && data['personal-data']['grade-letter'],
-					},
-					phone: data.phone,
-				},
-				userId: data['user_id'],
-				email: data.email,
-				role: data.role,
-			}
-		}
 	})
 }
 
@@ -163,32 +124,7 @@ export const updateProfileAPI = ({token, data}) => {
 	return apiConfig.post('user/current', data, {
 		headers: {
 			'Authorization': 'Bearer ' + token
-		},
-		transformResponse: (data) => {
-			if (!JSON.parse(data).result) return JSON.parse(data)
-
-			data = JSON.parse(data).result.data
-			return {
-				profile: {
-					personalData: {
-						lastName: data['personal-data'] && data['personal-data']['last-name'],
-						firstName: data['personal-data'] && data['personal-data']['first-name'],
-						middleName: data['personal-data'] && data['personal-data']['middle-name'],
-						birthday: data.birthday,
-						region: data.region,
-						city: data['personal-data'] && data['personal-data'].city,
-						school: data['personal-data'] && data['personal-data'].school,
-						grade: data['personal-data'] && data['personal-data'].grade,
-						gradeLetter: data['personal-data'] && data['personal-data']['grade-letter'],
-					},
-					phone: data.phone,
-				},
-				userId: data['user_id'],
-				email: data.email,
-				role: data.role,
-			}
-		}
-	})
+		}})
 }
 
 

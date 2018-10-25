@@ -2,8 +2,8 @@ import {call, put, all} from 'redux-saga/effects'
 import {SIGN_IN} from "../../constants/index"
 import {FAIL, AUTHORIZE_USER, SUCCESS} from "../action-types/index"
 import {stopSubmit, reset} from 'redux-form'
-import history from '../../utils/history'
 import {userAuthorizeAPI} from '../../constants/api-config'
+import {push} from "react-router-redux"
 
 
 export default function* sagaAuthorizeUser(action) {
@@ -17,7 +17,7 @@ export default function* sagaAuthorizeUser(action) {
 
 			}),
 			put(reset(SIGN_IN)),
-			history.push('/profile')
+			put(push('/profile'))
 		])
 	} catch (error) {
 		yield put({

@@ -10,7 +10,10 @@ import {
 	SET_PASSWORD,
 	START,
 	SUCCESS,
-	UPDATE_PROFILE
+	UPDATE_PROFILE,
+	SIGN_UP_STATUS_CLEAN,
+	SIGN_IN_STATUS_CLEAN,
+	PERSONAL_DATA_STATUS_CLEAN,
 } from '../action-types/index'
 
 
@@ -21,8 +24,8 @@ export const ReducerRecord = (userId = null, token = null) => new Record({
 	duration: null,
 	role: '',
 	message: null,
-
 	profile: {
+		phone: '',
 		personalData: {
 			lastName: '',
 			firstName: '',
@@ -34,7 +37,6 @@ export const ReducerRecord = (userId = null, token = null) => new Record({
 			grade: null,
 			gradeLetter: '',
 		},
-		phone: '',
 	},
 
 // status of user registering request
@@ -47,7 +49,6 @@ export const ReducerRecord = (userId = null, token = null) => new Record({
 	authorizeError: null,
 
 // status of user activation request
-	activateMessage: null,
 	activating: false,
 	activated: false,
 	activateError: null,
@@ -88,12 +89,13 @@ export default (state = new ReducerRecord(), action) => {
 
 // User activation
 		case ACTIVATE_USER + START:
-			return state.set('authorizing', true)
+			return state
+				.set('activating', true)
+				.set('message', null)
 
 		case ACTIVATE_USER + SUCCESS:
 			return state
-				.set('token', response.token)
-				.set('duration', response.duration)
+				.set('message', response.message)
 				.set('userId', response.userId)
 				.set('activating', false)
 				.set('activated', true)
@@ -143,9 +145,10 @@ export default (state = new ReducerRecord(), action) => {
 
 // Update user profile
 		case UPDATE_PROFILE + START:
-
-			return state.set('profileUpdating', true)
-
+			return state
+				.set('profileUpdating', true)
+				.set('profileUpdated', false)
+				.set('message', null)
 		case UPDATE_PROFILE + SUCCESS:
 			return state
 				.set('profile', response.profile)
@@ -181,6 +184,32 @@ export default (state = new ReducerRecord(), action) => {
 		case LOGOUT_USER + START :
 			return state
 				.set('token', null)
+
+
+//Clean statuses
+		case SIGN_UP_STATUS_CLEAN:
+			return state
+				.set('registering', false)
+				.set('registered', false)
+				.set('registerError', null)
+
+		case SIGN_IN_STATUS_CLEAN:
+			return state
+				.set('message', null)
+				.set('authorizing', false)
+				.set('authorizeError', null)
+				.set('activating', false)
+				.set('activated', false)
+				.set('activateError', null)
+
+		case PERSONAL_DATA_STATUS_CLEAN:
+			return state
+				.set('profileUpdating', false)
+				.set('profileUpdated', false)
+				.set('profileUpdateError', null)
+				.set('profileLoading', false)
+				.set('profileLoaded', false)
+				.set('profileLoadError', null)
 
 // Default state
 		default:

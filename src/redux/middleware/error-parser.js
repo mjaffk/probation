@@ -15,9 +15,6 @@ export default (store) => (next) => (action) => {
 			return next({...rest, type, error : usefulError})
 
 		case 'Request failed with status code 409':
-			usefulError = {
-				...error.response.data
-			}
 			return next({...rest, type, error : usefulError})
 
 		case 'Request failed with status code 401':

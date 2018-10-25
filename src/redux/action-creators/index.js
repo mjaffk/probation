@@ -1,13 +1,20 @@
 import {
+	ACTIVATE_USER,
 	AUTHORIZE_USER,
+	CHANGE_PASSWORD,
+	FORGOT_STATUS_CLEAN,
 	LOAD_CAPTCHA,
 	LOAD_DICTIONARY,
 	LOAD_PROFILE,
 	LOGOUT_USER,
+	PERSONAL_DATA_STATUS_CLEAN,
 	REGISTER_USER,
+	RESET_PASSWORD,
+	SET_PASSWORD,
+	SIGN_IN_STATUS_CLEAN,
+	SIGN_UP_STATUS_CLEAN,
 	START,
-	UPDATE_PROFILE, ACTIVATE_USER,
-	RESET_PASSWORD, SET_PASSWORD, CHANGE_PASSWORD
+	UPDATE_PROFILE
 } from '../action-types/index'
 
 
@@ -38,7 +45,7 @@ export function registerUser({data, uuid}) {
 
 export function activateUser({token}) {
 	return ({
-		type: ACTIVATE_USER,
+		type: ACTIVATE_USER + START,
 		payload: {
 			token
 		}
@@ -111,3 +118,32 @@ export function updateProfile({data}) {
 		}
 	})
 }
+
+
+export function signInStatusClean() {
+	return ({
+		type: SIGN_IN_STATUS_CLEAN
+	})
+}
+
+
+export function signUpStatusClean() {
+	return ({
+		type: SIGN_UP_STATUS_CLEAN
+	})
+}
+
+
+export function forgotStatusClean() {
+	return ({
+		type: FORGOT_STATUS_CLEAN
+	})
+}
+
+
+export function personalDataStatusClean() {
+	return ({
+		type: PERSONAL_DATA_STATUS_CLEAN
+	})
+}
+
