@@ -5,7 +5,6 @@ import {LOCATION_DICTIONARY} from "../../../constants"
 
 
 export default function ProfileBreadCrumb({location}) {
-	console.log(location)
 	return (<div id="breadcrumb"  >
 		<Breadcrumb tag="nav" className="rounder">
 			<BreadcrumbItem><Link to='/profile/'>Личный кабинет</Link></BreadcrumbItem>

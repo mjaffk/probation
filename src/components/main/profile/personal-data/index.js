@@ -188,7 +188,7 @@ export default connect(
 		updateProfile,
 		personalDataStatusClean
 	}
-)(reduxForm({form: PERSONAL_DATA})(PersonalData))
+)(reduxForm({form: PERSONAL_DATA, enableReinitialize: true, keepDirtyOnReinitialize: true})(PersonalData))
 
 PersonalData.propTypes = {
 	initialValues: PropTypes.object,
