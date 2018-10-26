@@ -24,6 +24,10 @@ class ChangePassword extends PureComponent {
 		const closeModal = () => this.setState({isOpen: false})
 
 		const formSubmitting = (data, dispatch, props) => {
+			props.changePassword({
+				oldPassword: data.oldPassword,
+				newPassword: data.newPassword
+			})
 		}
 
 		const isLoading = () => this.props.passwordSetting
