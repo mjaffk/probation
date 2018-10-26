@@ -19,10 +19,13 @@ import arrToObj from "../../../../utils/arr-to-obj"
 import './personal-data.css'
 import {loadDictionary, loadProfile, updateProfile, personalDataStatusClean} from "../../../../redux/action-creators"
 import PropTypes from "prop-types"
+import ChangePassword from "../../../common/modals/change-password"
 
 
 class PersonalData extends Component {
-	state = {}
+	state = {
+		changePasswordIsOpen: false,
+	}
 
 	componentDidMount() {
 		//download dictionary of regions
@@ -43,8 +46,19 @@ class PersonalData extends Component {
 
 		const isLoading = () => this.props.regionsLoading || this.props.profileLoading
 
+		const openChangePassword = () => {
+			this.setState({changePasswordIsOpen: true})
+		}
+
+		const onAfterClose = () => {
+			 this.setState({changePasswordIsOpen: false})
+		}
+
 		return (<div id="personal_data_form">
 			{isLoading() && <Loader/>}
+
+			<ChangePassword isOpen={this.state.changePasswordIsOpen} onAfterClose={onAfterClose}/>
+
 			<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 				<h4>Идентификация в системе</h4>
 				<hr/>
@@ -56,7 +70,12 @@ class PersonalData extends Component {
 					       label="Логин"
 					       id="user_id"
 					/>
-					<button className="m-4 btn btn-secondary btn-lg align-self-center">Сменить пароль</button>
+					<button className="m-4 btn btn-secondary btn-lg align-self-center"
+					        type="button"
+					        onClick={openChangePassword}
+					>
+						Сменить пароль
+					</button>
 				</div>
 				<h4>Персональные данные</h4>
 				<hr/>

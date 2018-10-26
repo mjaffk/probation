@@ -9,6 +9,7 @@ export const SIGN_IN = 'signIn'
 export const FORGOT = 'forgot'
 export const SET_NEW_PASSWORD = 'setNewPassword'
 export const PERSONAL_DATA = 'personalData'
+export const CHANGE_PASSWORD_FORM = 'changePassword'
 
 export const MODAL_STYLE = {
 	content: {
@@ -28,6 +29,7 @@ export const MODAL_STYLE = {
 		left: '0',
 		right: '0',
 		bottom: '0',
+		zIndex: '1000',
 	},
 }
 
