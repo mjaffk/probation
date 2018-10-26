@@ -28,5 +28,4 @@ export default function* sagaResetPassword(action) {
 			put(stopSubmit(FORGOT, error.response.data))
 		])
 	}
-
 }
