@@ -8,7 +8,6 @@ export default function* sagaLoadProfile() {
 		const token = yield select(userTokenSelector)
 		const response = yield call(loadProfileAPI, {token})
 		const data = response.data.result.data
-		console.log(data)
 		yield put({
 			type: LOAD_PROFILE + SUCCESS,
 			response: {

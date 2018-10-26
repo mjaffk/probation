@@ -23,7 +23,6 @@ export const userRegistrationErrorSelector = (state) => state.user.registerError
 export const userAuthorizingSelector = (state) => state.user.authorizing
 export const userAuthorizeErrorSelector = (state) => state.user.authorizeError
 
-export const activateMessageSelector = (state) => state.user.activateMessage
 export const userActivatingSelector = (state) => state.user.activating
 export const userActivatedSelector = (state) => state.user.activated
 export const userActivateErrorSelector = (state) => state.user.activateError
@@ -51,7 +50,7 @@ export const defaultPersonalDataValues = (state) => ({
 	middleName: state.user.profile.personalData.middleName,
 	birthday: state.user.profile.personalData.birthday,
 	region: state.user.profile.personalData.region,
-	city: state.user.profile.personalData.region,
+	city: state.user.profile.personalData.city,
 	school: state.user.profile.personalData.school,
 	grade: state.user.profile.personalData.grade,
 	gradeLetter: state.user.profile.personalData.gradeLetter,
