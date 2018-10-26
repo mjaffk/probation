@@ -1,4 +1,5 @@
-import {AUTHORIZE_USER, FAIL, LOGOUT_USER} from "../action-types"
+import {AUTHORIZE_USER, FAIL} from "../action-types"
+import {logoutUser} from "../action-creators"
 
 
 export default (store) => (next) => (action) => {
@@ -26,7 +27,7 @@ export default (store) => (next) => (action) => {
 				default:
 					usefulError.errorToUser = 'Требуется повторная авторизация'
 					next({...rest, type, error : usefulError})
-					return next({type: LOGOUT_USER})
+					return next(logoutUser())
 			}
 
 		default:
