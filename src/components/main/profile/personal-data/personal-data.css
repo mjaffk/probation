@@ -13,18 +13,18 @@
     color: red;
 }
 
-#user_class {
+#user_grade {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-#user_class>div {
+#user_grade>div {
     flex-grow: 1;
     flex-basis: 150px;
 }
 
-#user_class>div:first-child {
+#user_grade>div:first-child {
     margin-right: 30px;
 }
 
