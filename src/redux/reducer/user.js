@@ -71,7 +71,9 @@ export default (state = new ReducerRecord(), action) => {
 	switch (type) {
 // User registrations
 		case REGISTER_USER + START:
-			return state.set('registering', true)
+			return state
+				.set('registering', true)
+				.set('registerError', null)
 
 		case REGISTER_USER + SUCCESS:
 			return state
@@ -91,6 +93,7 @@ export default (state = new ReducerRecord(), action) => {
 			return state
 				.set('activating', true)
 				.set('message', null)
+				.set('activateError', null)
 
 		case ACTIVATE_USER + SUCCESS:
 			return state
@@ -106,7 +109,9 @@ export default (state = new ReducerRecord(), action) => {
 
 // User authorization
 		case AUTHORIZE_USER + START:
-			return state.set('authorizing', true)
+			return state
+				.set('authorizing', true)
+				.set('authorizeError', null)
 
 		case AUTHORIZE_USER + SUCCESS:
 			return state
@@ -124,7 +129,9 @@ export default (state = new ReducerRecord(), action) => {
 // Load user profile
 		case LOAD_PROFILE + START:
 
-			return state.set('profileLoading', true)
+			return state
+				.set('profileLoading', true)
+				.set('profileLoadError', null)
 
 		case LOAD_PROFILE + SUCCESS:
 			return state
@@ -146,7 +153,7 @@ export default (state = new ReducerRecord(), action) => {
 			return state
 				.set('profileUpdating', true)
 				.set('profileUpdated', false)
-				.set('message', null)
+				.set('profileUpdateError', null)
 		case UPDATE_PROFILE + SUCCESS:
 			return state
 				.set('profile', response.profile)

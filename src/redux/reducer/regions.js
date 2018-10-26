@@ -17,7 +17,9 @@ export default (state = new ReducerRecord(), action) => {
 
 	switch (type) {
 		case LOAD_DICTIONARY + START:
-			return state.set('loading', true)
+			return state
+				.set('loading', true)
+				.set('error', null)
 
 		case LOAD_DICTIONARY + SUCCESS:
 			return state

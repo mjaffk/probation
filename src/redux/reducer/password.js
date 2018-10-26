@@ -33,7 +33,9 @@ export default (state = new ReducerRecord(), action) => {
 	switch (type) {
 // User reset password from auth
 		case RESET_PASSWORD + START:
-			return state.set('passwordResetting', true)
+			return state
+				.set('passwordResetting', true)
+				.set('passwordResetError', null)
 
 		case RESET_PASSWORD + SUCCESS:
 			return state
@@ -50,6 +52,7 @@ export default (state = new ReducerRecord(), action) => {
 		case SET_PASSWORD + START:
 			return state
 				.set('passwordSetting', true)
+				.set('passwordSetError', null)
 
 		case SET_PASSWORD + SUCCESS:
 			return state
@@ -63,7 +66,9 @@ export default (state = new ReducerRecord(), action) => {
 
 // User change password from profile
 		case CHANGE_PASSWORD + START:
-			return state.set('passwordChanging', true)
+			return state
+				.set('passwordChanging', true)
+				.set('passwordChangeError', null)
 
 		case CHANGE_PASSWORD + SUCCESS:
 			return state
