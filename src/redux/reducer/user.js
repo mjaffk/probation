@@ -50,7 +50,6 @@ export const ReducerRecord = (userId = null, token = null) => new Record({
 
 // status of user activation request
 	activating: false,
-	activated: false,
 	activateError: null,
 
 // status of profile loading request
@@ -98,7 +97,6 @@ export default (state = new ReducerRecord(), action) => {
 				.set('message', response.message)
 				.set('userId', response.userId)
 				.set('activating', false)
-				.set('activated', true)
 				.set('activateError', null)
 
 		case ACTIVATE_USER + FAIL :
@@ -199,7 +197,6 @@ export default (state = new ReducerRecord(), action) => {
 				.set('authorizing', false)
 				.set('authorizeError', null)
 				.set('activating', false)
-				.set('activated', false)
 				.set('activateError', null)
 
 		case PERSONAL_DATA_STATUS_CLEAN:

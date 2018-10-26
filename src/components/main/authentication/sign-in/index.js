@@ -4,12 +4,14 @@ import AuthMenu from '../auth-menu'
 import {Field, reduxForm} from 'redux-form'
 import {required} from '../../../common/validate'
 import Input from '../../../common/input'
-import {authorizeUser, activateUser, signInStatusClean} from '../../../../redux/action-creators'
+import {activateUser, authorizeUser, signInStatusClean} from '../../../../redux/action-creators'
 import {MODAL_STYLE, SIGN_IN} from "../../../../constants"
 import Loader from "../../../common/loader"
 import InputPassword from "../../../common/input/input-password"
 import AlertModal from "../../../common/modals/alert-modal"
 import {
+	userActivateErrorSelector,
+	userActivatingSelector,
 	userAuthorizeErrorSelector,
 	userAuthorizingSelector,
 	userIdSelector,
@@ -19,9 +21,8 @@ import {
 class SignIn extends Component {
 
 	componentDidMount() {
-		this.props.location.state && this.props.location.state.token && this.props.activateUser && this.props.activateUser({
-			token: this.props.location.state.token
-		})
+		this.props.location.state && this.props.location.state.token && this.props.activateUser &&
+		this.props.activateUser({token: this.props.location.state.token})
 	}
 
 	componentWillUnmount() {
@@ -34,8 +35,9 @@ class SignIn extends Component {
 			props.authorizeUser(data)
 		}
 
-		const getErrorMessage = () => (this.props.userAuthorizeError && this.props.userAuthorizeError.errorToUser)
-		const isLoading = () => this.props.userAuthorizing
+		const getErrorMessage = () => (this.props.userAuthorizeError && this.props.userAuthorizeError.errorToUser) ||
+			(this.props.userActivateError && this.props.userActivateError.errorToUser)
+		const isLoading = () => this.props.userAuthorizing || this.props.userActivating
 
 
 		return (<div className="< d-flex position-absolute h-75 w-100">
@@ -86,7 +88,9 @@ export default connect(
 		initialValues: {userId: userIdSelector(state)},
 		userAuthorizing: userAuthorizingSelector(state),
 		userAuthorizeError: userAuthorizeErrorSelector(state),
-		message: userMessageSelector(state)
+		message: userMessageSelector(state),
+		userActivating: userActivatingSelector(state),
+		userActivateError: userActivateErrorSelector(state),
 	}), {
 		authorizeUser,
 		activateUser,

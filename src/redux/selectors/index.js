@@ -24,7 +24,6 @@ export const userAuthorizingSelector = (state) => state.user.authorizing
 export const userAuthorizeErrorSelector = (state) => state.user.authorizeError
 
 export const userActivatingSelector = (state) => state.user.activating
-export const userActivatedSelector = (state) => state.user.activated
 export const userActivateErrorSelector = (state) => state.user.activateError
 
 export const passwordResettingSelector = (state) => state.password.passwordResetting
