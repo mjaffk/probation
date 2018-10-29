@@ -1,5 +1,5 @@
 import {changePasswordAPI} from "../../constants/api-config"
-import {FAIL, RESET_PASSWORD, SUCCESS} from "../action-types"
+import {FAIL, CHANGE_PASSWORD, SUCCESS} from "../action-types"
 import {reset, stopSubmit} from "redux-form"
 import {CHANGE_PASSWORD_FORM} from "../../constants"
 import {call, put, all, select} from "redux-saga/effects"
@@ -19,7 +19,7 @@ export default function* sagaChangePassword(action) {
 		})
 		yield all([
 			put({
-				type: RESET_PASSWORD + SUCCESS,
+				type: CHANGE_PASSWORD + SUCCESS,
 				response: {
 					email: response.data.email,
 					userId: response.data.userid
@@ -33,7 +33,7 @@ export default function* sagaChangePassword(action) {
 	} catch (error) {
 		yield all([
 			put({
-				type: RESET_PASSWORD + FAIL,
+				type: CHANGE_PASSWORD + FAIL,
 				error: error
 			}),
 			put(stopSubmit(CHANGE_PASSWORD_FORM, {

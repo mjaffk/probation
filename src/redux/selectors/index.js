@@ -37,7 +37,7 @@ export const passwordSettingSelector = (state) => state.password.passwordSetting
 export const passwordSetErrorSelector = (state) => state.password.passwordSetError
 
 export const passwordChangingSelector = (state) => state.password.passwordChanging
-export const passwordCahgedErrorSelector = (state) => state.password.passwordChangeError
+export const passwordChangedErrorSelector = (state) => state.password.passwordChangeError
 
 
 export const profileLoadingSelector = (state) => state.user.profileLoading

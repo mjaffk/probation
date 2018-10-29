@@ -11,6 +11,7 @@ import {MODAL_STYLE} from "../../../constants"
 import {connect} from "react-redux"
 import {CHANGE_PASSWORD_FORM} from "../../../constants"
 import {changePassword} from "../../../redux/action-creators"
+import {passwordChangedErrorSelector, passwordChangingSelector} from "../../../redux/selectors"
 
 
 class ChangePassword extends PureComponent {
@@ -30,9 +31,9 @@ class ChangePassword extends PureComponent {
 			})
 		}
 
-		const isLoading = () => this.props.passwordSetting
+		const isLoading = () => this.props.passwordChanging
 
-		const getErrorMessage = () => this.passwordSetError && this.passwordSetError.errorToUser
+		const getErrorMessage = () => this.props.passwordChangeError && this.props.passwordChangeError.errorToUser
 
 		return (
 			<Modal
@@ -111,7 +112,10 @@ const validate = values => {
 	return errors
 }
 
-export default connect((state) => ({}), {
+export default connect((state) => ({
+		passwordChanging: passwordChangingSelector(state),
+		passwordChangeError: passwordChangedErrorSelector(state)
+	}), {
 		changePassword
 	}
 )(reduxForm({form: CHANGE_PASSWORD_FORM, validate})(ChangePassword))

@@ -72,7 +72,6 @@ export default (state = new ReducerRecord(), action) => {
 		case CHANGE_PASSWORD + SUCCESS:
 			return state
 				.set('passwordChanging', false)
-				.set('passwordChanged', true)
 				.set('passwordChangeError', null)
 
 		case CHANGE_PASSWORD + FAIL :
