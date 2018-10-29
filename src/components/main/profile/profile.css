@@ -17,9 +17,29 @@
 }
 
 #content_wrapper {
-    padding: 20px 64px 20px 64px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     flex-grow: 1;
-    flex-shrink: 1;
+    flex-shrink: 0;
+}
+
+#content_wrapper>div{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex-grow: 0.3;
+    flex-shrink: 0;
+    min-width: 400px;
+    max-width: 1000px;
+    flex-basis: auto;
+}
+
+#content_wrapper::after,
+#content_wrapper::before {
+    flex-grow: 1;
+    flex-shrink: 0;
+    content: '';
+    flex-basis: 60px;
 }
 
 #content_wrapper header {

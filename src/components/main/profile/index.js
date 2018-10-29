@@ -35,44 +35,43 @@ class Profile extends Component {
 				contentId="profile"
 				sidebar={<MainNavMenu role={this.props.role} userId={this.props.userId}/>}
 				docked={this.state.sidebarOpen}
-				styles={{sidebar: {background: "white"}}}
 			>
 				<Hamburger onClick={(event) => {
 					event.currentTarget.classList.toggle("is-closed")
 					event.currentTarget.classList.toggle("is-open")
 					this.onSetSidebarOpen()
 				}}/>
-
 				<div id="content_wrapper">
-					<header>
-						<div id='header_top'>
-							<div id="logo">
-								<Link to="/">
-									<img className="img-thumbnail logo"
-									     src={logo}
-									     alt="WorldSkills Russia"
-									     style={{borderStyle: "none"}}/>
-								</Link>
+					<div>
+						<header>
+							<div id='header_top'>
+								<div id="logo">
+									<Link to="/">
+										<img className="img-thumbnail logo"
+										     src={logo}
+										     alt="WorldSkills Russia"
+										     style={{borderStyle: "none"}}/>
+									</Link>
+								</div>
+
+								<div id="title">
+									<div className=" title text-justify h3">Билет в будущее</div>
+								</div>
 							</div>
 
-							<div id="title">
-								<div className=" title text-justify h3">Билет в будущее</div>
-							</div>
-						</div>
-
-						<ProfileBreadCrumb location={this.props.location.pathname}/>
-					</header>
-					<Switch>
-						<Redirect from={'/profile'} to={'/profile/personal-data'} exact/>
-						<Route path="/profile/messages" component={Messages}/>
-						<Route path="/profile/contests" component={Contests}/>
-						<Route path="/profile/recommendation" component={Recommendation}/>
-						<Route path="/profile/tickets" component={Tickets}/>
-						<Route path="/profile/personal-data" component={PersonalData}/>
-					</Switch>
+							<ProfileBreadCrumb location={this.props.location.pathname}/>
+						</header>
+						<Switch>
+							<Redirect from={'/profile'} to={'/profile/personal-data'} exact/>
+							<Route path="/profile/messages" component={Messages}/>
+							<Route path="/profile/contests" component={Contests}/>
+							<Route path="/profile/recommendation" component={Recommendation}/>
+							<Route path="/profile/tickets" component={Tickets}/>
+							<Route path="/profile/personal-data" component={PersonalData}/>
+						</Switch>
+					</div>
 				</div>
-				<footer id="footer">
-				</footer>
+				<footer id="footer"/>
 			</Sidebar>
 		)
 	}
