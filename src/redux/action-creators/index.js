@@ -1,6 +1,7 @@
 import {
 	ACTIVATE_USER,
 	AUTHORIZE_USER,
+	CHANGE_EMAIL,
 	CHANGE_PASSWORD,
 	FORGOT_STATUS_CLEAN,
 	LOAD_CAPTCHA,
@@ -98,6 +99,17 @@ export function changePassword({oldPassword, newPassword}) {
 		payload: {
 			oldPassword,
 			newPassword
+		},
+	})
+}
+
+
+export function changeEmail({oldEmail, newEmail}) {
+	return ({
+		type: CHANGE_EMAIL + START,
+		payload: {
+			oldEmail,
+			newEmail
 		},
 	})
 }

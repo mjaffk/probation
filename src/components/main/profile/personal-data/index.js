@@ -12,7 +12,7 @@ import {
 	loadingRegionsSelector,
 	profileLoadedSelector,
 	profileLoadErrorSelector,
-	profileLoadingSelector, profileUpdatedSelector, profileUpdateErrorSelector, profileUpdatingSelector,
+	profileLoadingSelector,  profileUpdateErrorSelector, profileUpdatingSelector,
 	regionsLoadErrorSelector,
 	regionsSelector, userActiveSchoolSelector, userSnilsPdfUploadedSelector,
 } from "../../../../redux/selectors"
@@ -24,6 +24,7 @@ import {loadDictionary, loadProfile, personalDataStatusClean, updateProfile} fro
 import PropTypes from "prop-types"
 import ChangePassword from "../../../common/modals/change-password"
 import AlertModal from "../../../common/modals/alert-modal"
+import ChangeEmail from "../../../common/modals/change-email"
 
 
 class PersonalData extends Component {
@@ -60,6 +61,14 @@ class PersonalData extends Component {
 			this.setState({changePasswordIsOpen: false})
 		}
 
+		const openChangeEmail = () => {
+			this.setState({changeEmailIsOpen: true})
+		}
+
+		const onAfterCloseChangeEmail = () => {
+			this.setState({changeEmailIsOpen: false})
+		}
+
 		const getSchoolAttachStatus = () => {
 			if (this.props.activeSchool) return (<div className="text-success">
 				<i className="fa fa-check-circle mr-1"/>
@@ -93,14 +102,15 @@ class PersonalData extends Component {
 		})
 
 
-		const getErrorMessage = () => this.props.profileLoadError && this.props.profileLoadError.errorToUser ||
-			this.props.profileUpdateError && this.props.profileUpdateError.errorToUser ||
-			this.props.regionsLoadError && this.props.regionsLoadError.errorToUser
+		const getErrorMessage = () => (this.props.profileLoadError && this.props.profileLoadError.errorToUser) ||
+			(this.props.profileUpdateError && this.props.profileUpdateError.errorToUser) ||
+			(this.props.regionsLoadError && this.props.regionsLoadError.errorToUser)
 
 		return (<div id="personal_data_form">
 			{isLoading() && <Loader/>}
 
 			<ChangePassword isOpen={this.state.changePasswordIsOpen} onAfterClose={onAfterCloseChangePassword}/>
+			<ChangeEmail isOpen={this.state.changeEmailIsOpen} onAfterClose={onAfterCloseChangeEmail}/>
 
 			{getErrorMessage() && <AlertModal
 				style={MODAL_STYLE}
@@ -279,7 +289,11 @@ class PersonalData extends Component {
 						       id="email"
 						       className="flex-grow-1 mr-sm-5"
 						/>
-						<button type="button" className="btn btn-secondary mx-sm-5 flex-grow-0">Сменить Email</button>
+						<button type="button" className="btn btn-secondary mx-sm-5 flex-grow-0"
+						onClick={openChangeEmail}
+						>
+							Сменить Email
+						</button>
 					</div>
 				</div>
 				<button type="submit" className="btn btn-primary" disabled={this.props.invalid || this.props.pristine}>
