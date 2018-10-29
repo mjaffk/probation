@@ -64,7 +64,6 @@ export const ReducerRecord = (userId = null, token = null) => new Record({
 
 // status of profile updating request
 	profileUpdating: false,
-	profileUpdated: false,
 	profileUpdateError: null,
 
 })()
@@ -137,6 +136,7 @@ export default (state = new ReducerRecord(), action) => {
 			return state
 				.set('profileLoading', true)
 				.set('profileLoadError', null)
+				.set('profileLoaded', false)
 
 		case LOAD_PROFILE + SUCCESS:
 			return state
@@ -208,7 +208,6 @@ export default (state = new ReducerRecord(), action) => {
 		case PERSONAL_DATA_STATUS_CLEAN:
 			return state
 				.set('profileUpdating', false)
-				.set('profileUpdated', false)
 				.set('profileUpdateError', null)
 				.set('profileLoading', false)
 				.set('profileLoaded', false)

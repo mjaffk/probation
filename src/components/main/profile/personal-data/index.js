@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Field, reduxForm} from 'redux-form'
 import {connect} from "react-redux"
 import {required} from "../../../../utils/validate"
-import {GRADE_DICTIONARY, GRADE_LETTER_DICTIONARY, PERSONAL_DATA} from "../../../../constants"
+import {GRADE_DICTIONARY, GRADE_LETTER_DICTIONARY, MODAL_STYLE, PERSONAL_DATA} from "../../../../constants"
 import Loader from "../../../common/loader"
 import validateSnils from "../../../../utils/snils-validation"
 import {createTextMask} from 'redux-form-input-masks'
@@ -12,7 +12,7 @@ import {
 	loadingRegionsSelector,
 	profileLoadedSelector,
 	profileLoadErrorSelector,
-	profileLoadingSelector,
+	profileLoadingSelector, profileUpdatedSelector, profileUpdateErrorSelector, profileUpdatingSelector,
 	regionsLoadErrorSelector,
 	regionsSelector, userActiveSchoolSelector, userSnilsPdfUploadedSelector,
 } from "../../../../redux/selectors"
@@ -23,11 +23,13 @@ import './personal-data.css'
 import {loadDictionary, loadProfile, personalDataStatusClean, updateProfile} from "../../../../redux/action-creators"
 import PropTypes from "prop-types"
 import ChangePassword from "../../../common/modals/change-password"
+import AlertModal from "../../../common/modals/alert-modal"
 
 
 class PersonalData extends Component {
 	state = {
 		changePasswordIsOpen: false,
+		changeEmailIsOpen: false,
 	}
 
 	componentDidMount() {
@@ -47,13 +49,14 @@ class PersonalData extends Component {
 			props.updateProfile({data})
 		}
 
-		const isLoading = () => this.props.regionsLoading || this.props.profileLoading
+		const isLoading = () => this.props.regionsLoading || this.props.profileLoading || this.props.profileUpdating
+
 
 		const openChangePassword = () => {
 			this.setState({changePasswordIsOpen: true})
 		}
 
-		const onAfterClose = () => {
+		const onAfterCloseChangePassword = () => {
 			this.setState({changePasswordIsOpen: false})
 		}
 
@@ -89,10 +92,21 @@ class PersonalData extends Component {
 			placeholder: 'Χ'
 		})
 
+
+		const getErrorMessage = () => this.props.profileLoadError && this.props.profileLoadError.errorToUser ||
+			this.props.profileUpdateError && this.props.profileUpdateError.errorToUser ||
+			this.props.regionsLoadError && this.props.regionsLoadError.errorToUser
+
 		return (<div id="personal_data_form">
 			{isLoading() && <Loader/>}
 
-			<ChangePassword isOpen={this.state.changePasswordIsOpen} onAfterClose={onAfterClose}/>
+			<ChangePassword isOpen={this.state.changePasswordIsOpen} onAfterClose={onAfterCloseChangePassword}/>
+
+			{getErrorMessage() && <AlertModal
+				style={MODAL_STYLE}
+				message={getErrorMessage()}
+				buttonLabel='Закрыть'
+			/>}
 
 			<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 				<h4>Идентификация в системе</h4>
@@ -297,7 +311,9 @@ export default connect(
 		profileLoaded: profileLoadedSelector(state),
 		profileLoadError: profileLoadErrorSelector(state),
 		activeSchool: userActiveSchoolSelector(state),
-		snilsPdfUploaded: userSnilsPdfUploadedSelector(state)
+		snilsPdfUploaded: userSnilsPdfUploadedSelector(state),
+		profileUpdating: profileUpdatingSelector(state),
+		profileUpdateError: profileUpdateErrorSelector(state)
 	}),
 	{
 		loadDictionary,

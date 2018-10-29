@@ -44,6 +44,9 @@ export const profileLoadingSelector = (state) => state.user.profileLoading
 export const profileLoadedSelector = (state) => state.user.profileLoaded
 export const profileLoadErrorSelector = (state) => state.user.profileLoadError
 
+export const profileUpdatingSelector = (state) => state.user.profileUpdating
+export const profileUpdateErrorSelector = (state) => state.user.profileUpdateError
+
 export const defaultPersonalDataValues = (state) => ({
 	userId: userIdSelector(state),
 	lastName: state.user.profile.personalData.lastName,
