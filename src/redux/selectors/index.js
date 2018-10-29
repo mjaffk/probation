@@ -15,6 +15,9 @@ export const userRoleNameSelector = (state) => ROLE_DICTIONARY[state.user.role]
 export const userRoleSelector = (state) => state.user.role
 export const userEmailSelector = (state) => state.user.email
 export const userMessageSelector = (state) => state.user.message
+export const userActiveSchoolSelector = (state) => state.user.profile.activeSchool
+export const userSnilsPdfUploadedSelector = (state) => state.user.profile.personalData.snilsPdfUploaded
+export const userEmailConfirmedSelector = (state) => state.user.profile.emailConfirmed
 
 export const userRegisteringSelector = (state) => state.user.registering
 export const userRegisteredSelector = (state) => state.user.registered
@@ -34,7 +37,6 @@ export const passwordSettingSelector = (state) => state.password.passwordSetting
 export const passwordSetErrorSelector = (state) => state.password.passwordSetError
 
 export const passwordChangingSelector = (state) => state.password.passwordChanging
-export const passwordChangedSelector = (state) => state.password.passwordChanged
 export const passwordCahgedErrorSelector = (state) => state.password.passwordChangeError
 
 
@@ -43,7 +45,7 @@ export const profileLoadedSelector = (state) => state.user.profileLoaded
 export const profileLoadErrorSelector = (state) => state.user.profileLoadError
 
 export const defaultPersonalDataValues = (state) => ({
-	userId: state.user.userId,
+	userId: userIdSelector(state),
 	lastName: state.user.profile.personalData.lastName,
 	firstName: state.user.profile.personalData.firstName,
 	middleName: state.user.profile.personalData.middleName,
@@ -54,5 +56,7 @@ export const defaultPersonalDataValues = (state) => ({
 	grade: state.user.profile.personalData.grade,
 	gradeLetter: state.user.profile.personalData.gradeLetter,
 	phone: state.user.profile.phone,
-	email: state.user.email,
+	snils: state.user.profile.personalData.snils,
+	email: userEmailSelector(state),
+	gender: state.user.profile.personalData.gender
 })

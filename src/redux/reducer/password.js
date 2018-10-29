@@ -22,7 +22,6 @@ export const ReducerRecord = new Record({
 
 // status of password
 	passwordChanging: false,
-	passwordChanged: false,
 	passwordChangeError: null,
 })
 

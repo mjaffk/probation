@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
 import {Field, reduxForm} from 'redux-form'
 import {connect} from "react-redux"
-import {required} from "../../../common/validate"
+import {required} from "../../../../utils/validate"
 import {GRADE_DICTIONARY, GRADE_LETTER_DICTIONARY, PERSONAL_DATA} from "../../../../constants"
 import Loader from "../../../common/loader"
+import validateSnils from "../../../../utils/snils-validation"
+import {createTextMask} from 'redux-form-input-masks'
+
 import {
 	defaultPersonalDataValues,
 	loadingRegionsSelector,
@@ -11,7 +14,7 @@ import {
 	profileLoadErrorSelector,
 	profileLoadingSelector,
 	regionsLoadErrorSelector,
-	regionsSelector,
+	regionsSelector, userActiveSchoolSelector, userSnilsPdfUploadedSelector,
 } from "../../../../redux/selectors"
 import Input from "../../../common/input"
 import Select from "../../../common/select"
@@ -55,10 +58,10 @@ class PersonalData extends Component {
 		}
 
 		const getSchoolAttachStatus = () => {
-			if (false) return (<div className="text-success">
-				<i className="fa fa-check mr-1"/>
+			if (this.props.activeSchool) return (<div className="text-success">
+				<i className="fa fa-check-circle mr-1"/>
 				Прикреплен к учебному заведению
-			</div>) //todo: add conditions
+			</div>)
 
 			return (<div className="text-danger">
 				<i className="fa fa-times-circle mr-1"/>
@@ -66,6 +69,25 @@ class PersonalData extends Component {
 			</div>)
 
 		}
+
+		const getSnilsUploadStatus = () => {
+			if (this.props.snilsPdfUploaded) return (<div className="text-success">
+				<i className="fa fa-check-circle mr-1"/>
+				СНИЛС загружен
+			</div>)
+
+			return null
+		}
+
+		const snilsMask = createTextMask({
+			pattern: "999-999-999 99",
+			placeholder: 'Χ'
+		})
+
+		const phoneMask = createTextMask({
+			pattern: "+7(999)-999-99-99",
+			placeholder: 'Χ'
+		})
 
 		return (<div id="personal_data_form">
 			{isLoading() && <Loader/>}
@@ -118,7 +140,7 @@ class PersonalData extends Component {
 					       id="middle_name"
 					/>
 
-					<Field name="sex"
+					<Field name="gender"
 					       className="required"
 					       component={Select}
 					       validate={[required]}
@@ -131,18 +153,21 @@ class PersonalData extends Component {
 						       value: 'женский'
 					       }]}
 					       label="Пол"
-					       id="sex"
+					       id="gender"
 					/>
 					<label htmlFor="snils" className="required">СНИЛС</label>
-					<div id='snils_section' className="d-flex justify-content-between align-items-baseline flex-wrap mb-2">
-						<Field name="snils"
-						       className="flex-grow-1 mr-sm-5"
-						       placeholder="XXX-XXX-XXX XX"
-						       component={Input}
-						       validate={[required]}
-						       type="text"
-						       id="snils"
-						/>
+					<div id='snils_section' className="d-flex justify-content-between align-items-start flex-wrap mb-2">
+						<div>
+							<Field name="snils"
+							       className="flex-grow-1 mr-sm-5"
+							       component={Input}
+							       validate={[required]}
+							       type="text"
+							       id="snils"
+							       {...snilsMask}
+							/>
+							{getSnilsUploadStatus()}
+						</div>
 						<div className="btn-group flex-grow-0">
 							<button
 								type="button"
@@ -228,7 +253,7 @@ class PersonalData extends Component {
 					       type="tel"
 					       label="Телефон"
 					       id="phone"
-					       placeholder="+X(XXX)-XXX-XX-XX"
+					       {...phoneMask}
 					/>
 
 					<label htmlFor="email">Email</label>
@@ -252,6 +277,15 @@ class PersonalData extends Component {
 
 }
 
+const validate = values => {
+	const errors = {}
+	const error = {}
+	if (!validateSnils(values.snils, error)) {
+		errors.snils = error.message
+	}
+	return errors
+}
+
 
 export default connect(
 	(state) => ({
@@ -262,6 +296,8 @@ export default connect(
 		profileLoading: profileLoadingSelector(state),
 		profileLoaded: profileLoadedSelector(state),
 		profileLoadError: profileLoadErrorSelector(state),
+		activeSchool: userActiveSchoolSelector(state),
+		snilsPdfUploaded: userSnilsPdfUploadedSelector(state)
 	}),
 	{
 		loadDictionary,
@@ -269,7 +305,7 @@ export default connect(
 		updateProfile,
 		personalDataStatusClean
 	}
-)(reduxForm({form: PERSONAL_DATA, enableReinitialize: true, keepDirtyOnReinitialize: true})(PersonalData))
+)(reduxForm({form: PERSONAL_DATA, validate, enableReinitialize: true, keepDirtyOnReinitialize: true})(PersonalData))
 
 PersonalData.propTypes = {
 	initialValues: PropTypes.object,

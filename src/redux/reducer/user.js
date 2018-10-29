@@ -26,7 +26,12 @@ export const ReducerRecord = (userId = null, token = null) => new Record({
 	message: null,
 	profile: {
 		phone: '',
+		activeSchool: false,
+		emailConfirmed: false,
 		personalData: {
+			gender: null,
+			snils: '',
+			snilsPdfUploaded: false,
 			lastName: '',
 			firstName: '',
 			middleName: '',
@@ -152,16 +157,10 @@ export default (state = new ReducerRecord(), action) => {
 		case UPDATE_PROFILE + START:
 			return state
 				.set('profileUpdating', true)
-				.set('profileUpdated', false)
 				.set('profileUpdateError', null)
 		case UPDATE_PROFILE + SUCCESS:
 			return state
-				.set('profile', response.profile)
-				.set('userId', response.userId)
-				.set('email', response.email)
-				.set('role', response.role)
 				.set('profileUpdating', false)
-				.set('profileUpdated', true)
 				.set('profileUpdateError', null)
 
 		case UPDATE_PROFILE + FAIL :
