@@ -17,7 +17,7 @@ import Input from "../../../common/input"
 import Select from "../../../common/select"
 import arrToObj from "../../../../utils/arr-to-obj"
 import './personal-data.css'
-import {loadDictionary, loadProfile, updateProfile, personalDataStatusClean} from "../../../../redux/action-creators"
+import {loadDictionary, loadProfile, personalDataStatusClean, updateProfile} from "../../../../redux/action-creators"
 import PropTypes from "prop-types"
 import ChangePassword from "../../../common/modals/change-password"
 
@@ -51,7 +51,20 @@ class PersonalData extends Component {
 		}
 
 		const onAfterClose = () => {
-			 this.setState({changePasswordIsOpen: false})
+			this.setState({changePasswordIsOpen: false})
+		}
+
+		const getSchoolAttachStatus = () => {
+			if (false) return (<div className="text-success">
+				<i className="fa fa-check mr-1"/>
+				Прикреплен к учебному заведению
+			</div>) //todo: add conditions
+
+			return (<div className="text-danger">
+				<i className="fa fa-times-circle mr-1"/>
+				Не прикреплен к учебному заведению
+			</div>)
+
 		}
 
 		return (<div id="personal_data_form">
@@ -62,15 +75,16 @@ class PersonalData extends Component {
 			<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 				<h4>Идентификация в системе</h4>
 				<hr/>
-				<div className="d-flex flex-row justify-content-between ">
+				<label htmlFor="user_id">Логин</label>
+				<div className="d-flex justify-content-between align-items-baseline flex-wrap mb-2">
 					<Field name="userId"
 					       disabled={true}
 					       component={Input}
 					       type="text"
-					       label="Логин"
 					       id="user_id"
+					       className="flex-grow-1 mr-sm-5"
 					/>
-					<button className="m-4 btn btn-secondary btn-lg align-self-center"
+					<button className="mx-sm-5 btn btn-secondary flex-grow-0"
 					        type="button"
 					        onClick={openChangePassword}
 					>
@@ -104,6 +118,47 @@ class PersonalData extends Component {
 					       id="middle_name"
 					/>
 
+					<Field name="sex"
+					       className="required"
+					       component={Select}
+					       validate={[required]}
+					       placeholder="Выберите"
+					       options={[{
+						       index: 'male',
+						       value: 'мужской'
+					       }, {
+						       index: 'female',
+						       value: 'женский'
+					       }]}
+					       label="Пол"
+					       id="sex"
+					/>
+					<label htmlFor="snils" className="required">СНИЛС</label>
+					<div id='snils_section' className="d-flex justify-content-between align-items-baseline flex-wrap mb-2">
+						<Field name="snils"
+						       className="flex-grow-1 mr-sm-5"
+						       placeholder="XXX-XXX-XXX XX"
+						       component={Input}
+						       validate={[required]}
+						       type="text"
+						       id="snils"
+						/>
+						<div className="btn-group flex-grow-0">
+							<button
+								type="button"
+								className="btn btn-success rounded-left mr-1"
+							>
+								Загрузить СНИЛС
+							</button>
+							<button
+								type="button"
+								className="btn btn-info rounded-right"
+								disabled
+							>
+								Выгрузит СНИЛС
+							</button>
+						</div>
+					</div>
 					<Field name="birthday"
 					       className="required"
 					       component={Input}
@@ -141,6 +196,9 @@ class PersonalData extends Component {
 					       label="Наименование учебного заведения"
 					       id="school"
 					/>
+
+					<div className="mb-3">{getSchoolAttachStatus()}</div>
+
 					<div id="user_grade">
 						<Field name="grade"
 						       className="required"
@@ -173,15 +231,19 @@ class PersonalData extends Component {
 					       placeholder="+X(XXX)-XXX-XX-XX"
 					/>
 
-					<Field name="email"
-					       disabled={true}
-					       component={Input}
-					       type="email"
-					       label="Email"
-					       id="email"
-					/>
+					<label htmlFor="email">Email</label>
+					<div className="d-flex justify-content-between align-items-baseline mb-3 flex-wrap">
+						<Field name="email"
+						       disabled={true}
+						       component={Input}
+						       type="email"
+						       id="email"
+						       className="flex-grow-1 mr-sm-5"
+						/>
+						<button type="button" className="btn btn-secondary mx-sm-5 flex-grow-0">Сменить Email</button>
+					</div>
 				</div>
-				<button type="submit" className="btn btn-success" disabled={this.props.invalid || this.props.pristine}>
+				<button type="submit" className="btn btn-primary" disabled={this.props.invalid || this.props.pristine}>
 					Сохронить изменения
 				</button>
 			</form>
