@@ -1,5 +1,6 @@
 #nav_menu_wrapper {
     background-color: #0072BC !important;
+    overflow: auto;
 }
 
 #profile {

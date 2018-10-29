@@ -3,7 +3,7 @@ import React, {PureComponent} from "react"
 import {compose} from 'redux'
 import {Field, reduxForm} from "redux-form"
 import InputPassword from "../input/input-password"
-import {alphaNumeric, minLength, required} from "../validate"
+import {alphaNumeric, minLength, required} from "../../../utils/validate"
 import {PasswordHint} from "../input/hints"
 import Loader from "../loader"
 import AlertModal from "./alert-modal"
