@@ -19,7 +19,7 @@ class ChangePassword extends PureComponent {
 	}
 
 	render() {
-		const {onAfterClose,...options} = this.props
+		const {onAfterClose, ...options} = this.props
 
 		const closeModal = () => this.setState({isOpen: false})
 
@@ -53,7 +53,10 @@ class ChangePassword extends PureComponent {
 				<div className='text-justify m-auto'>
 					<div className="d-flex justify-content-between align-items-start">
 						<h1 className="h3">Смена пароля</h1>
-						<button className="border-0 input-group-text bg-transparent" onClick={compose(onAfterClose, closeModal, this.props.reset)}><i className="fa fa-times"/></button>
+						<button className="border-0 input-group-text bg-transparent"
+						        onClick={compose(onAfterClose, closeModal, this.props.reset)}>
+							<i className="fa fa-times"/>
+						</button>
 					</div>
 
 					<form onSubmit={this.props.handleSubmit(formSubmitting)}>
@@ -108,8 +111,7 @@ const validate = values => {
 	return errors
 }
 
-export default connect((state) => ({
-	}), {
+export default connect((state) => ({}), {
 		changePassword
 	}
 )(reduxForm({form: CHANGE_PASSWORD_FORM, validate})(ChangePassword))
