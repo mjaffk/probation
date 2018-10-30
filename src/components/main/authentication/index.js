@@ -6,6 +6,7 @@ import SignUp from './sign-up'
 import SignOut from './sign-out'
 import SetPassword from "./set-password/index"
 import Activate from "./activate"
+import ConfirmEmail from "./confirm-email"
 
 class Authentication extends Component {
 	render() {
@@ -19,6 +20,7 @@ class Authentication extends Component {
 				<Route path="/auth/forgot/:token" component={SetPassword} />
 				<Route path="/auth/forgot" component={Forgot}/>
 				<Route path="/auth/signout" component={SignOut}/>
+				<Route path="/auth/confirm_email/:token" component={ConfirmEmail}/>
 			</Switch>
 		</div>)
 	}

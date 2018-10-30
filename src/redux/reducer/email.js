@@ -1,18 +1,17 @@
 import {Record} from 'immutable'
-import {
-	CHANGE_EMAIL,
-	SUCCESS,
-	EMAIL_STATUS_CLEAN,
-	START,
-	FAIL
-} from '../action-types'
+import {CHANGE_EMAIL, CONFIRM_EMAIL, EMAIL_STATUS_CLEAN, FAIL, START, SUCCESS} from '../action-types'
 
 
 export const ReducerRecord = new Record({
-// status of password
+// status of email changing
 	emailChanging: false,
 	emailChanged: false,
 	emailChangeError: null,
+
+// status of confirmation email
+	emailConfirming: false,
+	emailConfirmError: null,
+
 })
 
 
@@ -38,6 +37,21 @@ export default (state = new ReducerRecord(), action) => {
 				.set('emailChanging', false)
 				.set('emailChanged', false)
 				.set('emailChangeError', error)
+
+// Confirm changing email
+		case CONFIRM_EMAIL + START:
+			return state
+				.set('emailConfirming', true)
+				.set('emailConfirmError', null)
+		case CONFIRM_EMAIL + SUCCESS:
+			return state
+				.set('emailConfirming', false)
+				.set('emailConfirmError', null)
+		case CONFIRM_EMAIL + FAIL:
+			return state
+				.set('emailConfirming', false)
+				.set('emailConfirmError', error)
+
 
 // Clean status after form closing
 		case EMAIL_STATUS_CLEAN:

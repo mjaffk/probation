@@ -43,6 +43,9 @@ export const emailChangingSelector = (state) => state.email.emailChanging
 export const emailChangedSelector = (state) => state.email.emailChanged
 export const emailChangedErrorSelector = (state) => state.email.emailChangeError
 
+export const emailConfirmingSelector = (state) => state.email.emailConfirming
+export const emailConfirmErrorSelector = (state) => state.email.emailConfirmError
+
 export const profileLoadingSelector = (state) => state.user.profileLoading
 export const profileLoadedSelector = (state) => state.user.profileLoaded
 export const profileLoadErrorSelector = (state) => state.user.profileLoadError

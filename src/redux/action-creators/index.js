@@ -3,6 +3,7 @@ import {
 	AUTHORIZE_USER,
 	CHANGE_EMAIL,
 	CHANGE_PASSWORD,
+	CONFIRM_EMAIL,
 	EMAIL_STATUS_CLEAN,
 	FORGOT_STATUS_CLEAN,
 	LOAD_CAPTCHA,
@@ -110,6 +111,15 @@ export function changeEmail({newEmail}) {
 		type: CHANGE_EMAIL + START,
 		payload: {
 			newEmail
+		},
+	})
+}
+
+export function confirmEmail({token}) {
+	return ({
+		type: CONFIRM_EMAIL + START,
+		payload: {
+			token
 		},
 	})
 }

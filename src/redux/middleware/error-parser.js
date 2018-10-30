@@ -1,4 +1,4 @@
-import {AUTHORIZE_USER, FAIL} from "../action-types"
+import {AUTHORIZE_USER, CONFIRM_EMAIL, FAIL} from "../action-types"
 import {logoutUser} from "../action-creators"
 
 
@@ -16,7 +16,15 @@ export default (store) => (next) => (action) => {
 			return next({...rest, type, error : usefulError})
 
 		case 'Request failed with status code 409':
-			return next({...rest, type, error : usefulError})
+			switch (type) {
+				case CONFIRM_EMAIL + FAIL :
+					usefulError.errorToUser = (error.response.data && error.response.data.token) ||
+						'Произошла ошибка, попробуйте повторить попытку позже'
+					return next({...rest, type, error : usefulError})
+
+				default:
+					return next({...rest, type, error: usefulError})
+			}
 
 		case 'Request failed with status code 401':
 			switch (type) {
