@@ -7,6 +7,7 @@ import {routerReducer} from 'react-router-redux'
 import password from "./password"
 
 
+
 export default combineReducers({
 	regions,
 	captcha,
