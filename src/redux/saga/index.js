@@ -3,6 +3,7 @@ import {
 	ACTIVATE_USER,
 	AUTHORIZE_USER,
 	CHANGE_PASSWORD,
+	CHANGE_EMAIL,
 	LOAD_CAPTCHA,
 	LOAD_DICTIONARY,
 	LOAD_PROFILE,
@@ -24,6 +25,7 @@ import sagaUpdateProfile from "./saga-update-profile"
 import sagaSetPassword from "./saga-set-password"
 import sagaActivateUser from "./saga-avtivate-user"
 import sagaChangePassword from "./saga-change-password"
+import sagaChangeEmail from "./saga-change-email"
 
 export default function* saga() {
 	yield takeEvery(LOAD_CAPTCHA + START, sagaLoadCaptcha)
@@ -37,6 +39,8 @@ export default function* saga() {
 	yield takeEvery(RESET_PASSWORD + START, sagaResetPassword)
 	yield takeEvery(SET_PASSWORD + START, sagaSetPassword)
 	yield takeEvery(CHANGE_PASSWORD + START, sagaChangePassword)
+
+	yield takeEvery(CHANGE_EMAIL + START, sagaChangeEmail)
 
 	yield takeEvery(LOAD_PROFILE + START, sagaLoadProfile)
 	yield takeEvery(UPDATE_PROFILE + START, sagaUpdateProfile)
