@@ -39,8 +39,12 @@ export const passwordSetErrorSelector = (state) => state.password.passwordSetErr
 export const passwordChangingSelector = (state) => state.password.passwordChanging
 export const passwordChangedErrorSelector = (state) => state.password.passwordChangeError
 
-export const emailChangingSelector = (state) => state.password.emailChanging
-export const emailChangedErrorSelector = (state) => state.password.emailChangeError
+export const emailChangingSelector = (state) => state.email.emailChanging
+export const emailChangedSelector = (state) => state.email.emailChanged
+export const emailChangedErrorSelector = (state) => state.email.emailChangeError
+
+export const emailConfirmingSelector = (state) => state.email.emailConfirming
+export const emailConfirmErrorSelector = (state) => state.email.emailConfirmError
 
 export const profileLoadingSelector = (state) => state.user.profileLoading
 export const profileLoadedSelector = (state) => state.user.profileLoaded

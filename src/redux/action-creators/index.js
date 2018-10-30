@@ -3,6 +3,8 @@ import {
 	AUTHORIZE_USER,
 	CHANGE_EMAIL,
 	CHANGE_PASSWORD,
+	CONFIRM_EMAIL,
+	EMAIL_STATUS_CLEAN,
 	FORGOT_STATUS_CLEAN,
 	LOAD_CAPTCHA,
 	LOAD_DICTIONARY,
@@ -104,12 +106,20 @@ export function changePassword({oldPassword, newPassword}) {
 }
 
 
-export function changeEmail({oldEmail, newEmail}) {
+export function changeEmail({newEmail}) {
 	return ({
 		type: CHANGE_EMAIL + START,
 		payload: {
-			oldEmail,
 			newEmail
+		},
+	})
+}
+
+export function confirmEmail({token}) {
+	return ({
+		type: CONFIRM_EMAIL + START,
+		payload: {
+			token
 		},
 	})
 }
@@ -159,3 +169,8 @@ export function personalDataStatusClean() {
 	})
 }
 
+export function emailStatusClean() {
+	return ({
+		type: EMAIL_STATUS_CLEAN,
+	})
+}

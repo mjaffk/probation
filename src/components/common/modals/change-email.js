@@ -5,16 +5,16 @@ import {Field, reduxForm} from "redux-form"
 import {email, required} from "../../../utils/validate"
 import Loader from "../loader"
 import AlertModal from "./alert-modal"
-import {MODAL_STYLE} from "../../../constants"
+import {CHANGE_EMAIL_FORM, MODAL_STYLE} from "../../../constants"
 import {connect} from "react-redux"
-import {CHANGE_EMAIL_FORM} from "../../../constants"
-import {changeEmail} from "../../../redux/action-creators"
+import {changeEmail, emailStatusClean} from "../../../redux/action-creators"
 import {
 	emailChangedErrorSelector,
-	emailChangingSelector, userEmailSelector,
+	emailChangedSelector,
+	emailChangingSelector,
+	userEmailSelector
 } from "../../../redux/selectors"
 import Input from "../input"
-
 
 class ChangeEmail extends PureComponent {
 	state = {
@@ -27,10 +27,11 @@ class ChangeEmail extends PureComponent {
 
 		const formSubmitting = (data, dispatch, props) => {
 			props.changeEmail({
-				oldEmail: data.oldEmail,
 				newEmail: data.newEmail
 			})
 		}
+
+		const isChangeRequestSuccessful = () => this.props.emailChanged
 
 		const isLoading = () => this.props.emailChanging
 
@@ -50,6 +51,14 @@ class ChangeEmail extends PureComponent {
 					style={MODAL_STYLE}
 					message={getErrorMessage()}
 					buttonLabel='Закрыть'
+				/>}
+
+				{isChangeRequestSuccessful() && <AlertModal
+					style={MODAL_STYLE}
+					message={`Запрос на смену адреса электронной почты принят. Необходимо перейти по ссылке из письма,
+					отправленного на новый адрес электронной почты, для ее активации`}
+					buttonLabel='Закрыть'
+					onAfterClose={compose(this.props.emailStatusClean, onAfterClose, closeModal)}
 				/>}
 
 				<div className='text-justify m-auto'>
@@ -109,9 +118,11 @@ const validate = values => {
 export default connect((state) => ({
 		initialValues: {oldEmail: userEmailSelector(state)},
 		emailChanging: emailChangingSelector(state),
+		emailChanged: emailChangedSelector(state),
 		emailChangeError: emailChangedErrorSelector(state)
 	}), {
-		changeEmail
+		changeEmail,
+		emailStatusClean
 	}
 )(reduxForm({form: CHANGE_EMAIL_FORM, validate, enableReinitialize: true, keepDirtyOnReinitialize: true})(ChangeEmail))
 
