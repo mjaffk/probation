@@ -6,19 +6,20 @@ import {
 	FAIL
 } from '../action-types/index'
 
-const ReducerRecord = new Record({
-	regions: List(),
+export const ReducerRecord = (arr) => new Record({
+	regions: List(arr),
 	loading: false,
-	loaded: false,
 	error: null
-})
+})()
 
 export default (state = new ReducerRecord(), action) => {
 	const {type, response, error} = action
 
 	switch (type) {
 		case LOAD_DICTIONARY + START:
-			return state.set('loading', true)
+			return state
+				.set('loading', true)
+				.set('error', null)
 
 		case LOAD_DICTIONARY + SUCCESS:
 			return state
@@ -26,7 +27,6 @@ export default (state = new ReducerRecord(), action) => {
 					List(response.result.region.options).merge(regions)
 				)
 				.set('loading', false)
-				.set('loaded', true)
 				.set('error', null)
 
 		case LOAD_DICTIONARY + FAIL :

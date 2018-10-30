@@ -5,17 +5,15 @@ export default class InputPassword extends PureComponent {
 	constructor(props) {
 		super(props)
 		const {type = {open: 'text', close: 'password'}, appendIcon = {open: 'eye-slash', close: 'eye'}} = props
-
 		this.state = {
 			inputType: type.close,
 			inputAppendIcon: appendIcon.close
 		}
 	}
 
-
 	render() {
 		const {
-			input, placeholder, meta: {touched, error}, prependIcon, hint: Hint,
+			input, placeholder, meta: {touched, error}, prependIcon, hint: Hint, label,
 			type = {
 				open: 'text',
 				close: 'password'
@@ -23,9 +21,11 @@ export default class InputPassword extends PureComponent {
 			appendIcon = {
 				open: 'eye-slash',
 				close: 'eye'
-			}
+			},
+			...rest
 		} = this.props
 
+		const {id} = rest
 		const {inputType, inputAppendIcon} = this.state
 
 		const openPassword = () => {
@@ -43,19 +43,22 @@ export default class InputPassword extends PureComponent {
 			}
 		}
 
-		const cursorStyle ={
+		const cursorStyle = {
 			cursor: 'pointer'
 		}
 
 		return (<div className="form-group text-left">
+			{label && id && <label htmlFor={id} className={`${touched && error && 'text-danger'}`}>{label}</label>}
 			<div className={`input-group ${touched && (error && 'rounded border border-danger ')}`}>
 				{prependIcon && < Icon type='prepend' iconId={prependIcon}/>}
-				<input {...input} className='form-control' type={inputType} placeholder={placeholder}/>
-				<div style={cursorStyle} className="input-group-append">< Icon type='append' iconId={inputAppendIcon} onClick={openPassword}/>
+				<input {...input} {...rest} className='form-control' type={inputType} placeholder={placeholder}/>
+				<div style={cursorStyle} className="input-group-append">
+					< Icon type='append' iconId={inputAppendIcon} onClick={openPassword}/>
 				</div>
 			</div>
 			{touched && (error && <span className="form-control-feedback text-danger small">{error}</span>)}
-			{Hint && <div className="font-text text-muted small">{(typeof Hint === 'string') ? Hint : <Hint/>} </div>}
+			{Hint && <div className="font-text text-muted small">{(typeof Hint === 'string') ? Hint : <Hint/>}
+			</div>}
 		</div>)
 	}
 }

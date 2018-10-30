@@ -1,6 +1,7 @@
-import { Record } from 'immutable'
+import {Record} from 'immutable'
 import {
 	LOAD_CAPTCHA,
+	SIGN_UP_STATUS_CLEAN,
 	SUCCESS,
 	START,
 	FAIL
@@ -10,29 +11,32 @@ const ReducerRecord = new Record({
 	image: '',
 	uuid: '',
 	loading: false,
-	loaded: false,
 	error: null
 })
 
 export default (state = new ReducerRecord(), action) => {
-	const {type, response, error, uuid} = action
+	const {type, response, error} = action
 
 	switch (type) {
 		case LOAD_CAPTCHA + START:
-			return state.set('loading', true)
+			return state
+				.set('loading', true)
+				.set('error', null)
 
 		case LOAD_CAPTCHA + SUCCESS:
 			return state
-				.set('image', `data:image/png;base64,${response}`)
-				.set('uuid', uuid)
+				.set('image', response.image)
+				.set('uuid', response.uuid)
 				.set('loading', false)
-				.set('loaded', true)
 				.set('error', null)
 
 		case LOAD_CAPTCHA + FAIL :
 			return state
 				.set('loading', false)
 				.set('error', error)
+
+		case SIGN_UP_STATUS_CLEAN :
+			return new ReducerRecord()
 
 		default:
 			return state

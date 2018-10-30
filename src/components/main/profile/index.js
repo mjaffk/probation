@@ -1,59 +1,88 @@
 import React, {Component} from 'react'
-import {Route, Switch, Redirect} from 'react-router-dom'
-import PersonalData from "./personal-data"
+import {connect} from "react-redux"
+import {Route, Switch, Redirect, Link} from 'react-router-dom'
+import PersonalData from "./personal-data/index"
 import MainNavMenu from "./main-nav-menu"
 import Sidebar from "react-sidebar"
 import './profile.css'
+import ProfileBreadCrumb from "../../common/breadcrumb"
+import Hamburger from "../../common/hamburger"
+import logo from "../../../pictures/logo.jpg"
+import {userIdSelector, userRoleNameSelector} from "../../../redux/selectors"
+import {loadProfile} from "../../../redux/action-creators"
+import Messages from "./messages"
+import Contests from "./contests"
+import Recommendation from "./recommendation"
+import Tickets from "./tickets"
 
 class Profile extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			sidebarOpen: true,
-		}
-		this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this)
+	state = {
+		sidebarOpen: true,
 	}
 
 	onSetSidebarOpen() {
 		this.setState({sidebarOpen: !this.state.sidebarOpen})
 	}
 
+	componentDidMount() {
+		this.props.loadProfile && this.props.loadProfile()
+	}
+
 	render() {
 		return (
 			<Sidebar
-				sidebarId="nab_menu_wrapper"
-				contentClassName="d-flex flex-column justify-content-between"
-				sidebar={<MainNavMenu role={'Участник'} userId={'K0SWYXYGC1'}/>}
-				onSetOpen={this.onSetSidebarOpen}
+				sidebarId="nav_menu_wrapper"
+				contentId="profile"
+				sidebar={<MainNavMenu role={this.props.role} userId={this.props.userId}/>}
 				docked={this.state.sidebarOpen}
-				styles={{sidebar: {background: "white"}}}
 			>
-				<button type="button" id="hamburger" className="is-open"
-				        onClick={(event) => {
-					        event.currentTarget.classList.toggle("is-closed")
-					        event.currentTarget.classList.toggle("is-open")
-					        this.onSetSidebarOpen()
-				        }}>
-					<span className="hamb-top line">{''}</span>
-					<span className="hamb-middle line">{''}</span>
-					<span className="hamb-bottom line">{''}</span>
-				</button>
+				<Hamburger onClick={(event) => {
+					event.currentTarget.classList.toggle("is-closed")
+					event.currentTarget.classList.toggle("is-open")
+					this.onSetSidebarOpen()
+				}}/>
+				<div id="content_wrapper">
+					<div>
+						<header>
+							<div id='header_top'>
+								<div id="logo">
+									<Link to="/">
+										<img className="img-thumbnail logo"
+										     src={logo}
+										     alt="WorldSkills Russia"
+										     style={{borderStyle: "none"}}/>
+									</Link>
+								</div>
 
-				<div className='flex-grow-1'>
-				<Switch>
-					<Redirect from={'/profile'} to={'/profile/personal-data'} exact/>
-					{/*<Route path="/profile/messages" component={}/>*/}
-					{/*<Route path="/profile/contests" component={}/>*/}
-					{/*<Route path="/profile/recommendation" component={}/>*/}
-					{/*<Route path="/profile/tickets" component={}/>*/}
-					<Route path="/profile/personal-data" component={PersonalData}/>
-				</Switch>
+								<div id="title">
+									<div className=" title text-justify h3">Билет в будущее</div>
+								</div>
+							</div>
+
+							<ProfileBreadCrumb location={this.props.location.pathname}/>
+						</header>
+						<Switch>
+							<Redirect from={'/profile'} to={'/profile/personal-data'} exact/>
+							<Route path="/profile/messages" component={Messages}/>
+							<Route path="/profile/contests" component={Contests}/>
+							<Route path="/profile/recommendation" component={Recommendation}/>
+							<Route path="/profile/tickets" component={Tickets}/>
+							<Route path="/profile/personal-data" component={PersonalData}/>
+						</Switch>
+					</div>
 				</div>
-				<footer id="footer" className="bg-light footer d-flex flex-grow-0">
-				</footer>
+				<footer id="footer"/>
 			</Sidebar>
 		)
 	}
 }
 
-export default Profile
+export default connect(
+	(state) => ({
+		userId: userIdSelector(state),
+		role: userRoleNameSelector(state)
+	}),
+	{
+		loadProfile
+	}
+)(Profile)
