@@ -87,6 +87,32 @@ export const changePasswordAPI = ({token, data}) => {
 
 
 /**
+ * API to change email in personal data
+ * @param { Object} data : {{string}  new_email }
+ * @param {string} token
+ * @returns {AxiosPromise<any>}
+ */
+export const changeEmailAPI = ({token, data}) => {
+	return apiConfig.post(`change_email/`, data, {
+			headers: {
+				'Authorization': 'Bearer ' + token
+			},
+		}
+	)
+}
+
+
+/**
+ * API to change email in personal data
+ * @param { Object} data : {{string}  token }
+ * @returns {AxiosPromise<any>}
+ */
+export const confirmEmailAPI = ({data}) => {
+	return apiConfig.post(`confirm_email/`, data)
+}
+
+
+/**
  * API to logout user by token
  * @param token
  * @returns {AxiosPromise<any>}
