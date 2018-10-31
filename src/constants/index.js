@@ -11,6 +11,7 @@ export const SET_NEW_PASSWORD = 'setNewPassword'
 export const PERSONAL_DATA = 'personalData'
 export const CHANGE_PASSWORD_FORM = 'changePassword'
 export const CHANGE_EMAIL_FORM = 'changeEmail'
+export const UPLOAD_SNILS_FORM = 'uploadSnils'
 
 export const MODAL_STYLE = {
 	content: {
