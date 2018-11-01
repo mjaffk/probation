@@ -6,21 +6,31 @@ import {GRADE_DICTIONARY, GRADE_LETTER_DICTIONARY, MODAL_STYLE, PERSONAL_DATA} f
 import Loader from "../../../common/loader"
 import validateSnils from "../../../../utils/snils-validation"
 import {createTextMask} from 'redux-form-input-masks'
-
 import {
 	defaultPersonalDataValues,
 	loadingRegionsSelector,
 	profileLoadedSelector,
 	profileLoadErrorSelector,
-	profileLoadingSelector,  profileUpdateErrorSelector, profileUpdatingSelector,
+	profileLoadingSelector,
+	profileUpdateErrorSelector,
+	profileUpdatingSelector,
 	regionsLoadErrorSelector,
-	regionsSelector, userActiveSchoolSelector, userSnilsPdfUploadedSelector,
+	regionsSelector,
+	userActiveSchoolSelector,
+	userIdSelector,
+	userSnilsPdfUploadedSelector,
 } from "../../../../redux/selectors"
 import Input from "../../../common/input"
 import Select from "../../../common/select"
 import arrToObj from "../../../../utils/arr-to-obj"
 import './personal-data.css'
-import {loadDictionary, loadProfile, personalDataStatusClean, updateProfile} from "../../../../redux/action-creators"
+import {
+	downloadSnils,
+	loadDictionary,
+	loadProfile,
+	personalDataStatusClean,
+	updateProfile
+} from "../../../../redux/action-creators"
 import PropTypes from "prop-types"
 import ChangePassword from "../../../common/modals/change-password"
 import AlertModal from "../../../common/modals/alert-modal"
@@ -211,9 +221,10 @@ class PersonalData extends Component {
 							<button
 								type="button"
 								className="btn btn-info rounded-right"
-								disabled
+								disabled={!this.props.snilsPdfUploaded}
+								onClick={this.props.downloadSnils}
 							>
-								Выгрузит СНИЛС
+								Выгрузить СНИЛС
 							</button>
 						</div>
 					</div>
@@ -299,7 +310,7 @@ class PersonalData extends Component {
 						       className="flex-grow-1 mr-sm-5"
 						/>
 						<button type="button" className="btn btn-secondary mx-sm-5 flex-grow-0"
-						onClick={openChangeEmail}
+						        onClick={openChangeEmail}
 						>
 							Сменить Email
 						</button>
@@ -327,6 +338,7 @@ const validate = values => {
 export default connect(
 	(state) => ({
 		initialValues: defaultPersonalDataValues(state),
+		userId: userIdSelector(state),
 		regions: regionsSelector(state),
 		regionsLoading: loadingRegionsSelector(state),
 		regionsLoadError: regionsLoadErrorSelector(state),
@@ -342,7 +354,8 @@ export default connect(
 		loadDictionary,
 		loadProfile,
 		updateProfile,
-		personalDataStatusClean
+		personalDataStatusClean,
+		downloadSnils
 	}
 )(reduxForm({form: PERSONAL_DATA, validate, enableReinitialize: true, keepDirtyOnReinitialize: true})(PersonalData))
 

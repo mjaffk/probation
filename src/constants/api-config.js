@@ -199,3 +199,18 @@ export const uploadSnilsAPI = ({token, data}) => {
 
 	})
 }
+
+/**
+ * API to download snils
+ * @param {string} token
+ * @param {string} userId
+ * @returns {AxiosPromise<any>}
+ */
+export const downloadSnilsAPI = ({token, userId}) => {
+	return apiConfig.get(`account/${userId}/personal-data/snils/pdf`, {
+		headers: {
+			'Authorization': 'Bearer ' + token,
+		},
+		responseType: "blob"
+	})
+}

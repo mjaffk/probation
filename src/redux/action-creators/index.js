@@ -3,7 +3,7 @@ import {
 	AUTHORIZE_USER,
 	CHANGE_EMAIL,
 	CHANGE_PASSWORD,
-	CONFIRM_EMAIL,
+	CONFIRM_EMAIL, DOWNLOAD_SNILS,
 	EMAIL_STATUS_CLEAN,
 	FORGOT_STATUS_CLEAN,
 	LOAD_CAPTCHA,
@@ -184,6 +184,12 @@ export function uploadSnils({file}) {
 		payload: {
 			file
 		}
+	})
+}
+
+export function downloadSnils() {
+	return ({
+		type: DOWNLOAD_SNILS,
 	})
 }
 
