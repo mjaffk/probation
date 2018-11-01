@@ -183,3 +183,19 @@ export const loadCaptchaAPI = ({uuid}) => {
 export const loadRegionsAPI = () => {
 	return apiConfig.get('directory/regions')
 }
+
+/**
+ * API to upload snils
+ * @param {string} token
+ * @param {Object} data - FormData
+ * @returns {AxiosPromise<any>}
+ */
+export const uploadSnilsAPI = ({token, data}) => {
+	return apiConfig.post('account/current/personal-data/snils/pdf', data, {
+		headers: {
+			'Authorization': 'Bearer ' + token,
+			'Content-Type': 'multipart/form-data'
+		},
+
+	})
+}

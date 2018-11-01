@@ -16,8 +16,10 @@ import {
 	SET_PASSWORD,
 	SIGN_IN_STATUS_CLEAN,
 	SIGN_UP_STATUS_CLEAN,
+	SNILS_STATUS_CLEAN,
 	START,
-	UPDATE_PROFILE
+	UPDATE_PROFILE,
+	UPLOAD_SNILS
 } from '../action-types/index'
 
 
@@ -172,5 +174,21 @@ export function personalDataStatusClean() {
 export function emailStatusClean() {
 	return ({
 		type: EMAIL_STATUS_CLEAN,
+	})
+}
+
+
+export function uploadSnils({file}) {
+	return ({
+		type: UPLOAD_SNILS + START,
+		payload: {
+			file
+		}
+	})
+}
+
+export function uploadSnilsStatusClean() {
+	return ({
+		type: SNILS_STATUS_CLEAN,
 	})
 }

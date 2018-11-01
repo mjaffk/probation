@@ -1,6 +1,6 @@
-// export const SERVER = 'https://10.31.7.111/'
+export const SERVER = 'https://10.31.7.111/'
 // export const SERVER = 'https://10.31.7.112/'
-export const SERVER = 'https://10.31.7.109/'
+// export const SERVER = 'https://10.31.7.109/'
 // export const SERVER = 'https://10.31.7.101/' //некорректный
 // export const SERVER = 'https://fvm212.lpr.jet.msk.su/'
 
@@ -23,6 +23,7 @@ export const MODAL_STYLE = {
 		transform: 'translate(-50%, -50%)',
 		padding: '30px',
 		maxWidth: '500px',
+		overflow: 'hidden'
 	},
 	overlay: {
 		backgroundColor: 'rgba(0, 0, 0, 0.2)',

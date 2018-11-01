@@ -6,11 +6,11 @@ import Loader from "../loader"
 import AlertModal from "./alert-modal"
 import {MODAL_STYLE, UPLOAD_SNILS_FORM} from "../../../constants"
 import {connect} from "react-redux"
-import {uploadSnils} from "../../../redux/action-creators"
+import {uploadSnils, uploadSnilsStatusClean} from "../../../redux/action-creators"
 import FileInput from "../input/file-input"
 import Input from "../input"
 import {required} from "../../../utils/validate"
-import {snilsUploadErrorSelector, snilsUploadingSelector} from "../../../redux/selectors"
+import {snilsUploadedSelector, snilsUploadErrorSelector, snilsUploadingSelector} from "../../../redux/selectors"
 
 
 class UploadSnils extends PureComponent {
@@ -31,6 +31,7 @@ class UploadSnils extends PureComponent {
 
 		const getErrorMessage = () => this.props.snilsUploadError && this.props.snilsUploadError.errorToUser
 
+		const isUploaded = () => this.props.snilsUploaded
 		return (
 			<Modal
 				shouldCloseOnOverlayClick={false}
@@ -47,6 +48,14 @@ class UploadSnils extends PureComponent {
 					buttonLabel='Закрыть'
 				/>}
 
+				{isUploaded() && <AlertModal
+					style={MODAL_STYLE}
+					message={`СНИЛС успешно загружен. Спасибо!`}
+					buttonLabel='Закрыть'
+					onAfterClose={compose(this.props.uploadSnilsStatusClean, onAfterClose, closeModal)}
+				/>}
+
+
 				<div className='text-justify m-auto'>
 					<div className="d-flex justify-content-between align-items-start">
 						<h1 className="h3 mr-5">Загрузить СНИЛС</h1>
@@ -60,7 +69,7 @@ class UploadSnils extends PureComponent {
 
 						<label htmlFor="snils" className="required">Расположение загружаемого файла</label>
 
-						<div className="d-flex justify-content-between align-items-start" id="snils">
+						<div className="d-flex justify-content-between align-items-start flex-grow-1" id="snils">
 							<Field
 								name="snilsFileName"
 								disabled={true}
@@ -79,7 +88,7 @@ class UploadSnils extends PureComponent {
 									accept: 'application/pdf'
 								}}
 							>
-								<button className="btn btn-outline-secondary" type="button">Выбрать</button>
+								<button className="btn btn-outline-secondary flex-grow-0" type="button">Выбрать</button>
 							</FileInput>
 						</div>
 						<div className="d-flex justify-content-start">
@@ -103,8 +112,10 @@ export default connect((state) => ({
 				state.form[UPLOAD_SNILS_FORM].values.snilsFile.name : null
 		},
 		snilsUploading: snilsUploadingSelector(state),
+		snilsUploaded: snilsUploadedSelector(state),
 		snilsUploadError: snilsUploadErrorSelector(state)
 	}), {
-		uploadSnils
+		uploadSnils,
+		uploadSnilsStatusClean
 	}
 )(reduxForm({form: UPLOAD_SNILS_FORM, enableReinitialize: true, keepDirtyOnReinitialize: true})(UploadSnils))

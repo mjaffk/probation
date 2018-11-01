@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import Dropzone from 'react-dropzone';
-import { Field } from 'redux-form';
+import React, {Component} from 'react'
+import Dropzone from 'react-dropzone'
+import {Field} from 'redux-form'
 import PropTypes from "prop-types"
 
 
@@ -8,29 +8,28 @@ class FileInput extends Component {
 
 	static defaultProps = {
 		className: '',
-		cbFunction: (file) => {console.log(file)},
-	};
+	}
 
 	render() {
-		const { className, input: { onChange }, dropzone_options, meta: { error, touched }, label, classNameLabel, children, name, cbFunction } = this.props;
+		const {className, input: {onChange}, dropzone_options, meta: {error, touched},
+			label, classNameLabel, children, ...rest} = this.props
 
 		return (
-			<div className={`${className}` + (error && touched ? ' has-error ' : '')}>
+			<div className={className + (error && touched ? ' has-error ' : '')}>
 				{label && <p className={classNameLabel || ''}>{label}</p>}
 				<Dropzone
 					{...dropzone_options}
-					onDrop={(f) => {
-						cbFunction(f[0]);
-						return onChange(f[0]);
+					onDrop={(file) => {
+						return onChange(file[0])
 					}}
 					className="dropzone-input"
-					name={name}
+					{...rest}
 				>
 					{children}
 				</Dropzone>
 				{error && touched ? error : ''}
 			</div>
-		);
+		)
 	}
 }
 
@@ -45,4 +44,4 @@ FileInput.propTypes = {
 	cbFunction: PropTypes.func,
 }
 
-export default props => <Field {...props} component={FileInput} />
+export default props => <Field {...props} component={FileInput}/>
