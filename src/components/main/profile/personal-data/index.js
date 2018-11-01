@@ -25,12 +25,14 @@ import PropTypes from "prop-types"
 import ChangePassword from "../../../common/modals/change-password"
 import AlertModal from "../../../common/modals/alert-modal"
 import ChangeEmail from "../../../common/modals/change-email"
+import UploadSnils from "../../../common/modals/upload-snils"
 
 
 class PersonalData extends Component {
 	state = {
 		changePasswordIsOpen: false,
 		changeEmailIsOpen: false,
+		uploadSnilsIsOpen: false,
 	}
 
 	componentDidMount() {
@@ -56,15 +58,20 @@ class PersonalData extends Component {
 		const openChangePassword = () => {
 			this.setState({changePasswordIsOpen: true})
 		}
-
 		const onAfterCloseChangePassword = () => {
 			this.setState({changePasswordIsOpen: false})
+		}
+
+		const openUploadSnils = () => {
+			this.setState({uploadSnilsIsOpen: true})
+		}
+		const onAfterCloseUploadSnils = () => {
+			this.setState({uploadSnilsIsOpen: false})
 		}
 
 		const openChangeEmail = () => {
 			this.setState({changeEmailIsOpen: true})
 		}
-
 		const onAfterCloseChangeEmail = () => {
 			this.setState({changeEmailIsOpen: false})
 		}
@@ -110,6 +117,7 @@ class PersonalData extends Component {
 			{isLoading() && <Loader/>}
 
 			<ChangePassword isOpen={this.state.changePasswordIsOpen} onAfterClose={onAfterCloseChangePassword}/>
+			<UploadSnils isOpen={this.state.uploadSnilsIsOpen} onAfterClose={onAfterCloseUploadSnils}/>
 			<ChangeEmail isOpen={this.state.changeEmailIsOpen} onAfterClose={onAfterCloseChangeEmail}/>
 
 			{getErrorMessage() && <AlertModal
@@ -196,6 +204,7 @@ class PersonalData extends Component {
 							<button
 								type="button"
 								className="btn btn-success rounded-left mr-1"
+								onClick={openUploadSnils}
 							>
 								Загрузить СНИЛС
 							</button>
