@@ -1,17 +1,17 @@
 import Modal from "react-modal"
 import React, {PureComponent} from "react"
 import {compose} from 'redux'
-import {Field, reduxForm} from "redux-form"
-import InputPassword from "../input/input-password"
-import {alphaNumeric, minLength, required} from "../../../utils/validate"
-import {PasswordHint} from "../input/hints"
-import Loader from "../loader"
-import AlertModal from "./alert-modal"
-import {MODAL_STYLE} from "../../../constants"
+import {reduxForm} from "redux-form"
+import InputPassword from "../../../common/input/input-password"
+import {alphaNumeric, minLength, required} from "../../../../utils/validate"
+import {PasswordHint} from "../../../common/input/hints"
+import Loader from "../../../common/loader/index"
+import AlertModal from "../../../common/modals/alert-modal"
+import {MODAL_STYLE} from "../../../../constants/index"
 import {connect} from "react-redux"
-import {CHANGE_PASSWORD_FORM} from "../../../constants"
-import {changePassword} from "../../../redux/action-creators"
-import {passwordChangedErrorSelector, passwordChangingSelector} from "../../../redux/selectors"
+import {CHANGE_PASSWORD_FORM} from "../../../../constants/index"
+import {changePassword} from "../../../../redux/action-creators/index"
+import {passwordChangedErrorSelector, passwordChangingSelector} from "../../../../redux/selectors/index"
 
 
 class ChangePassword extends PureComponent {
@@ -62,26 +62,23 @@ class ChangePassword extends PureComponent {
 
 					<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 
-						<Field
+						<InputPassword
 							name="oldPassword"
-							component={InputPassword}
 							validate={[required]}
 							prependIcon='unlock-alt'
 							id="old_password"
 							label="Старый пароль"
 						/>
-						<Field
+						<InputPassword
 							name="newPassword"
-							component={InputPassword}
 							validate={[required, minLength(8), alphaNumeric]}
 							prependIcon='unlock-alt'
 							hint={PasswordHint}
 							id="new_password"
 							label="Новый пароль"
 						/>
-						<Field
+						<InputPassword
 							name="newPasswordConformation"
-							component={InputPassword}
 							validate={[required]}
 							prependIcon='unlock-alt'
 							id="new_password_conformation"

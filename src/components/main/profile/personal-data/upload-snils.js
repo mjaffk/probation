@@ -1,16 +1,20 @@
 import Modal from "react-modal"
 import React, {PureComponent} from "react"
 import {compose} from 'redux'
-import {Field, reduxForm} from "redux-form"
-import Loader from "../loader"
-import AlertModal from "./alert-modal"
-import {MODAL_STYLE, UPLOAD_SNILS_FORM} from "../../../constants"
+import {reduxForm} from "redux-form"
+import Loader from "../../../common/loader/index"
+import AlertModal from "../../../common/modals/alert-modal"
+import {MODAL_STYLE, UPLOAD_SNILS_FORM} from "../../../../constants/index"
 import {connect} from "react-redux"
-import {uploadSnils, uploadSnilsStatusClean} from "../../../redux/action-creators"
-import FileInput from "../input/file-input"
-import Input from "../input"
-import {required} from "../../../utils/validate"
-import {snilsUploadedSelector, snilsUploadErrorSelector, snilsUploadingSelector} from "../../../redux/selectors"
+import {uploadSnils, uploadSnilsStatusClean} from "../../../../redux/action-creators/index"
+import FileInput from "../../../common/input/file-input"
+import Input from "../../../common/input/index"
+import {required} from "../../../../utils/validate"
+import {
+	snilsUploadedSelector,
+	snilsUploadErrorSelector,
+	snilsUploadingSelector
+} from "../../../../redux/selectors/index"
 
 
 class UploadSnils extends PureComponent {
@@ -24,7 +28,7 @@ class UploadSnils extends PureComponent {
 		const closeModal = () => this.setState({isOpen: false})
 
 		const formSubmitting = (data, dispatch, props) => {
-			props.uploadSnils({file: data.snilsFile})
+			props.uploadSnils && props.uploadSnils({file: data && data.snilsFile})
 		}
 
 		const isLoading = () => this.props.snilsUploading
@@ -70,10 +74,9 @@ class UploadSnils extends PureComponent {
 						<label htmlFor="snils" className="required">Расположение загружаемого файла</label>
 
 						<div className="d-flex justify-content-between align-items-start flex-grow-1" id="snils">
-							<Field
+							<Input
 								name="snilsFileName"
 								disabled={true}
-								component={Input}
 								validate={[required]}
 								id="snils_file_name"
 								className="required mr-4 text-nowrap"

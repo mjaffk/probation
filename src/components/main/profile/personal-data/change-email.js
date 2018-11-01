@@ -1,20 +1,20 @@
 import Modal from "react-modal"
 import React, {PureComponent} from "react"
 import {compose} from 'redux'
-import {Field, reduxForm} from "redux-form"
-import {email, required} from "../../../utils/validate"
-import Loader from "../loader"
-import AlertModal from "./alert-modal"
-import {CHANGE_EMAIL_FORM, MODAL_STYLE} from "../../../constants"
+import {reduxForm} from "redux-form"
+import {email, required} from "../../../../utils/validate"
+import Loader from "../../../common/loader/index"
+import AlertModal from "../../../common/modals/alert-modal"
+import {CHANGE_EMAIL_FORM, MODAL_STYLE} from "../../../../constants/index"
 import {connect} from "react-redux"
-import {changeEmail, emailStatusClean} from "../../../redux/action-creators"
+import {changeEmail, emailStatusClean} from "../../../../redux/action-creators/index"
 import {
 	emailChangedErrorSelector,
 	emailChangedSelector,
 	emailChangingSelector,
 	userEmailSelector
-} from "../../../redux/selectors"
-import Input from "../input"
+} from "../../../../redux/selectors/index"
+import Input from "../../../common/input/index"
 
 class ChangeEmail extends PureComponent {
 	state = {
@@ -74,20 +74,18 @@ class ChangeEmail extends PureComponent {
 						<div>Для успешной смены адреса электронной почты необходимо перейти по ссылке из активационного
 							письма, отправленного на <b>новый</b> адрес электронной почты
 						</div>
-						<Field
+						<Input
 							name="oldEmail"
 							type="text"
-							component={Input}
 							validate={[required, email]}
 							prependIcon='envelope'
 							label="Текущий email"
 							id="old_email"
 							disabled={true}
 						/>
-						<Field
+						<Input
 							name="newEmail"
 							type="text"
-							component={Input}
 							validate={[required, email]}
 							prependIcon='envelope'
 							label="Новый email"

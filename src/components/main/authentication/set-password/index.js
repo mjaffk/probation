@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import Loader from "../../../common/loader"
 import AlertModal from "../../../common/modals/alert-modal"
 import {MODAL_STYLE, SET_NEW_PASSWORD} from "../../../../constants"
-import {Field, reduxForm} from "redux-form"
+import { reduxForm} from "redux-form"
 import {required, minLength, alphaNumeric} from "../../../../utils/validate"
 import InputPassword from "../../../common/input/input-password"
 import AuthMenu from "../auth-menu"
@@ -39,9 +39,8 @@ class SetPassword extends Component {
 				<h1 className="h3 text-left font-wight-normal">Восстановление доступа к личному кабинету</h1>
 				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 
-					<Field
+					<InputPassword
 						name="password"
-						component={InputPassword}
 						placeholder="Новый пароль"
 						validate={[required, minLength(8), alphaNumeric]}
 						prependIcon='unlock-alt'
@@ -49,9 +48,8 @@ class SetPassword extends Component {
 						id="password"
 						label="Пожалуйста, укажите новый пароль"
 					/>
-					<Field
+					<InputPassword
 						name="passwordConformation"
-						component={InputPassword}
 						placeholder="Подтвердите новый пароль"
 						validate={[required]}
 						prependIcon='unlock-alt'

@@ -56,6 +56,14 @@ export const LOCATION_DICTIONARY = {
 }
 
 export const MESSAGE_DICTIONARY = {
-	"new password is set" : "Вы успешно сменили пароль",
-	"activated" : "Спасибо! Ваша учётная запись активирована"
+	"new password is set": "Вы успешно сменили пароль",
+	"activated": "Спасибо! Ваша учётная запись активирована"
 }
+
+export const GENDER_DICTIONARY = [{
+	index: 'male',
+	value: 'мужской'
+}, {
+	index: 'female',
+	value: 'женский'
+}]
