@@ -1,10 +1,7 @@
 import React from 'react'
 import Menu from "../../../common/menu"
-import MenuItem from "../../../common/menu/menu-item"
 import './main-nav-menu.css'
-
-const activeClassName = "active_link"
-const linkClassName = "link"
+import MainNavMenuItem from "./main-nav-menu-item"
 
 export default function MainNavMenu({userId, role}) {
 	return (<Menu className="main_nav">
@@ -13,36 +10,14 @@ export default function MainNavMenu({userId, role}) {
 			<li>{userId}</li>
 			<li>{role}</li>
 		</ul>
-		<MenuItem className={linkClassName}
-		          to="/profile/messages"
-		          activeClassName={activeClassName}>
-			Сообщения
-		</MenuItem>
-		<MenuItem className={linkClassName}
-		          to="/profile/contests"
-		          activeClassName={activeClassName}>
-			Конкурсы
-		</MenuItem>
-		<MenuItem className={linkClassName}
-		          to="/profile/recommendation"
-		          activeClassName={activeClassName}>
-			Рекомендации
-		</MenuItem>
-		<MenuItem className={linkClassName}
-		          to="/profile/tickets"
-		          activeClassName={activeClassName}>
-			Билеты
-		</MenuItem>
-		<MenuItem className={linkClassName}
-		          to="/profile/personal-data"
-		          activeClassName={activeClassName}>
-			Личные данные
-		</MenuItem>
-		<MenuItem className={linkClassName} aria-current="page"
-		          to="/auth/signout"
-		          activeClassName={activeClassName}>
-			Выход
-		</MenuItem>
+		<MainNavMenuItem to={"/profile/messages"} title={'Сообщения'}/>
+		<MainNavMenuItem to={"/profile/contests"} title={'Конкурсы'}/>
+		<MainNavMenuItem to={"/profile/recommendation"} title={'Рекомендации'}/>
+		<MainNavMenuItem to={"/profile/tickets"} title={'Билеты'}/>
+		<MainNavMenuItem to={"/profile/personal-data"} title={'Личные данные'}/>
+		<MainNavMenuItem to={"/profile/new-personal-data"} title={'Новые личные данные'}/>
+		<MainNavMenuItem to={"/auth/signout"} title={'Выход'}/>
+
 	</Menu>)
 
 }
