@@ -1,6 +1,6 @@
 import {Record} from "immutable"
 
-export default new Record({
+const initialState = new Record({
 	email: null,
 	role: '',
 	profile: {
@@ -32,3 +32,5 @@ export default new Record({
 	updating: false,
 	updateError: null,
 })
+
+export default new initialState()
