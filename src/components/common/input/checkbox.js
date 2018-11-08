@@ -9,6 +9,7 @@ function Checkbox({input, id, meta: {touched, error}}) {
 			       type='checkbox'/>
 			Для успешной регистрации необходимо подтвердить согласие с <a
 			target="_blank"
+      rel="noopener noreferrer"
 			href={`${SERVER}/project-rules`}>
 			правилами проекта
 		</a>

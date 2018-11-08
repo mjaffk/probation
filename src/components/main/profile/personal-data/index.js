@@ -100,7 +100,7 @@ class PersonalData extends Component {
 		this.setState({changeEmailIsOpen: false})
 	}
 
-	getSchoolAttachStatus() {
+	getSchoolAttachedStatus() {
 		return (this.props.activeSchool) ?
 			(<div className="text-success">
 				<i className="fa fa-check-circle mr-1"/>
@@ -258,7 +258,7 @@ class PersonalData extends Component {
 						       id="school"
 						/>
 
-						<div className="mb-3">{this.getSchoolAttachStatus()}</div>
+						<div className="mb-3">{this.getSchoolAttachedStatus()}</div>
 
 						<div id="user_grade">
 							<Select name="grade"
@@ -351,8 +351,7 @@ export default connect(
 	validate,
 	enableReinitialize: true,
 	keepDirtyOnReinitialize: true
-})
-(PersonalData))
+})(PersonalData))
 
 PersonalData.propTypes = {
 	initialValues: PropTypes.object,
