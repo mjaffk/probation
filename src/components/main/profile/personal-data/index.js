@@ -54,6 +54,8 @@ class PersonalData extends Component {
 		}
 		this.isLoading.bind(this)
 		this.openChangePassword.bind(this)
+    this.openUploadSnils(this)
+    this.openChangeEmail(this)
 	}
 
 
@@ -76,29 +78,13 @@ class PersonalData extends Component {
 		return this.props.regionsLoading || this.props.profileLoading || this.props.profileUpdating
 	}
 
-	openChangePassword() {
-		this.setState({changePasswordIsOpen: true})
-	}
+	openChangePassword = () => this.setState({changePasswordIsOpen: true})
+	onAfterCloseChangePassword = () =>this.setState({changePasswordIsOpen: false})
+	openUploadSnils = () => this.setState({uploadSnilsIsOpen: true})
+	onAfterCloseUploadSnils = () =>this.setState({uploadSnilsIsOpen: false})
+		openChangeEmail = () => this.setState({changeEmailIsOpen: true})
+	onAfterCloseChangeEmail = () => this.setState({changeEmailIsOpen: false})
 
-	onAfterCloseChangePassword() {
-		this.setState({changePasswordIsOpen: false})
-	}
-
-	openUploadSnils() {
-		this.setState({uploadSnilsIsOpen: true})
-	}
-
-	onAfterCloseUploadSnils() {
-		this.setState({uploadSnilsIsOpen: false})
-	}
-
-	openChangeEmail() {
-		this.setState({changeEmailIsOpen: true})
-	}
-
-	onAfterCloseChangeEmail() {
-		this.setState({changeEmailIsOpen: false})
-	}
 
 	getSchoolAttachedStatus() {
 		return (this.props.activeSchool) ?
@@ -117,7 +103,7 @@ class PersonalData extends Component {
 			<div className="text-success">
 				<i className="fa fa-check-circle mr-1"/>
 				СНИЛС загружен
-			</div>
+      </div>
 	}
 
 	snilsMask = createTextMask({
