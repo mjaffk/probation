@@ -28,10 +28,10 @@
 #content_wrapper>div{
     padding-top: 20px;
     padding-bottom: 20px;
-    flex-grow: 0.3;
+    flex-grow: 0.5;
     flex-shrink: 0;
-    min-width: 400px;
-    max-width: 1000px;
+    min-width: 600px;
+    max-width: 1500px;
     flex-basis: auto;
 }
 
@@ -44,7 +44,7 @@
 }
 
 #content_wrapper header {
-    min-width: 400px;
+    min-width: 600px;
     flex-basis: auto;
 }
 

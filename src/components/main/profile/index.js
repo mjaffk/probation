@@ -13,7 +13,8 @@ import {loadProfile} from "../../../redux/action-creators"
 import Messages from "./messages"
 import Contests from "./contests"
 import Recommendation from "./recommendation"
-import Tickets from "./tickets"
+import NewPersonalData from "./new-personal-data"
+import Tickets from "./ticket"
 
 class Profile extends Component {
 	state = {
@@ -68,6 +69,7 @@ class Profile extends Component {
 							<Route path="/profile/recommendation" component={Recommendation}/>
 							<Route path="/profile/tickets" component={Tickets}/>
 							<Route path="/profile/personal-data" component={PersonalData}/>
+							<Route path={'/profile/new-personal-data'} component={NewPersonalData}/>
 						</Switch>
 					</div>
 				</div>

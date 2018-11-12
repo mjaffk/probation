@@ -1,7 +1,8 @@
 import React, {PureComponent} from 'react'
 import Icon from '../icon/index'
+import {Field} from "redux-form"
 
-export default class InputPassword extends PureComponent {
+class InputPassword extends PureComponent {
 	constructor(props) {
 		super(props)
 		const {type = {open: 'text', close: 'password'}, appendIcon = {open: 'eye-slash', close: 'eye'}} = props
@@ -62,3 +63,5 @@ export default class InputPassword extends PureComponent {
 		</div>)
 	}
 }
+
+export default props => <Field {...props} component={InputPassword} />

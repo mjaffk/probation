@@ -11,6 +11,7 @@ export const SET_NEW_PASSWORD = 'setNewPassword'
 export const PERSONAL_DATA = 'personalData'
 export const CHANGE_PASSWORD_FORM = 'changePassword'
 export const CHANGE_EMAIL_FORM = 'changeEmail'
+export const UPLOAD_SNILS_FORM = 'uploadSnils'
 
 export const MODAL_STYLE = {
 	content: {
@@ -22,6 +23,7 @@ export const MODAL_STYLE = {
 		transform: 'translate(-50%, -50%)',
 		padding: '30px',
 		maxWidth: '500px',
+		overflow: 'hidden'
 	},
 	overlay: {
 		backgroundColor: 'rgba(0, 0, 0, 0.2)',
@@ -54,6 +56,14 @@ export const LOCATION_DICTIONARY = {
 }
 
 export const MESSAGE_DICTIONARY = {
-	"new password is set" : "Вы успешно сменили пароль",
-	"activated" : "Спасибо! Ваша учётная запись активирована"
+	"new password is set": "Вы успешно сменили пароль",
+	"activated": "Спасибо! Ваша учётная запись активирована"
 }
+
+export const GENDER_DICTIONARY = [{
+	index: 'male',
+	value: 'мужской'
+}, {
+	index: 'female',
+	value: 'женский'
+}]

@@ -4,7 +4,7 @@ import {
 	AUTHORIZE_USER,
 	CHANGE_EMAIL,
 	CHANGE_PASSWORD,
-	CONFIRM_EMAIL,
+	CONFIRM_EMAIL, DOWNLOAD_SNILS,
 	LOAD_CAPTCHA,
 	LOAD_DICTIONARY,
 	LOAD_PROFILE,
@@ -13,7 +13,8 @@ import {
 	RESET_PASSWORD,
 	SET_PASSWORD,
 	START,
-	UPDATE_PROFILE
+	UPDATE_PROFILE,
+	UPLOAD_SNILS
 } from '../action-types/index'
 import sagaLoadCaptcha from "./saga-load-captcha"
 import sagaLoadDictionary from "./saga-load-regions"
@@ -28,6 +29,8 @@ import sagaActivateUser from "./saga-avtivate-user"
 import sagaChangePassword from "./saga-change-password"
 import sagaChangeEmail from "./saga-change-email"
 import sagaConfirmEmail from "./saga-confirm-email"
+import sagaUploadSnils from "./saga-upload-snils"
+import sagaDownloadSnils from "./saga-download-snils"
 
 export default function* saga() {
 	yield takeEvery(LOAD_CAPTCHA + START, sagaLoadCaptcha)
@@ -47,4 +50,7 @@ export default function* saga() {
 
 	yield takeEvery(LOAD_PROFILE + START, sagaLoadProfile)
 	yield takeEvery(UPDATE_PROFILE + START, sagaUpdateProfile)
+
+	yield takeEvery(UPLOAD_SNILS+START, sagaUploadSnils)
+	yield takeEvery(DOWNLOAD_SNILS, sagaDownloadSnils)
 }

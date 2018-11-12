@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {Field} from "redux-form"
 
-export default function Select({input, id, label, meta: {touched, error}, options, placeholder, className, ...rest}) {
+function Select({input, id, label, meta: {touched, error}, options, placeholder, className, ...rest}) {
 	return (<div className={`form-group text-left ${className}`}>
 		<label className={`form-control-label ${touched && (error && 'text-danger')}`}
 		       htmlFor={id}>{label}</label>
@@ -33,3 +34,5 @@ Select.propTypes = {
 	className: PropTypes.string,
 	rest: PropTypes.any
 }
+
+export default props => <Field {...props} component={Select}/>

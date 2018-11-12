@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import AuthMenu from '../auth-menu'
-import {Field, reduxForm} from 'redux-form'
+import { reduxForm} from 'redux-form'
 import {required} from '../../../../utils/validate'
 import Input from '../../../common/input'
 import {activateUser, authorizeUser, signInStatusClean} from '../../../../redux/action-creators'
@@ -55,18 +55,15 @@ class SignIn extends Component {
 				{this.props.message && <div className='my-2'>{this.props.message}</div>}
 				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 
-					<Field
+					<Input
 						name="userId"
-						type="text"
-						component={Input}
 						placeholder="Введите идентификационный номер"
 						validate={[required]}
 						prependIcon='user'
 					/>
-					<Field
+					<InputPassword
 						className="form-control"
 						name="password"
-						component={InputPassword}
 						placeholder="Введите пароль"
 						validate={[required]}
 						prependIcon='unlock-alt'

@@ -1,10 +1,9 @@
 import React from 'react'
 import Icon from '../icon/index'
+import {Field} from "redux-form/"
 
-export default function Input({
-	                              placeholder, label, type, meta: {touched, error}, prependIcon,
-	                              appendIcon, hint: Hint, className, input, ...rest
-                              }) {
+function Input({placeholder, label, type="text", meta: {touched, error}, prependIcon, appendIcon,
+	               hint: Hint, className, input, ...rest}) {
 	const {id} = rest
 	return (<div className={`form-group text-left ${className}`}>
 		{label && id && <label htmlFor={id} className={`${touched && error && 'text-danger'}`}>{label}</label>}
@@ -19,3 +18,5 @@ export default function Input({
 		{Hint && <div className="font-text text-muted small">{(typeof Hint === 'string') ? Hint : <Hint/>} </div>}
 	</div>)
 }
+
+export default props => <Field {...props} component={Input}/>

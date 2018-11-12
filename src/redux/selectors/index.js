@@ -4,11 +4,18 @@ export const regionsSelector = (state) => state.regions.regions.toArray()
 export const loadingRegionsSelector = (state) => state.regions.loading
 export const regionsLoadErrorSelector = (state) => state.regions.error
 
+export const allRegionsSelector = (state) => ({
+  entities: regionsSelector(state),
+  loading: loadingRegionsSelector(state),
+  loadError: regionsLoadErrorSelector(state)
+})
+
 export const captchaSelector = (state) => state.captcha.image
 export const uuidSelector = (state) => state.captcha.uuid
 export const loadingCaptchaSelector = (state) => state.captcha.loading
 export const captchaLoadErrorSelector = (state) => state.captcha.error
 
+export const userSelector = (state) => state.user
 export const userIdSelector = (state) => state.user.userId
 export const userTokenSelector = (state) => state.user.token
 export const userRoleNameSelector = (state) => ROLE_DICTIONARY[state.user.role]
@@ -45,6 +52,10 @@ export const emailChangedErrorSelector = (state) => state.email.emailChangeError
 
 export const emailConfirmingSelector = (state) => state.email.emailConfirming
 export const emailConfirmErrorSelector = (state) => state.email.emailConfirmError
+
+export const snilsUploadingSelector = (state) => state.snils.snilsUploading
+export const snilsUploadedSelector = (state) => state.snils.snilsUploaded
+export const snilsUploadErrorSelector = (state) => state.snils.snilsUploadError
 
 export const profileLoadingSelector = (state) => state.user.profileLoading
 export const profileLoadedSelector = (state) => state.user.profileLoaded

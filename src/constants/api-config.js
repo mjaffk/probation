@@ -183,3 +183,34 @@ export const loadCaptchaAPI = ({uuid}) => {
 export const loadRegionsAPI = () => {
 	return apiConfig.get('directory/regions')
 }
+
+/**
+ * API to upload snils
+ * @param {string} token
+ * @param {Object} data - FormData
+ * @returns {AxiosPromise<any>}
+ */
+export const uploadSnilsAPI = ({token, data}) => {
+	return apiConfig.post('account/current/personal-data/snils/pdf', data, {
+		headers: {
+			'Authorization': 'Bearer ' + token,
+			'Content-Type': 'multipart/form-data'
+		},
+
+	})
+}
+
+/**
+ * API to download snils
+ * @param {string} token
+ * @param {string} userId
+ * @returns {AxiosPromise<any>}
+ */
+export const downloadSnilsAPI = ({token, userId}) => {
+	return apiConfig.get(`account/${userId}/personal-data/snils/pdf`, {
+		headers: {
+			'Authorization': 'Bearer ' + token,
+		},
+		responseType: "blob"
+	})
+}

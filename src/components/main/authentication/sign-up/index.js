@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import AuthMenu from '../auth-menu'
-import {Field, reduxForm} from 'redux-form'
+import {reduxForm} from 'redux-form'
 import Input from '../../../common/input'
 import Checkbox from '../../../common/input/checkbox'
 import {alphaNumeric, email, minLength, required, requiredConformation} from '../../../../utils/validate'
@@ -20,8 +20,8 @@ import {
 	regionsLoadErrorSelector,
 	regionsSelector,
 	userEmailSelector,
-	userRegisteringSelector,
 	userRegisteredSelector,
+	userRegisteringSelector,
 	userRegistrationErrorSelector,
 	uuidSelector
 } from "../../../../redux/selectors"
@@ -83,43 +83,37 @@ class SignUp extends Component {
 
 				<h1 className="h3 text-left font-wight-normal">Регистрация</h1>
 				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
-					<Field
+					<InputPassword
 						name="password"
-						component={InputPassword}
 						placeholder="Введите пароль"
 						validate={[required, minLength(8), alphaNumeric]}
 						prependIcon='unlock-alt'
 						hint={PasswordHint}
 					/>
 
-					<Field
+					<InputPassword
 						name="passwordConformation"
-						component={InputPassword}
 						placeholder="Подтвердите пароль"
 						validate={[required]}
 						prependIcon='unlock-alt'
 					/>
 
-					<Field
+					<Input
 						name="email"
-						type="text"
-						component={Input}
+						type="email"
 						placeholder="Адрес электронной почты"
 						validate={[required, email]}
 						prependIcon='envelope'
 						hint='Для подтверждения адреса электронной почты вам будет направлена активационная ссылка'
 					/>
 
-					<Field
+					<Checkbox
 						name="conformation"
-						type="checkbox"
-						component={Checkbox}
 						validate={[requiredConformation]}
 					/>
 
-					<Field
+					<Select
 						name="region"
-						component={Select}
 						placeholder="Выберите"
 						label="Регион проживания"
 						options={this.props.regions}
@@ -139,10 +133,8 @@ class SignUp extends Component {
 						</button>
 					</div>
 
-					<Field
+					<Input
 						name="captcha"
-						type="text"
-						component={Input}
 						placeholder="Введите текст, который вы видете на экране"
 						validate={[required]}
 					/>

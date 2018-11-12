@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import AuthMenu from '../auth-menu'
-import {Field, reduxForm} from 'redux-form'
-import {required, email} from '../../../../utils/validate'
+import {reduxForm} from 'redux-form'
+import {email, required} from '../../../../utils/validate'
 import Input from '../../../common/input'
-import {resetPassword, forgotStatusClean} from '../../../../redux/action-creators'
-import {MODAL_STYLE, FORGOT} from "../../../../constants"
+import {forgotStatusClean, resetPassword} from '../../../../redux/action-creators'
+import {FORGOT, MODAL_STYLE} from "../../../../constants"
 import Loader from "../../../common/loader"
 import AlertModal from "../../../common/modals/alert-modal"
 import {
+	passwordResetErrorSelector,
 	passwordResetSelector,
 	passwordResettingSelector,
-	passwordResetErrorSelector,
 	userEmailSelector,
 } from "../../../../redux/selectors"
 import history from "../../../../utils/history"
@@ -53,10 +53,9 @@ class Forgot extends Component {
 				<p>Пожалуйста, укажите <b>адрес электронной почты</b>, который вы указали при регистрации на сайте</p>
 				<form onSubmit={this.props.handleSubmit(formSubmitting)}>
 
-					<Field
+					<Input
 						name="email"
 						type="text"
-						component={Input}
 						placeholder="Введите адрес электронной почты"
 						validate={[required, email]}
 						prependIcon='envelope'
