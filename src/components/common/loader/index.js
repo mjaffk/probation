@@ -1,7 +1,7 @@
 import React from 'react'
 import './loader.css'
 
-export default function Loader() {
+function Loader() {
 	return (<div id="wrapper">
 		<div id="loader">
 			<div id="box">{''}</div>
@@ -9,3 +9,5 @@ export default function Loader() {
 		</div>
 	</div>)
 }
+
+export default (...isLoadings) => (isLoadings.some((isLoading) => isLoading) || !isLoadings.length) && <Loader/>

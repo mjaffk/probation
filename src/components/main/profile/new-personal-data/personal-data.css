@@ -1,0 +1,32 @@
+#personal_data_form input,
+#personal_data_form select{
+    font-size: smaller;
+}
+
+#personal_data_form h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+label.required:after,
+.required label:after {
+    content: '*';
+    color: red;
+}
+
+#user_grade {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#user_grade>div {
+    flex-grow: 1;
+    flex-basis: 150px;
+}
+
+#user_grade>div:first-child {
+    margin-right: 30px;
+}
+
+
+
