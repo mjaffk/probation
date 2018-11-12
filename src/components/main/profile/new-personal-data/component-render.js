@@ -8,15 +8,26 @@ import { required } from '../../../../utils/validate';
 import { phoneMask, snilsMask } from './common/field-masks';
 import { Button, Submit } from './common/buttons';
 import './personal-data.css';
+import ChangePassword from '../personal-data/change-password'
+import UploadSnils from '../personal-data/upload-snils'
+import ChangeEmail from '../personal-data/change-email'
 
 function ComponentRender({
-  handleSubmit, openChangePassword, getSnilsUploadStatus, downloadSnils, openChangeEmail, getSchoolAttachStatus,
-  disableFormSubmit, disableSnilsDownload, regions, openUploadSnils, children,
+  handleSubmit, openChangePassword, getSnilsUploadStatus, downloadSnils, openChangeEmail, getSchoolAttachedStatus,
+  disableFormSubmit, disableSnilsDownload, regions, openUploadSnils, loader, changePasswordIsOpen, errorMessage,
+  setChangePasswordIsOpen, uploadSnilsIsOpen, setUploadSnilsIsOpen, changeEmailIsOpen, setChangeEmailIsOpen
+
 }) {
   return (
     <div id="personal_data_form">
+
+      { loader }
+      <ChangePassword isOpen={ changePasswordIsOpen } onAfterClose={ () => setChangePasswordIsOpen(false) }/>
+      <UploadSnils isOpen={ uploadSnilsIsOpen } onAfterClose={ () => setUploadSnilsIsOpen(false) }/>
+      <ChangeEmail isOpen={ changeEmailIsOpen } onAfterClose={ () => setChangeEmailIsOpen(false) }/>
+      { errorMessage }
+
       <form onSubmit={handleSubmit}>
-        { children }
         <h4>Идентификация в системе</h4>
         <hr />
         <label htmlFor="user_id">Логин</label>
@@ -51,7 +62,7 @@ function ComponentRender({
         >
           <div>
             <Input name="snils" id="snils" validate={[required]} className="flex-grow-1 mr-sm-5" {...snilsMask} />
-            { /* {getSnilsUploadStatus()} */ }
+            {getSnilsUploadStatus()}
           </div>
           <div className="btn-group flex-grow-0">
             <Button
@@ -94,7 +105,7 @@ function ComponentRender({
           id="school"
         />
 
-        { /* <div className="mb-3">{getSchoolAttachStatus()}</div> */ }
+        <div className="mb-3">{getSchoolAttachedStatus()}</div>
 
         <div id="user_grade">
           <Select

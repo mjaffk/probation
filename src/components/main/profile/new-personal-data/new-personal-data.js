@@ -1,58 +1,77 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState } from 'react'
 import { reduxForm } from 'redux-form'
 import ComponentRender from './component-render'
-import UploadSnils from '../personal-data/upload-snils'
-import ChangePassword from '../personal-data/change-password'
-import ChangeEmail from '../personal-data/change-email'
 import { FORM_NAME } from './const'
-import reducer from './redux/reducer';
-import initialState from './redux/initial-state';
-// import { MODAL_STYLE } from '../../../../constants';
-// import AlertModal from '../../../common/modals/alert-modal';
-// import Loader from '../../../common/loader';
-// import {
-//   loadPersonalData, updatePersonalData, cleanStatusPersonalData, downloadSnils,
-// } from './redux/actions';
-// import { getSchoolAttachedStatus, getSnilsUploadStatus } from './common/get-status';
+import getErrorMessage from './common/get-error-massage'
+import getLoader from '../../../common/loader'
+import { validate } from './common/validate'
+import { getSchoolAttachedStatus, getSnilsUploadStatus } from './common/get-status'
+import { connect } from 'react-redux'
+import { allRegionsSelector, defaultPersonalDataValues, userSelector } from '../../../../redux/selectors'
+import {
+  loadDictionary,
+  downloadSnils,
+  personalDataStatusClean,
+  loadProfile,
+  updateProfile
+} from '../../../../redux/action-creators'
+import { compose, lifecycle } from 'recompose'
 
-function NewPersonalData(props) {
+function NewPersonalData (props) {
+  const {user, regions} = props
+
   const [changePasswordIsOpen, setChangePasswordIsOpen] = useState(false)
   const [changeEmailIsOpen, setChangeEmailIsOpen] = useState(false)
   const [uploadSnilsIsOpen, setUploadSnilsIsOpen] = useState(false)
 
-  const [state, dispatch] = useReducer(reducer, initialState)
-  // const [] = useEffect()
-  console.log(state)
+
+  console.log(props.pristine, props)
 
   const renderProps = {
     openChangePassword: () => setChangePasswordIsOpen(true),
     openUploadSnils: () => setUploadSnilsIsOpen(true),
     openChangeEmail: () => setChangeEmailIsOpen(true),
-    // handleSubmit: () => {},
-    // downloadSnils: () => dispatch(downloadSnils()),
-    // getSnilsUploadStatus: () =>	getSnilsUploadStatus(),
-    // getSchoolAttachedStatus: () => getSchoolAttachedStatus(),
+    handleSubmit: () => props.handleSubmit((data, dispatch, props) => props.updateProfile({data})),
+    downloadSnils: () => props.downloadSnils(),
+    getSnilsUploadStatus: () => getSnilsUploadStatus(props.user.profile.personalData.snilsPdfUploaded),
+    getSchoolAttachedStatus: () => getSchoolAttachedStatus(props.activeSchool),
     disableFormSubmit: props.invalid || props.pristine,
-    disableSnilsDownload: state.profile.personalData.snilsPdfUploaded,
-    regions: [{index: '1', value: 'dkjfg'}],
-  };
+    disableSnilsDownload: !user.profile.personalData.snilsPdfUploaded,
+    regions: regions.entities,
+    loader: getLoader(user.profileLoading, user.profileUpdating, regions.loading),
+    errorMessage: getErrorMessage(user.profileLoadError, user.profileUpdateError, regions.loadError),
+    changePasswordIsOpen,
+    setChangePasswordIsOpen,
+    uploadSnilsIsOpen,
+    setUploadSnilsIsOpen,
+    changeEmailIsOpen,
+    setChangeEmailIsOpen
+  }
+
   return (
-    <ComponentRender {...renderProps}>
-      {/* {this.isLoading() && <Loader/>} */}
-       <ChangePassword isOpen={changePasswordIsOpen} onAfterClose={() => setChangePasswordIsOpen(false)}/>
-       <UploadSnils isOpen={uploadSnilsIsOpen} onAfterClose={() => setUploadSnilsIsOpen(false)}/>
-       <ChangeEmail isOpen={changeEmailIsOpen} onAfterClose={() => setChangeEmailIsOpen(false)}/>
-      {/* {this.getErrorMessage() && <AlertModal */}
-      {/* style={MODAL_STYLE} */}
-      {/* message={this.getErrorMessage()} */}
-      {/* buttonLabel='Закрыть' */}
-      {/* />} */}
-    </ComponentRender>
-  );
+    <ComponentRender { ...renderProps }/>
+  )
 }
 
-// const isLoading = () => {
-// 	return this.props.regionsLoading || this.props.profileLoading || this.props.profileUpdating
-// }
-
-export default reduxForm({ form: FORM_NAME })(NewPersonalData);
+export default compose(
+  connect(
+    state => ({
+      initialValues: defaultPersonalDataValues(state),
+      user: userSelector(state),
+      regions: allRegionsSelector(state)
+    }), {
+      loadProfile, updateProfile, personalDataStatusClean, downloadSnils, loadDictionary
+    }),
+  lifecycle({
+    componentDidMount () {
+      !this.props.user.profileLoaded && !this.props.user.profileLoading && this.props.loadProfile()
+      !this.props.regions.entities.length && this.props.loadDictionary()
+    },
+    componentWillUnmount () {
+      this.props.personalDataStatusClean()
+    }
+  }),
+  reduxForm({
+    form: FORM_NAME, validate, enableReinitialize: true, keepDirtyOnReinitialize: true
+  })
+)(NewPersonalData)

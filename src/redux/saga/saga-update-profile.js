@@ -28,7 +28,6 @@ export default function* sagaUpdateProfile(action) {
 				birthday: data.birthday && data.birthday + ' 00:00:00.00000',
 				email: data.email,
 				email_confirmed: emailConfirmed,
-				esia_id: null,
 				gender: data.gender,
 				init_password: null,
 				personal_data: {
